@@ -34,10 +34,9 @@
   <div id="loadingOverlay" class="loading-overlay" aria-hidden="true">
     <div class="loading-card">
       <div class="loading-badge">INISIALISASI LABORATORIUM KOMPUTASI</div>
-      <h2 class="loading-title">Menyiapkan Mesin Algoritma...</h2>
-      <p id="loadingStepText" class="loading-step">Mengalokasikan ruang pencarian & memori array...</p>
+      <h2 class="loading-title">Menyiapkan Mesin Algoritma &amp; Validator Teknik...</h2>
+      <p id="loadingStepText" class="loading-step">Mengalokasikan ruang pencarian &amp; memori array...</p>
 
-      <!-- Indikator Visual Array [2, 3, 7, 6, 5] -> [2, 3, 5, 6, 7] -->
       <div class="loading-nodes" id="loadingNodes">
         <div class="load-node" data-idx="0"><span>2</span><small>[1]</small></div>
         <div class="load-node" data-idx="1"><span>3</span><small>[2]</small></div>
@@ -53,7 +52,7 @@
     </div>
   </div>
 
-  <!-- Navigasi Header Global (Muncul di Layar 2-7) -->
+  <!-- Navigasi Header Global -->
   <header id="mainHeader" class="app-header hidden">
     <div class="header-brand" onclick="navigateTo('home')" role="button" tabindex="0">
       <div class="brand-icon">
@@ -87,16 +86,14 @@
         <div class="splash-badge">INFORMATIKA SMA/MA/SMK KELAS X (EDISI REVISI) • BAB 2</div>
         <h1 class="splash-title">Laboratorium Virtual Algoritma Pencarian &amp; Pengurutan</h1>
         <p class="splash-desc">
-          Eksplorasi interaktif cara memilih algoritma untuk masalah kehidupan nyata: memahami elemen <strong>Pencarian (Searching)</strong> serta membedah mekanisme <strong>Bubble Sort</strong>, <strong>Insertion Sort</strong>, dan <strong>Selection Sort</strong> secara visual.
+          Eksplorasi interaktif cara memilih algoritma untuk masalah kehidupan nyata: memahami elemen <strong>Pencarian (Searching)</strong> serta mempraktikkan langsung teknik <strong>Bubble Sort</strong>, <strong>Insertion Sort</strong>, dan <strong>Selection Sort</strong> dengan pencatatan diagnostik kesalahan iterasi.
         </p>
 
-        <!-- Panel Visual Inti Materi -->
         <div class="splash-core-panel">
           <div class="core-panel-header">
             <span>VISUALISASI INTI: TRANSFORMASI DERET UJI [2, 3, 7, 6, 5] &rarr; [2, 3, 5, 6, 7]</span>
           </div>
           <div class="core-grid">
-            <!-- Kartu Visual 1: Bubble Sort -->
             <div class="core-box">
               <div class="core-tag">a. Bubble Sort</div>
               <div class="mini-bubbles">
@@ -106,9 +103,8 @@
                 <span class="mb swap-dark">7</span>
                 <span class="mb">5</span>
               </div>
-              <p>Tukar elemen berdekatan secara berulang layaknya gelembung naik ke ujung kanan.</p>
+              <p>Bandingkan &amp; tukar elemen berdekatan secara berulang dari kiri ke kanan.</p>
             </div>
-            <!-- Kartu Visual 2: Insertion Sort -->
             <div class="core-box">
               <div class="core-tag">b. Insertion Sort</div>
               <div class="mini-cards">
@@ -118,25 +114,24 @@
                 <span class="mc">6</span>
                 <span class="mc">7</span>
               </div>
-              <p>Ambil kartu ke-(i+1) lalu sisipkan ke posisi yang tepat di sebelah kiri.</p>
+              <p>Ambil kartu ke-(i+1) lalu sisipkan mundur ke posisi yang tepat di kiri.</p>
             </div>
-            <!-- Kartu Visual 3: Selection Sort -->
             <div class="core-box">
               <div class="core-tag">c. Selection Sort</div>
               <div class="mini-bars">
-                <span class="mbar s-done" style="height:18px" title="2">2</span>
-                <span class="mbar s-done" style="height:25px" title="3">3</span>
-                <span class="mbar s-min" style="height:34px" title="5">5</span>
-                <span class="mbar s-un" style="height:42px" title="6">6</span>
-                <span class="mbar s-un" style="height:50px" title="7">7</span>
+                <span class="mbar s-done" style="height:18px">2</span>
+                <span class="mbar s-done" style="height:25px">3</span>
+                <span class="mbar s-min" style="height:34px">5</span>
+                <span class="mbar s-un" style="height:42px">6</span>
+                <span class="mbar s-un" style="height:50px">7</span>
               </div>
               <p>Seleksi nilai terkecil dari Bagian Belum Terurut ke Bagian Terurut.</p>
             </div>
           </div>
 
           <div class="splash-features">
-            <span class="feat-pill">&#9889; 5 Misi Praktikum Berjenjang</span>
-            <span class="feat-pill">&#128269; Simulator Searching &amp; 3 Metode Sorting</span>
+            <span class="feat-pill">&#9997;&#65039; Mode Praktik Mandiri Siswa</span>
+            <span class="feat-pill">&#9888;&#65039; Deteksi &amp; Log Kesalahan Iterasi/Teknik</span>
             <span class="feat-pill">&#128196; LKPD 10 Soal &amp; Ekspor PDF A4</span>
           </div>
         </div>
@@ -170,7 +165,6 @@
       </div>
 
       <div class="menu-grid">
-        <!-- Kartu 1: Teori -->
         <div class="menu-card" onclick="navigateTo('teori')" role="button" tabindex="0">
           <div class="menu-icon-wrap">
             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#facc15" stroke-width="2">
@@ -183,7 +177,6 @@
           <span class="menu-link">Buka Materi &rarr;</span>
         </div>
 
-        <!-- Kartu 2: Simulasi -->
         <div class="menu-card highlight-card" onclick="navigateTo('simulasi')" role="button" tabindex="0">
           <div class="menu-icon-wrap">
             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#38bdf8" stroke-width="2">
@@ -192,12 +185,11 @@
               <line x1="12" y1="17" x2="12" y2="21" />
             </svg>
           </div>
-          <h3>Simulasi Interaktif</h3>
-          <p>Jalankan eksperimen 5 misi praktikum: uji pencarian objek, jalankan animasi per langkah, atau urutkan data secara manual dan catat tabel percobaan.</p>
-          <span class="menu-link">Mulai Simulasi &rarr;</span>
+          <h3>Simulasi &amp; Praktik Sorting</h3>
+          <p>Praktikkan sendiri teknik Bubble, Insertion, dan Selection Sort per iterasi! Setiap ketepatan maupun kesalahan teknik akan tercatat otomatis.</p>
+          <span class="menu-link">Mulai Praktik &rarr;</span>
         </div>
 
-        <!-- Kartu 3: Prosedur -->
         <div class="menu-card" onclick="navigateTo('prosedur')" role="button" tabindex="0">
           <div class="menu-icon-wrap">
             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#facc15" stroke-width="2">
@@ -210,11 +202,10 @@
             </svg>
           </div>
           <h3>Prosedur Praktikum</h3>
-          <p>Panduan 7 langkah kerja berurutan mulai dari pemilihan skenario misi, pengamatan iterasi, pencatatan data, hingga pengunduhan laporan PDF.</p>
+          <p>Panduan 7 langkah kerja berurutan mulai dari pemilihan skenario misi, praktik sorting mandiri, evaluasi kesalahan iterasi, hingga ekspor PDF.</p>
           <span class="menu-link">Lihat Prosedur &rarr;</span>
         </div>
 
-        <!-- Kartu 4: LKPD -->
         <div class="menu-card" onclick="navigateTo('lkpd')" role="button" tabindex="0">
           <div class="menu-icon-wrap">
             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#38bdf8" stroke-width="2">
@@ -225,11 +216,10 @@
             </svg>
           </div>
           <h3>LKPD Digital &amp; PDF</h3>
-          <p>Kerjakan 10 soal evaluasi (Analisis Data, Diagnostik Konsep otomatis, &amp; Penalaran HOTS) dan ekspor hasil praktikum ke berkas PDF A4.</p>
+          <p>Kerjakan 10 soal evaluasi dan ekspor hasil praktikum beserta rekap kesalahan iterasi &amp; akurasi ke berkas PDF A4.</p>
           <span class="menu-link">Kerjakan LKPD &rarr;</span>
         </div>
 
-        <!-- Kartu 5: Pengembang -->
         <div class="menu-card" onclick="navigateTo('pengembang')" role="button" tabindex="0">
           <div class="menu-icon-wrap">
             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#facc15" stroke-width="2">
@@ -251,26 +241,25 @@
       <div class="view-header">
         <span class="section-badge">REFERENSI BUKU TEKS INFORMATIKA KELAS X (HAL. 80–89)</span>
         <h2>Materi &amp; Teori Visual: Pencarian (Searching) dan Pengurutan (Sorting)</h2>
-        <p>Klik pada kartu konsep di bawah ini untuk mempelajari cara kerja algoritma secara mendalam.</p>
+        <p>Klik pada kartu konsep di bawah ini untuk mempelajari aturan setiap algoritma sebelum melakukan praktik di meja simulasi.</p>
       </div>
 
-      <!-- Bagian 1: Pencarian (Searching) -->
       <div class="theory-block">
         <h3 class="block-title">1. Pencarian (Searching) dalam Kehidupan Nyata &amp; Komputasi</h3>
         <p class="theory-lead">
-          <strong>Apa itu mencari?</strong> Mencari adalah usaha menemukan "sesuatu" yang dapat berupa benda, angka, konsep, atau informasi yang memenuhi kriteria tertentu dalam suatu <strong>ruang pencarian</strong>. Contohnya: mencari buku dengan judul tertentu di rak perpustakaan, mencari pakaian batik seragam di lemari, atau mencari dokumen web dengan mesin pencari seperti Google.
+          <strong>Apa itu mencari?</strong> Mencari adalah usaha menemukan "sesuatu" yang dapat berupa benda, angka, konsep, atau informasi yang memenuhi kriteria tertentu dalam suatu <strong>ruang pencarian</strong>.
         </p>
 
         <div class="theory-cards-3">
           <div class="t-card clickable-card" onclick="playCardClickEffect(this)">
             <div class="t-num">Elemen 1</div>
             <h4>Sekumpulan Benda / Objek</h4>
-            <p>Ruang pencarian tempat objek berada, misalnya seluruh koleksi buku di rak perpustakaan, tumpukan pakaian di lemari, atau deret angka di dalam larik (array).</p>
+            <p>Ruang pencarian tempat objek berada, misalnya seluruh koleksi buku di rak perpustakaan, tumpukan pakaian di lemari, atau deret angka di dalam larik.</p>
           </div>
           <div class="t-card clickable-card" onclick="playCardClickEffect(this)">
             <div class="t-num">Elemen 2</div>
             <h4>Kriteria Objek yang Dicari</h4>
-            <p>Ciri spesifik dari target yang ingin ditemukan, misalnya judul buku tertentu, motif batik seragam sekolah, atau nilai angka target (misal: mencari angka <code>6</code>).</p>
+            <p>Ciri spesifik dari target yang ingin ditemukan, misalnya judul buku tertentu, motif batik seragam sekolah, atau nilai angka target.</p>
           </div>
           <div class="t-card clickable-card" onclick="playCardClickEffect(this)">
             <div class="t-num">Elemen 3</div>
@@ -280,25 +269,24 @@
         </div>
 
         <div class="strategy-banner">
-          <strong>Strategi Pencarian:</strong> Mengambil pakaian secara <em>acak</em> berisiko memeriksa benda yang sama berulang kali. Memeriksa secara <em>berurutan</em> (dari atas ke bawah atau kiri ke kanan) lebih sistematis. Namun, pencarian menjadi <strong>jauh lebih cepat</strong> apabila objek di dalam lemari atau rak perpustakaan sudah <strong>tersusun rapi dengan aturan tertentu (terurut)</strong>!
+          <strong>Strategi Pencarian:</strong> Mengambil pakaian secara <em>acak</em> berisiko memeriksa benda yang sama berulang kali. Memeriksa dari atas ke bawah atau kiri ke kanan lebih teratur, dan pencarian menjadi <strong>paling cepat</strong> ketika objek sudah <strong>tersusun rapi dengan aturan tertentu (terurut)</strong>!
         </div>
       </div>
 
-      <!-- Bagian 2: Dasar Pengurutan (Sorting) -->
       <div class="theory-block">
         <h3 class="block-title">2. Konsep Dasar Pengurutan (Sorting)</h3>
         <p class="theory-lead">
-          <strong>Pengurutan (Sorting)</strong> ialah permasalahan klasik pada komputasi untuk mengatur agar suatu kelompok benda, objek, atau entitas diletakkan mengikuti aturan tertentu—misalnya mengurutkan angka secara <strong>terurut menaik (ascending)</strong> dari kecil ke besar atau <strong>menurun (descending)</strong>.
+          <strong>Pengurutan (Sorting)</strong> dilakukan untuk mengatur agar suatu kelompok benda, objek, atau entitas diletakkan mengikuti aturan tertentu—misalnya mengurutkan angka secara <strong>terurut menaik (ascending)</strong> atau <strong>menurun (descending)</strong>.
         </p>
 
         <div class="intro-sort-demo clickable-card" onclick="playCardClickEffect(this)">
           <div class="isd-left">
             <span class="mini-label">CONTOH PENGANTAR BUKU (HAL. 82)</span>
             <h4>Mengurutkan 5 Angka Acak dengan 1 Kali Pertukaran</h4>
-            <p>Pada deret <code>[1, 2, 4, 3, 5]</code>, kita cukup menukar posisi nilai <strong>4</strong> dan <strong>3</strong> agar menjadi terurut menaik <code>[1, 2, 3, 4, 5]</code>. Terdapat <strong>2 langkah penting</strong> dalam setiap algoritma pengurutan:</p>
+            <p>Pada deret <code>[1, 2, 4, 3, 5]</code>, kita cukup menukar posisi nilai <strong>4</strong> dan <strong>3</strong> agar menjadi terurut menaik <code>[1, 2, 3, 4, 5]</code>. Terdapat <strong>2 langkah penting</strong> dalam pengurutan:</p>
             <ol class="clean-ol">
               <li><strong>Pembandingan (Comparison):</strong> Membandingkan dua buah nilai untuk melihat mana yang lebih besar (<code>&gt;</code>), lebih kecil (<code>&lt;</code>), atau sama dengan (<code>=</code>).</li>
-              <li><strong>Penempatan / Pertukaran (Placement / Swap):</strong> Menempatkan atau menukar posisi bilangan setelah hasil pembandingan diperoleh.</li>
+              <li><strong>Penempatan / Pertukaran (Placement / Swap):</strong> Menempatkan bilangan setelah melakukan pembandingan.</li>
             </ol>
           </div>
           <div class="isd-right">
@@ -321,7 +309,6 @@
         </div>
       </div>
 
-      <!-- Bagian 3: Telusur 3 Algoritma Pengurutan pada Deret [2, 3, 7, 6, 5] -->
       <div class="theory-block">
         <h3 class="block-title">3. Bedah 3 Algoritma Pengurutan pada Deret Uji [2, 3, 7, 6, 5]</h3>
 
@@ -331,76 +318,63 @@
           <button class="algo-tab-btn" onclick="switchTheoryTab('selection', this)">c. Selection Sort</button>
         </div>
 
-        <!-- Panel Tab A: Bubble Sort -->
         <div id="theory-tab-bubble" class="algo-tab-content active">
           <div class="algo-explain-grid">
             <div>
-              <h4>Prinsip Kerja Bubble Sort (Gelembung Naik)</h4>
-              <p>Mengilustrasikan bilangan yang diurutkan sebagai gelembung (<em>bubble</em>) yang terus naik ke kanan dengan menukar elemen yang berdekatan secara berulang.</p>
+              <h4>Aturan Teknik Bubble Sort (Gelembung Naik)</h4>
               <ol class="clean-ol">
-                <li>Bandingkan nilai data ke-1 dan data ke-2. Jika data ke-1 &gt; data ke-2, tukar posisinya.</li>
-                <li>Ulangi langkah 1 pada pasangan berikutnya: ke-2 &amp; ke-3, hingga ke-(n-1) &amp; ke-n. Satu putaran penuh disebut <strong>satu iterasi</strong>, dan nilai tertinggi akan berada di ujung kanan.</li>
-                <li>Ulangi langkah 1 dan 2 untuk <code>n-1</code>, <code>n-2</code>, dst. sampai seluruh data terurut.</li>
+                <li>Bandingkan nilai data ke-1 dan data ke-2. Jika data ke-1 &gt; data ke-2, tukar posisinya. Jika tidak, posisi tetap.</li>
+                <li>Ulangi langkah 1 pada pasangan berdekatan berikutnya: data ke-2 &amp; ke-3, hingga data ke-(n-1) &amp; ke-n (nilai tertinggi akan berada di ujung kanan setelah 1 iterasi selesai).</li>
+                <li>Ulangi langkah 1 dan 2 untuk <code>n-1</code>, <code>n-2</code>, dst. sampai habis.</li>
               </ol>
             </div>
             <div class="trace-box">
-              <h5>Telusur Eksekusi Deret [2, 3, 7, 6, 5] (Urut Menaik):</h5>
+              <h5>Telusur Eksekusi Deret [2, 3, 7, 6, 5]:</h5>
               <ul class="trace-list">
-                <li><strong>Iterasi Pertama (4 Kali Perbandingan):</strong>
-                  <br>&bull; Bandingkan (2, 3) &rarr; <code>2 &lt; 3</code>, tetap <code>(2, 3, 7, 6, 5)</code>.
-                  <br>&bull; Bandingkan (3, 7) &rarr; <code>3 &lt; 7</code>, tetap <code>(2, 3, 7, 6, 5)</code>.
-                  <br>&bull; Bandingkan (7, 6) &rarr; <code>7 &gt; 6</code>, <strong>tukar</strong> menjadi <code>(2, 3, 6, 7, 5)</code>.
-                  <br>&bull; Bandingkan (7, 5) &rarr; <code>7 &gt; 5</code>, <strong>tukar</strong> menjadi <code>(2, 3, 6, 5, 7)</code>.
-                </li>
-                <li><strong>Iterasi Kedua (3 Kali Perbandingan):</strong>
-                  <br>&bull; (2, 3) tetap &rarr; (3, 6) tetap &rarr; Bandingkan (6, 5): karena <code>6 &gt; 5</code>, <strong>tukar</strong> menjadi <code>(2, 3, 5, 6, 7)</code>.
-                </li>
-                <li><strong>Iterasi Ketiga (2 Kali Perbandingan):</strong> (2, 3) tetap, (3, 5) tetap &rarr; <code>(2, 3, 5, 6, 7)</code>.</li>
-                <li><strong>Iterasi Keempat (1 Kali Perbandingan):</strong> (2, 3) tetap &rarr; Selesai!</li>
+                <li><strong>Iterasi 1 (4 Perbandingan):</strong> (2,3) tetap &rarr; (3,7) tetap &rarr; (7,6) tukar jadi <code>(2,3,6,7,5)</code> &rarr; (7,5) tukar jadi <code>(2,3,6,5,7)</code>.</li>
+                <li><strong>Iterasi 2 (3 Perbandingan):</strong> (2,3) tetap &rarr; (3,6) tetap &rarr; (6,5) tukar jadi <code>(2,3,5,6,7)</code>.</li>
+                <li><strong>Iterasi 3 (2 Perbandingan):</strong> (2,3) tetap &rarr; (3,5) tetap.</li>
+                <li><strong>Iterasi 4 (1 Perbandingan):</strong> (2,3) tetap &rarr; Selesai!</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <!-- Panel Tab B: Insertion Sort -->
         <div id="theory-tab-insertion" class="algo-tab-content">
           <div class="algo-explain-grid">
             <div>
-              <h4>Prinsip Kerja Insertion Sort (Penyisipan Kartu)</h4>
-              <p>Mengurutkan sebuah lis (daftar objek) dengan cara <strong>menyisipkan (insertion)</strong> elemen satu per satu sesuai urutan besar kecilnya ke bagian kiri yang sudah terurut.</p>
+              <h4>Aturan Teknik Insertion Sort (Penyisipan Kartu)</h4>
               <ol class="clean-ol">
                 <li>Asumsikan <code>i</code> ialah nomor iterasi.</li>
                 <li>Ambil bilangan ke-<code>(i+1)</code>.</li>
                 <li>Bandingkan dengan bilangan sebelumnya di sebelah kiri.</li>
-                <li>Jika bilangan sebelumnya lebih besar, lakukan penukaran, lalu bandingkan lagi dengan bilangan sebelumnya terus-menerus hingga ditemukan bilangan yang lebih kecil atau sampai di awal lis.</li>
+                <li>Jika bilangan sebelumnya lebih besar, lakukan penukaran, lalu bandingkan lagi dengan bilangan sebelumnya hingga ditemukan bilangan yang lebih kecil atau sampai di awal lis.</li>
               </ol>
             </div>
             <div class="trace-box">
-              <h5>Ilustrasi Kartu [2, 3, 7, 6, 5] (Hal. 87–88):</h5>
+              <h5>Ilustrasi Kartu [2, 3, 7, 6, 5]:</h5>
               <ul class="trace-list">
-                <li><strong>Iterasi 1:</strong> Ambil kartu ke-2 (nilai <code>3</code>), bandingkan dengan <code>2</code>. Karena <code>2 &lt; 3</code>, urutan tetap <code>[2, 3, 7, 6, 5]</code>.</li>
-                <li><strong>Iterasi 2:</strong> Ambil kartu ke-3 (nilai <code>7</code>), bandingkan dengan <code>3</code>. Karena <code>3 &lt; 7</code>, urutan tetap <code>[2, 3, 7, 6, 5]</code>.</li>
-                <li><strong>Iterasi 3:</strong> Ambil kartu ke-4 (nilai <code>6</code>). Bandingkan dengan <code>7</code> (<code>6 &lt; 7</code> &rarr; tukar), lalu bandingkan dengan <code>3</code> (<code>6 &not;&lt; 3</code> &rarr; berhenti). Kartu <code>6</code> disisipkan di antara 3 dan 7 menjadi <code>[2, 3, 6, 7, 5]</code>.</li>
-                <li><strong>Iterasi 4:</strong> Ambil kartu ke-5 (nilai <code>5</code>). Tukar dengan <code>7</code>, tukar dengan <code>6</code>, berhenti di sebelah kanan <code>3</code>. Kartu <code>5</code> disisipkan di antara 3 dan 6 menjadi <code>[2, 3, 5, 6, 7]</code>.</li>
+                <li><strong>Iterasi 1:</strong> Ambil kartu ke-2 (<code>3</code>), bandingkan dengan <code>2</code> (<code>2 &lt; 3</code> &rarr; tetap <code>[2, 3, 7, 6, 5]</code>).</li>
+                <li><strong>Iterasi 2:</strong> Ambil kartu ke-3 (<code>7</code>), bandingkan dengan <code>3</code> (<code>3 &lt; 7</code> &rarr; tetap <code>[2, 3, 7, 6, 5]</code>).</li>
+                <li><strong>Iterasi 3:</strong> Ambil kartu ke-4 (<code>6</code>). Bandingkan dengan <code>7</code> (tukar), lalu bandingkan dengan <code>3</code> (berhenti). Hasil: <code>[2, 3, 6, 7, 5]</code>.</li>
+                <li><strong>Iterasi 4:</strong> Ambil kartu ke-5 (<code>5</code>). Tukar dengan <code>7</code>, tukar dengan <code>6</code>, berhenti setelah <code>3</code>. Hasil: <code>[2, 3, 5, 6, 7]</code>.</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <!-- Panel Tab C: Selection Sort -->
         <div id="theory-tab-selection" class="algo-tab-content">
           <div class="algo-explain-grid">
             <div>
-              <h4>Prinsip Kerja Selection Sort (Seleksi Nilai Terkecil)</h4>
-              <p>Membagi daftar bilangan menjadi dua bagian: <strong>Bagian Terurut</strong> di sebelah kiri (awalnya kosong) dan <strong>Bagian yang Belum Terurut</strong> di sebelah kanan.</p>
+              <h4>Aturan Teknik Selection Sort (Seleksi Nilai Terkecil)</h4>
               <ol class="clean-ol">
-                <li>Cari (seleksi) bilangan terkecil yang ada pada <em>Bagian Belum Terurut</em>.</li>
-                <li>Tukar bilangan terkecil tersebut dengan bilangan pertama pada <em>Bagian Belum Terurut</em>, lalu masukkan ke <em>Bagian Terurut</em>.</li>
-                <li>Ulangi langkah 1 dan 2 sampai <em>Bagian Belum Terurut</em> habis.</li>
+                <li>Bagi daftar menjadi <strong>Bagian Terurut</strong> di kiri (awalnya kosong) dan <strong>Bagian yang Belum Terurut</strong> di kanan.</li>
+                <li>Cari bilangan terkecil yang ada pada <em>Bagian Belum Terurut</em>.</li>
+                <li>Tukar bilangan terkecil tersebut dengan bilangan pertama <em>Bagian Belum Terurut</em>, lalu masukkan ke <em>Bagian Terurut</em>. Ulangi sampai bagian belum terurut habis.</li>
               </ol>
             </div>
             <div class="trace-box">
-              <h5>Tabel Urutan Selection Sort pada (2, 3, 7, 6, 5) (Hal. 89):</h5>
+              <h5>Tabel Urutan Selection Sort pada (2, 3, 7, 6, 5):</h5>
               <table class="mini-theory-table">
                 <thead>
                   <tr>
@@ -423,103 +397,70 @@
         </div>
       </div>
 
-      <!-- Tabel Perbandingan 3 Algoritma -->
-      <div class="theory-block">
-        <h3 class="block-title">4. Tabel Perbandingan Karakteristik Algoritma Pengurutan</h3>
-        <div class="table-responsive">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Aspek Pembanding</th>
-                <th>Bubble Sort</th>
-                <th>Insertion Sort</th>
-                <th>Selection Sort</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Metafora Utama</strong></td>
-                <td>Gelembung (<em>bubble</em>) nilai besar naik ke ujung kanan</td>
-                <td>Menyisipkan kartu ke posisi yang tepat di sebelah kiri</td>
-                <td>Menyeleksi nilai minimum dari sisa data belum terurut</td>
-              </tr>
-              <tr>
-                <td><strong>Mekanisme Pertukaran</strong></td>
-                <td>Menukar dua elemen bersebelahan setiap kali <code>A[j] &gt; A[j+1]</code></td>
-                <td>Menggeser/menukar elemen ke kiri sampai bertemu nilai yang lebih kecil</td>
-                <td>Hanya 1 kali pertukaran di akhir tiap iterasi (antara elemen pertama belum terurut &amp; nilai terkecil)</td>
-              </tr>
-              <tr>
-                <td><strong>Posisi Elemen Pasti di Tiap Iterasi</strong></td>
-                <td>Elemen terbesar menempati ujung paling kanan</td>
-                <td>Sub-lis sebelah kiri sebanyak <code>i+1</code> kartu selalu terurut relatif</td>
-                <td>Elemen terkecil menempati Bagian Terurut di sebelah kiri</td>
-              </tr>
-              <tr>
-                <td><strong>Perilaku pada Deret [2, 3, 7, 6, 5]</strong></td>
-                <td>10 pembandingan total (4 + 3 + 2 + 1) dan 3 kali pertukaran</td>
-                <td>Hemat perbandingan karena berhenti saat elemen kiri sudah lebih kecil (3 kali pertukaran)</td>
-                <td>10 pembandingan untuk mencari nilai terkecil, hanya 2 kali pertukaran posisi nyata</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Kotak Penekanan Konsep Penting (HOTS) -->
       <div class="hots-callout">
-        <div class="hots-badge">&#128161; KONSEP PENTING (HOTS) — MENGAPA KITA MEMILIH ALGORITMA?</div>
+        <div class="hots-badge">&#128161; SIAP BERLATIH MANDIRI?</div>
         <p>
-          Tidak ada satu algoritma yang selalu paling unggul untuk semua kondisi data. Jika deret data sudah <strong>hampir terurut</strong> (seperti <code>[2, 3, 7, 6, 5]</code>), <strong>Insertion Sort</strong> sangat cepat karena langsung menghentikan pengecekan ke kiri begitu menemukan elemen yang lebih kecil. Sebaliknya, jika biaya <strong>pertukaran (swap)</strong> benda di dunia nyata sangat berat (misalnya memindahkan kontainer barang berukuran besar), <strong>Selection Sort</strong> lebih hemat tenaga karena meminimalkan jumlah pertukaran fisik!
+          Pada menu <strong>Simulasi</strong>, Anda akan mempraktikkan sendiri setiap langkah iterasi dari ketiga teknik <em>sorting</em> di atas. Sistem akan memvalidasi apakah langkah Anda sudah sesuai dengan aturan algoritma dan mencatat apabila terjadi kesalahan iterasi atau teknik!
         </p>
-        <button class="btn-gold" onclick="navigateTo('simulasi')">Uji Langsung di Meja Simulasi &rarr;</button>
+        <button class="btn-gold" onclick="navigateTo('simulasi')">Buka Meja Praktik Simulasi &rarr;</button>
       </div>
     </section>
 
     <!-- ==========================================
-         LAYAR 4: SIMULASI INTERAKTIF & TABEL PERCOBAAN
+         LAYAR 4: SIMULASI INTERAKTIF & VALIDATOR KESALAHAN SISWA
          ========================================== -->
     <section id="view-simulasi" class="view">
-      <!-- Bagian Atas: Tujuan Pembelajaran & Pemilih Misi (5 Misi Berjenjang) -->
+      <!-- Bagian Atas: Tujuan Pembelajaran & Pemilih Misi -->
       <div class="sim-top-grid">
         <div class="glass-panel">
           <span class="mini-label">TUJUAN PEMBELAJARAN PRAKTIKUM</span>
-          <h3 class="panel-heading">Eksperimen Pencarian &amp; Pengurutan Data</h3>
+          <h3 class="panel-heading">Praktik Teknik Sorting &amp; Diagnostik Kesalahan Iterasi</h3>
           <p class="panel-text">
-            Siswa mampu membandingkan strategi pencarian pada ruang data acak vs terurut, menelusuri proses iterasi algoritma <strong>Bubble Sort</strong>, <strong>Insertion Sort</strong>, dan <strong>Selection Sort</strong> pada kasus uji buku teks <code>[2, 3, 7, 6, 5]</code> maupun data acak/terbalik, serta mengevaluasi jumlah pembandingan dan pertukaran.
+            Siswa mampu mengeksekusi sendiri tahapan iterasi algoritma <strong>Bubble Sort</strong>, <strong>Insertion Sort</strong>, dan <strong>Selection Sort</strong> maupun strategi <strong>Searching</strong>, serta menganalisis catatan kesalahan iterasi/teknik yang terdeteksi selama praktikum.
           </p>
         </div>
 
         <div class="glass-panel">
           <div class="mission-header-row">
-            <span class="mini-label">PEMILIH MISI / SKENARIO PRAKTIKUM (5 MISI BERJENJANG)</span>
+            <span class="mini-label">PEMILIH MISI PRAKTIKUM (5 MISI BERJENJANG)</span>
             <span id="missionStatusBadge" class="mission-status-pill">Misi Aktif: #1</span>
           </div>
           <div class="mission-selector" id="missionButtons">
             <button class="mission-btn active" data-mission="1" onclick="selectMission(1)">Misi 1: Searching</button>
-            <button class="mission-btn" data-mission="2" onclick="selectMission(2)">Misi 2: Bubble [2,3,7,6,5]</button>
-            <button class="mission-btn" data-mission="3" onclick="selectMission(3)">Misi 3: Insertion [2,3,7,6,5]</button>
-            <button class="mission-btn" data-mission="4" onclick="selectMission(4)">Misi 4: Selection [2,3,7,6,5]</button>
+            <button class="mission-btn" data-mission="2" onclick="selectMission(2)">Misi 2: Praktik Bubble</button>
+            <button class="mission-btn" data-mission="3" onclick="selectMission(3)">Misi 3: Praktik Insertion</button>
+            <button class="mission-btn" data-mission="4" onclick="selectMission(4)">Misi 4: Praktik Selection</button>
             <button class="mission-btn" data-mission="5" onclick="selectMission(5)">Misi 5: Data Terbalik</button>
           </div>
-          <div id="missionInstructionBox" class="mission-instruction">
-            <strong>Target Misi 1 (Eksplorasi Pencarian):</strong> Pilih mode <em>Pencarian (Searching)</em>, cari angka target pada kondisi data <strong>Terurut</strong> atau <strong>Acak</strong> sampai ditemukan, lalu klik <strong>Catat Data &amp; Verifikasi</strong>.
-          </div>
+          <div id="missionInstructionBox" class="mission-instruction"></div>
         </div>
       </div>
 
-      <!-- Meja Kerja Simulasi (Kiri) dan Panel Pengujian/Output (Kanan) -->
+      <!-- Meja Kerja Simulasi (Kiri) dan Panel Pengujian/Output & Log Kesalahan (Kanan) -->
       <div class="sim-workspace-grid">
-        <!-- KIRI: Meja Kerja Manipulasi & Visualisasi -->
+        <!-- KIRI: Meja Kerja Manipulasi & Panel Aksi Praktik Siswa -->
         <div class="glass-panel workbench-panel">
+          <!-- Pemilih Mode Kerja: Praktik Mandiri Siswa vs Demonstrasi Otomatis -->
+          <div class="mode-switch-bar">
+            <span class="mode-switch-label">Mode Eksekusi:</span>
+            <div class="mode-toggle-group">
+              <button id="modeBtnPractice" class="mode-toggle-btn active" onclick="setExecutionMode('practice')">
+                &#9997;&#65039; Mode Praktik Siswa (Validasi &amp; Catat Kesalahan)
+              </button>
+              <button id="modeBtnDemo" class="mode-toggle-btn" onclick="setExecutionMode('demo')">
+                &#9654;&#65039; Mode Demonstrasi (Langkah / Otomatis)
+              </button>
+            </div>
+          </div>
+
           <div class="wb-toolbar">
             <div class="control-group">
-              <label for="simAlgoSelect">Mode &amp; Algoritma:</label>
+              <label for="simAlgoSelect">Teknik Algoritma:</label>
               <select id="simAlgoSelect" onchange="handleAlgoChange()">
-                <optgroup label="Pengurutan (Sorting)">
-                  <option value="bubble">Bubble Sort (Gelembung Berdekatan)</option>
-                  <option value="insertion">Insertion Sort (Penyisipan Kartu)</option>
-                  <option value="selection">Selection Sort (Seleksi Nilai Terkecil)</option>
+                <optgroup label="Teknik Pengurutan (Sorting)">
+                  <option value="bubble">a. Bubble Sort (Gelembung Berdekatan)</option>
+                  <option value="insertion">b. Insertion Sort (Penyisipan Kartu)</option>
+                  <option value="selection">c. Selection Sort (Seleksi Nilai Terkecil)</option>
                 </optgroup>
                 <optgroup label="Pencarian (Searching)">
                   <option value="search_unsorted">Searching: Ruang Data Acak (Belum Terurut)</option>
@@ -529,7 +470,7 @@
             </div>
 
             <div class="control-group">
-              <label for="simPresetSelect">Preset Data Uji:</label>
+              <label for="simPresetSelect">Preset Deret Bilangan:</label>
               <select id="simPresetSelect" onchange="handlePresetChange()">
                 <option value="2,3,7,6,5">Kasus Utama Buku [2, 3, 7, 6, 5]</option>
                 <option value="1,2,4,3,5">Kasus Pengantar Buku [1, 2, 4, 3, 5]</option>
@@ -548,17 +489,53 @@
           <!-- Area Visual Utama -->
           <div class="visual-stage">
             <div class="stage-top-bar">
-              <span id="stageModeLabel" class="stage-mode-tag">VISUALISASI BUBBLE SORT</span>
-              <span id="stageActionBanner" class="stage-action-text">Siap memulai percobaan pada deret [2, 3, 7, 6, 5].</span>
+              <span id="stageModeLabel" class="stage-mode-tag">PRAKTIK BUBBLE SORT</span>
+              <span id="stageIterBadge" class="stage-iter-pill">Iterasi Ke-1</span>
             </div>
 
-            <!-- Representasi Elemen (Lingkaran Indeks / Kartu / Batang) -->
+            <!-- Kotak Instruksi Langkah Aktif bagi Siswa -->
+            <div id="studentPromptBox" class="student-prompt-box">
+              Memuat instruksi langkah praktik...
+            </div>
+
+            <!-- Representasi Elemen Array -->
             <div id="arrayVisualContainer" class="array-visual-container"></div>
 
-            <!-- Baris Indeks Posisi [1] .. [5] sesuai Buku Hal. 83 -->
+            <!-- Baris Indeks Posisi [1] .. [5] -->
             <div id="arrayIndexRow" class="array-index-row"></div>
 
-            <!-- Tabel Partisi Khusus Selection Sort (Bagian Terurut vs Belum Terurut sesuai Hal. 89) -->
+            <!-- Panel Tombol Keputusan Praktik Siswa (Tampil di Mode Praktik) -->
+            <div id="practiceDecisionPanel" class="practice-decision-panel">
+              <!-- Tombol Khusus Bubble Sort -->
+              <div id="bubbleActionGroup" class="action-btn-group">
+                <button class="btn-practice btn-swap-act" onclick="handleBubbleDecision(true)">
+                  &#8644; Tukar Posisi (Kiri &gt; Kanan)
+                </button>
+                <button class="btn-practice btn-keep-act" onclick="handleBubbleDecision(false)">
+                  &#10004; Urutan Tetap / Lanjut (Kiri &le; Kanan)
+                </button>
+              </div>
+
+              <!-- Tombol Khusus Insertion Sort -->
+              <div id="insertionActionGroup" class="action-btn-group hidden">
+                <button class="btn-practice btn-swap-act" onclick="handleInsertionDecision('swap_left')">
+                  &#8592; Tukar / Geser Kartu ke Kiri (Kiri &gt; Kartu)
+                </button>
+                <button class="btn-practice btn-keep-act" onclick="handleInsertionDecision('place_here')">
+                  &#128204; Posisi Sudah Tepat / Selesai Sisip (Kiri &le; Kartu)
+                </button>
+              </div>
+
+              <!-- Petunjuk Khusus Selection Sort & Searching (Klik Elemen Langsung) -->
+              <div id="clickElementHintGroup" class="click-hint-banner hidden">
+                &#128070; <strong>Aksi Siswa:</strong> Klik langsung pada elemen di atas yang sesuai dengan aturan langkah saat ini!
+              </div>
+            </div>
+
+            <!-- Umpan Balik Instan Langkah Siswa (Benar / Kesalahan Teknik) -->
+            <div id="instantStepFeedback" class="instant-step-feedback hidden"></div>
+
+            <!-- Tabel Partisi Khusus Selection Sort (Hal. 89) -->
             <div id="selectionPartitionBox" class="selection-partition-box hidden">
               <div class="sp-col">
                 <span class="sp-label">Bagian Terurut (Kiri)</span>
@@ -573,52 +550,55 @@
                 <div id="spMinText" class="sp-val highlight">-</div>
               </div>
             </div>
-
-            <!-- Mode Interaksi Manual oleh Siswa -->
-            <div class="manual-hint-bar" id="manualHintBar">
-              &#128070; <strong>Tips Interaktif:</strong> Anda dapat menekan tombol <strong>Langkah Berikutnya</strong> / <strong>Jalankan Otomatis</strong> di bawah, ATAU klik langsung 2 elemen di atas untuk menukarnya secara manual!
-            </div>
           </div>
 
-          <!-- Tombol Kontrol Eksekusi Simulasi -->
+          <!-- Tombol Kontrol Bawah (Reset & Mode Demo) -->
           <div class="sim-controls-row">
-            <button class="btn-sim btn-step" id="btnStep" onclick="stepSimulation()">
-              &#9654;| Langkah Berikutnya
+            <button class="btn-sim btn-step hidden" id="btnStep" onclick="stepSimulation()">
+              &#9654;| Langkah Demo Berikutnya
             </button>
-            <button class="btn-sim btn-auto" id="btnAuto" onclick="toggleAutoPlay()">
-              &#9654; Jalankan Otomatis
+            <button class="btn-sim btn-auto hidden" id="btnAuto" onclick="toggleAutoPlay()">
+              &#9654; Jalankan Demo Otomatis
             </button>
             <button class="btn-sim btn-reset" onclick="resetSimulationState()">
-              &#8634; Reset Deret
+              &#8634; Ulangi / Reset Deret dari Awal
             </button>
-            <div class="speed-control">
-              <label for="speedRange">Kecepatan:</label>
+            <div class="speed-control hidden" id="speedControlWrap">
+              <label for="speedRange">Kecepatan Demo:</label>
               <input type="range" id="speedRange" min="250" max="1400" step="50" value="750" />
             </div>
           </div>
         </div>
 
-        <!-- KANAN: Panel Pengujian / Output & Log Iterasi -->
+        <!-- KANAN: Panel Telemetri, Pencatat Kesalahan Siswa, & Jejak Iterasi -->
         <div class="glass-panel telemetry-panel">
-          <span class="mini-label">PANEL PENGUJIAN &amp; PEMBACAAN HASIL LANGSUNG</span>
-          <h3 class="panel-heading">Telemetri Eksekusi Algoritma</h3>
+          <span class="mini-label">TELEMETRI &amp; DIAGNOSTIK PRAKTIK SISWA</span>
+          <h3 class="panel-heading">Hasil Pembacaan &amp; Catatan Kesalahan</h3>
 
-          <div class="metrics-grid">
+          <div class="metrics-grid-6">
             <div class="metric-box">
               <span class="m-label">Iterasi Saat Ini</span>
-              <strong id="metricIteration" class="m-val">0</strong>
+              <strong id="metricIteration" class="m-val">1</strong>
             </div>
             <div class="metric-box">
-              <span class="m-label">Jumlah Pembandingan</span>
+              <span class="m-label">Pembandingan</span>
               <strong id="metricComparisons" class="m-val cyan">0</strong>
             </div>
             <div class="metric-box">
-              <span class="m-label">Jumlah Pertukaran</span>
+              <span class="m-label">Pertukaran</span>
               <strong id="metricSwaps" class="m-val gold">0</strong>
+            </div>
+            <div class="metric-box error-metric-box">
+              <span class="m-label">Kesalahan Siswa</span>
+              <strong id="metricErrors" class="m-val rose">0</strong>
+            </div>
+            <div class="metric-box">
+              <span class="m-label">Akurasi Teknik</span>
+              <strong id="metricAccuracy" class="m-val emerald">100%</strong>
             </div>
             <div class="metric-box">
               <span class="m-label">Status Akhir</span>
-              <strong id="metricStatus" class="m-val status-wait">Belum Selesai</strong>
+              <strong id="metricStatus" class="m-val status-wait">Dalam Praktik</strong>
             </div>
           </div>
 
@@ -627,15 +607,24 @@
             <div><span>Kondisi Saat Ini:</span> <code id="summaryCurrent">[2, 3, 7, 6, 5]</code></div>
           </div>
 
-          <!-- Jejak Iterasi Langsung -->
+          <!-- Panel Khusus: Catatan Kesalahan Iterasi / Teknik Sorting Siswa -->
+          <div class="error-log-container">
+            <div class="error-log-header">
+              <span>&#9888;&#65039; Catatan Kesalahan Iterasi / Teknik Siswa (<strong id="errorCountBadge">0</strong>)</span>
+              <button class="btn-mini-clear" onclick="clearErrorLog()">Bersihkan</button>
+            </div>
+            <ul id="studentErrorLog" class="student-error-log">
+              <li class="no-err-item">&#10004; Belum ada kesalahan teknik yang tercatat pada sesi ini.</li>
+            </ul>
+          </div>
+
+          <!-- Jejak Langkah Benar & Iterasi -->
           <div class="log-container">
             <div class="log-header">
-              <span>Jejak Langkah &amp; Iterasi</span>
+              <span>&#128221; Jejak Langkah &amp; Iterasi</span>
               <button class="btn-mini-clear" onclick="clearStepLog()">Bersihkan Log</button>
             </div>
-            <ul id="simStepLog" class="sim-step-log">
-              <li>Siap menjalankan simulasi. Pilih langkah atau klik elemen.</li>
-            </ul>
+            <ul id="simStepLog" class="sim-step-log"></ul>
           </div>
 
           <!-- Tombol Catat Data & Verifikasi -->
@@ -643,18 +632,18 @@
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            <span>Catat Data &amp; Verifikasi Misi</span>
+            <span>Catat Data (Beserta Rekap Kesalahan) &amp; Verifikasi</span>
           </button>
           <div id="verifyFeedbackBox" class="verify-feedback hidden"></div>
         </div>
       </div>
 
-      <!-- Bagian Bawah: Tabel Data Hasil Percobaan -->
+      <!-- Bagian Bawah: Tabel Data Hasil Percobaan & Rekap Kesalahan -->
       <div class="glass-panel experiment-table-panel">
         <div class="et-header">
           <div>
-            <span class="mini-label">REKAPITULASI EKSPERIMEN SISWA (OTOMATIS TERCANTUM DI PDF LKPD)</span>
-            <h3>Tabel Data Hasil Percobaan</h3>
+            <span class="mini-label">REKAPITULASI EKSPERIMEN &amp; KESALAHAN TEKNIK SISWA (OTOMATIS TERCANTUM DI PDF LKPD)</span>
+            <h3>Tabel Data Hasil Percobaan &amp; Diagnostik Kesalahan</h3>
           </div>
           <button class="btn-danger-outline" onclick="clearExperimentTable()">Hapus Semua Data</button>
         </div>
@@ -663,18 +652,20 @@
             <thead>
               <tr>
                 <th>No</th>
-                <th>Algoritma / Mode</th>
-                <th>Data Awal / Ruang Cari</th>
-                <th>Hasil Akhir / Temuan</th>
-                <th>Jml Iterasi</th>
-                <th>Jml Pembandingan</th>
-                <th>Jml Pertukaran</th>
-                <th>Status</th>
+                <th>Teknik / Mode</th>
+                <th>Data Awal</th>
+                <th>Hasil Akhir</th>
+                <th>Iterasi</th>
+                <th>Banding</th>
+                <th>Tukar</th>
+                <th>Jml Kesalahan</th>
+                <th>Akurasi</th>
+                <th>Rincian Kesalahan Iterasi / Teknik Siswa</th>
               </tr>
             </thead>
             <tbody id="experimentTableBody">
               <tr class="empty-row">
-                <td colspan="8">Belum ada data percobaan yang dicatat. Jalankan simulasi di atas lalu klik <strong>"Catat Data &amp; Verifikasi Misi"</strong>.</td>
+                <td colspan="10">Belum ada data percobaan yang dicatat. Lakukan praktik sorting di atas lalu klik <strong>"Catat Data &amp; Verifikasi"</strong>.</td>
               </tr>
             </tbody>
           </table>
@@ -688,64 +679,64 @@
     <section id="view-prosedur" class="view">
       <div class="view-header">
         <span class="section-badge">PANDUAN KERJA LABORATORIUM VIRTUAL</span>
-        <h2>7 Langkah Prosedur Praktikum Searching &amp; Sorting</h2>
-        <p>Ikuti tahapan berurutan berikut agar seluruh misi praktikum dan laporan LKPD PDF Anda tuntas dengan akurat.</p>
+        <h2>7 Langkah Prosedur Praktikum &amp; Evaluasi Kesalahan</h2>
+        <p>Ikuti tahapan berurutan berikut untuk mempraktikkan teknik sorting dan merekap diagnostik kesalahan ke laporan PDF.</p>
       </div>
 
       <div class="procedure-list">
         <div class="proc-card">
           <div class="proc-num">1</div>
           <div class="proc-body">
-            <h3>Pelajari Konsep Elemen Pencarian &amp; 3 Algoritma Pengurutan di Menu Teori</h3>
-            <p>Buka menu <strong>Teori</strong> untuk memahami 3 elemen masalah pencarian (sekumpulan objek, kriteria, pengecekan) serta cara kerja <em>Bubble Sort</em>, <em>Insertion Sort</em>, dan <em>Selection Sort</em> pada deret acuan <code>[2, 3, 7, 6, 5]</code>.</p>
+            <h3>Pelajari Aturan Bubble, Insertion, dan Selection Sort di Menu Teori</h3>
+            <p>Buka menu <strong>Teori</strong> untuk memahami perbedaan aturan perbandingan berdekatan (<em>Bubble Sort</em>), penyisipan kartu mundur ke kiri (<em>Insertion Sort</em>), dan pemilihan nilai terkecil (<em>Selection Sort</em>).</p>
           </div>
         </div>
 
         <div class="proc-card">
           <div class="proc-num">2</div>
           <div class="proc-body">
-            <h3>Pilih Skenario Misi Berjenjang di Bagian Atas Menu Simulasi</h3>
-            <p>Masuk ke menu <strong>Simulasi</strong> dan klik tombol <strong>Misi 1</strong> hingga <strong>Misi 5</strong> secara bertahap. Setiap misi menampilkan instruksi spesifik pada kotak panduan misi.</p>
+            <h3>Aktifkan "Mode Praktik Siswa" pada Meja Kerja Simulasi</h3>
+            <p>Masuk ke menu <strong>Simulasi</strong> dan pastikan tombol <strong>Mode Praktik Siswa (Validasi &amp; Catat Kesalahan)</strong> aktif agar Anda dapat mengendalikan sendiri keputusan di setiap iterasi.</p>
           </div>
         </div>
 
         <div class="proc-card">
           <div class="proc-num">3</div>
           <div class="proc-body">
-            <h3>Atur Algoritma dan Preset Deret Bilangan pada Meja Kerja</h3>
-            <p>Pilih mode <em>Pencarian (Searching)</em> atau salah satu algoritma pengurutan (<em>Bubble Sort</em>, <em>Insertion Sort</em>, <em>Selection Sort</em>) beserta preset data uji seperti <code>[2, 3, 7, 6, 5]</code> atau <code>[9, 7, 5, 3, 1]</code>.</p>
+            <h3>Pilih Misi Berjenjang (Misi 1 s.d. Misi 5)</h3>
+            <p>Klik tombol <strong>Misi 1</strong> hingga <strong>Misi 5</strong> di bagian atas layar simulasi. Sistem akan menyiapkan teknik algoritma dan deret uji yang sesuai.</p>
           </div>
         </div>
 
         <div class="proc-card">
           <div class="proc-num">4</div>
           <div class="proc-body">
-            <h3>Jalankan Eksekusi Langkah demi Langkah atau Praktikkan Pertukaran Manual</h3>
-            <p>Tekan tombol <strong>Langkah Berikutnya</strong> untuk mengamati proses pembandingan dan pertukaran secara rinci per iterasi, tekan <strong>Jalankan Otomatis</strong>, atau klik langsung elemen pada layar untuk menukar posisi secara manual.</p>
+            <h3>Lakukan Teknik Sorting Sesuai Instruksi Iterasi Aktif</h3>
+            <p>Pada <em>Bubble Sort</em>, putuskan apakah pasangan elemen yang disorot harus <strong>Ditukar</strong> atau <strong>Tetap</strong>. Pada <em>Insertion Sort</em>, geser kartu ke kiri hingga posisinya tepat. Pada <em>Selection Sort</em>, klik langsung bilangan terkecil dari <em>Bagian Belum Terurut</em>.</p>
           </div>
         </div>
 
         <div class="proc-card">
           <div class="proc-num">5</div>
           <div class="proc-body">
-            <h3>Amati Telemetri Jumlah Iterasi, Pembandingan, dan Pertukaran</h3>
-            <p>Perhatikan panel kanan untuk mencatat berapa kali algoritma melakukan <em>pembandingan</em> dua bilangan dan berapa kali terjadi <em>pertukaran</em> posisi hingga seluruh elemen berstatus <strong>Terurut / Ditemukan</strong>.</p>
+            <h3>Perhatikan Umpan Balik &amp; Catatan Kesalahan Iterasi/Teknik Siswa</h3>
+            <p>Apabila Anda mengambil langkah yang melanggar aturan algoritma, sistem akan mengeluarkan bunyi peringatan dan mencatat rincian kesalahan tersebut pada panel <strong>Catatan Kesalahan Iterasi / Teknik Siswa</strong>.</p>
           </div>
         </div>
 
         <div class="proc-card">
           <div class="proc-num">6</div>
           <div class="proc-body">
-            <h3>Tekan Tombol "Catat Data &amp; Verifikasi Misi"</h3>
-            <p>Setiap kali satu percobaan selesai, klik tombol <strong>Catat Data &amp; Verifikasi Misi</strong> agar hasil eksperimen masuk ke dalam <strong>Tabel Data Hasil Percobaan</strong> di bagian bawah layar dan menandai misi tuntas.</p>
+            <h3>Tekan Tombol "Catat Data (Beserta Rekap Kesalahan) &amp; Verifikasi"</h3>
+            <p>Setelah deret terurut menaik, klik tombol hijau untuk menyimpan jumlah iterasi, pembandingan, pertukaran, jumlah kesalahan, persentase akurasi, dan rincian kesalahan Anda ke dalam <strong>Tabel Data Hasil Percobaan</strong>.</p>
           </div>
         </div>
 
         <div class="proc-card">
           <div class="proc-num">7</div>
           <div class="proc-body">
-            <h3>Lengkapi 10 Soal di Menu LKPD dan Unduh Laporan PDF A4</h3>
-            <p>Buka menu <strong>LKPD</strong>, isi Nama Lengkap dan Kelas, jawab soal Bagian A, uji ketepatan konsep pada Bagian B dengan tombol <strong>Cek</strong>, lengkapi kesimpulan Bagian C, lalu tekan <strong>Ubah ke PDF</strong>.</p>
+            <h3>Jawab 10 Soal di Menu LKPD dan Unduh Laporan PDF A4</h3>
+            <p>Buka menu <strong>LKPD</strong>, lengkapi identitas dan 10 soal evaluasi, lalu klik <strong>Ubah ke PDF</strong>. Seluruh tabel percobaan beserta rekap kesalahan teknik Anda akan tercetak rapi di dalam dokumen PDF.</p>
           </div>
         </div>
       </div>
@@ -758,10 +749,9 @@
       <div class="view-header">
         <span class="section-badge">LEMBAR KERJA PESERTA DIDIK (LKPD) DIGITAL</span>
         <h2>Evaluasi Praktikum Algoritma Pencarian &amp; Pengurutan</h2>
-        <p>Seluruh jawaban Anda beserta Tabel Data Hasil Percobaan dari menu Simulasi akan disertakan otomatis ke dalam dokumen PDF.</p>
+        <p>Seluruh jawaban Anda beserta Tabel Data Hasil Percobaan dan Rekap Kesalahan Teknik Siswa dari menu Simulasi akan disertakan otomatis ke dalam PDF.</p>
       </div>
 
-      <!-- Identitas Siswa -->
       <div class="glass-panel lkpd-identity">
         <div class="id-field">
           <label for="studentName">Nama Lengkap Siswa:</label>
@@ -777,7 +767,7 @@
       <div class="glass-panel lkpd-section">
         <div class="lkpd-sec-header">
           <span class="sec-pill">BAGIAN A</span>
-          <h3>Analisis Data Percobaan (Soal Esai 1–4)</h3>
+          <h3>Analisis Data Percobaan &amp; Evaluasi Kesalahan (Soal Esai 1–4)</h3>
         </div>
 
         <div class="q-item">
@@ -786,22 +776,22 @@
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q2">2. Berdasarkan hasil percobaan algoritma Bubble Sort pada deret [2, 3, 7, 6, 5], jelaskan apa yang terjadi pada Iterasi Pertama (4 kali perbandingan) dan Iterasi Kedua (3 kali perbandingan)! Mengapa pada Iterasi Ketiga dan Keempat tidak terjadi pertukaran lagi?</label>
+          <label for="lkpd_q2">2. Berdasarkan praktik Bubble Sort pada deret [2, 3, 7, 6, 5], jelaskan apa yang terjadi pada Iterasi Pertama (4 kali perbandingan) dan Iterasi Kedua (3 kali perbandingan)! Mengapa pada Iterasi Ketiga dan Keempat tidak boleh dilakukan pertukaran lagi?</label>
           <textarea id="lkpd_q2" rows="3" placeholder="Uraikan perubahan urutan deret [2, 3, 7, 6, 5] pada Iterasi 1 hingga Iterasi 4..."></textarea>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q3">3. Pada algoritma Insertion Sort untuk deret kartu [2, 3, 7, 6, 5], jelaskan bagaimana proses penyisipan kartu bernilai 6 pada Iterasi Ketiga dan kartu bernilai 5 pada Iterasi Keempat hingga deret menjadi terurut!</label>
+          <label for="lkpd_q3">3. Pada praktik Insertion Sort untuk deret kartu [2, 3, 7, 6, 5], jelaskan proses penyisipan kartu 6 pada Iterasi Ketiga dan kartu 5 pada Iterasi Keempat! Kesalahan apa yang sering terjadi saat menyisipkan kartu ke sebelah kiri?</label>
           <textarea id="lkpd_q3" rows="3" placeholder="Jelaskan perbandingan mundur ke kiri saat menyisipkan kartu 6 dan kartu 5..."></textarea>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q4">4. Pada algoritma Selection Sort untuk deret (2, 3, 7, 6, 5), bagaimana perubahan isi "Bagian Terurut" dan "Bagian yang Belum Terurut" dari awal hingga selesai? Nilai terkecil apa saja yang diseleksi di setiap tahap?</label>
-          <textarea id="lkpd_q4" rows="3" placeholder="Tuliskan tahapan perubahan Bagian Terurut () hingga (2,3,5,6,7)..."></textarea>
+          <label for="lkpd_q4">4. Pada praktik Selection Sort untuk deret (2, 3, 7, 6, 5), bagaimana perubahan isi "Bagian Terurut" dan "Bagian yang Belum Terurut" dari awal hingga selesai? Evaluasilah apakah Anda sempat melakukan kesalahan memilih nilai terkecil selama simulasi!</label>
+          <textarea id="lkpd_q4" rows="3" placeholder="Tuliskan tahapan perubahan Bagian Terurut () hingga (2,3,5,6,7) beserta refleksi praktik Anda..."></textarea>
         </div>
       </div>
 
-      <!-- BAGIAN B: Ketepatan Konsep & Diagnostik (Soal 5-8 dengan tombol Cek) -->
+      <!-- BAGIAN B: Ketepatan Konsep & Diagnostik (Soal 5-8) -->
       <div class="glass-panel lkpd-section">
         <div class="lkpd-sec-header">
           <span class="sec-pill cyan-pill">BAGIAN B</span>
@@ -836,7 +826,7 @@
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q8">8. Pada tabel <em>Selection Sort</em> untuk deret <code>(2, 3, 7, 6, 5)</code>, ketika Bagian Terurut berisi <code>(2, 3)</code> dan Bagian yang Belum Terurut berisi <code>(7, 6, 5)</code>, berapakah <strong>Nilai Terkecil</strong> yang diseleksi dari bagian belum terurut tersebut?</label>
+          <label for="lkpd_q8">8. Pada tabel <em>Selection Sort</em> untuk deret <code>(2, 3, 7, 6, 5)</code>, ketika Bagian Terurut berisi <code>(2, 3)</code> dan Bagian yang Belum Terurut berisi <code>(7, 6, 5)</code>, berapakah <strong>Nilai Terkecil</strong> yang wajib diseleksi dari bagian belum terurut tersebut?</label>
           <div class="diag-row">
             <input type="text" id="lkpd_q8" placeholder="Ketik angka nilai terkecil..." />
             <button class="btn-check" onclick="checkDiagnostic(8)">Cek</button>
@@ -853,12 +843,12 @@
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q9">9. Bandingkan hasil percobaan Anda pada deret yang hampir terurut <code>[2, 3, 7, 6, 5]</code> dengan deret terbalik <code>[9, 7, 5, 3, 1]</code>! Mengapa algoritma Insertion Sort membutuhkan jauh lebih sedikit perbandingan pada data yang hampir terurut dibandingkan Bubble Sort dan Selection Sort?</label>
+          <label for="lkpd_q9">9. Bandingkan hasil praktik Anda pada deret yang hampir terurut <code>[2, 3, 7, 6, 5]</code> dengan deret terbalik <code>[9, 7, 5, 3, 1]</code>! Mengapa algoritma Insertion Sort membutuhkan jauh lebih sedikit perbandingan pada data yang hampir terurut dibandingkan Bubble Sort dan Selection Sort?</label>
           <textarea id="lkpd_q9" rows="3" placeholder="Tuliskan analisis perbandingan efisiensi ketiga algoritma..."></textarea>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q10">10. Buatlah kesimpulan akhir dari praktikum ini mengenai hubungan antara Pengurutan (Sorting) dan Pencarian (Searching), serta pedoman memilih algoritma pengurutan yang tepat untuk menyelesaikan masalah di kehidupan sehari-hari!</label>
+          <label for="lkpd_q10">10. Buatlah kesimpulan akhir dari praktikum ini mengenai hubungan antara Pengurutan (Sorting) dan Pencarian (Searching), serta pelajaran yang Anda peroleh dari catatan kesalahan iterasi/teknik selama menjalankan simulasi!</label>
           <textarea id="lkpd_q10" rows="3" placeholder="Tuliskan kesimpulan menyeluruh hasil praktikum Anda..."></textarea>
         </div>
 
@@ -869,7 +859,7 @@
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
-            <span>Ubah ke PDF (Unduh Laporan LKPD A4)</span>
+            <span>Ubah ke PDF (Unduh Laporan LKPD &amp; Diagnostik Kesalahan)</span>
           </button>
         </div>
       </div>
@@ -909,21 +899,20 @@
         </div>
       </div>
 
-      <!-- 3 Kartu Tentang Lab Maya -->
       <div class="about-lab-grid">
         <div class="glass-panel about-card">
           <div class="about-icon">&#9881;&#65039;</div>
           <h3>Teknologi</h3>
           <p>
-            Dibangun menggunakan arsitektur web modern berbasis <strong>HTML5 Semantik</strong>, <strong>CSS3 Glassmorphism Responsif</strong>, <strong>Canvas 2D Particle Engine</strong>, synthesizer murni <strong>Web Audio API</strong> (tanpa ketergantungan berkas audio eksternal), serta integrasi <strong>jsPDF 2.5.1</strong> untuk pembuatan dokumen laporan praktikum otomatis.
+            Dibangun menggunakan arsitektur web modern berbasis <strong>HTML5 Semantik</strong>, <strong>CSS3 Glassmorphism Responsif</strong>, <strong>Canvas 2D Particle Engine</strong>, synthesizer murni <strong>Web Audio API</strong>, mesin validator langkah algoritmik, serta integrasi <strong>jsPDF 2.5.1</strong>.
           </p>
         </div>
 
         <div class="glass-panel about-card">
           <div class="about-icon">&#128300;</div>
-          <h3>Fitur Lab</h3>
+          <h3>Fitur Lab &amp; Diagnostik</h3>
           <p>
-            Menyediakan 7 layar terintegrasi: Splash Screen statis berfokus visual, animasi inisialisasi komponen, referensi teori interaktif sesuai buku teks Kemendikbudristek, simulator <em>Searching</em> &amp; 3 metode <em>Sorting</em> (otomatis, per langkah, dan pertukaran manual), rekap tabel data percobaan, serta pemeriksaan diagnostik LKPD instan.
+            Menyediakan <strong>Mode Praktik Mandiri Siswa</strong> untuk menguji ketepatan pelaksanaan *Bubble Sort*, *Insertion Sort*, dan *Selection Sort* per iterasi, mendeteksi kesalahan langkah siswa secara *real-time*, serta mencatat rincian kesalahan tersebut ke Tabel Percobaan dan PDF.
           </p>
         </div>
 
@@ -931,14 +920,14 @@
           <div class="about-icon">&#127891;</div>
           <h3>Capaian Pembelajaran</h3>
           <p>
-            Memfasilitasi peserta didik Fase E (Kelas X SMA/MA/SMK) pada elemen <strong>Berpikir Komputasional (BK)</strong> dan <strong>Algoritma &amp; Pemrograman (AP)</strong> untuk menerapkan strategi algoritmik standar pada kehidupan sehari-hari maupun implementasi dalam program komputer melalui pencarian (<em>searching</em>) dan pengurutan (<em>sorting</em>).
+            Memfasilitasi peserta didik Fase E (Kelas X SMA/MA/SMK) pada elemen <strong>Berpikir Komputasional (BK)</strong> dan <strong>Algoritma &amp; Pemrograman (AP)</strong> untuk menerapkan strategi algoritmik standar melalui pencarian (<em>searching</em>) dan pengurutan (<em>sorting</em>).
           </p>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Tombol Melayang Audio Synthesizer (Pojok Kiri Bawah) -->
+  <!-- Tombol Melayang Audio Synthesizer -->
   <div class="floating-audio-controls" aria-label="Kontrol Suara Lab">
     <button id="btnToggleSfx" class="audio-fab active" onclick="toggleSfx()" title="Efek Suara (SFX) Aktif/Nonaktif">
       <span id="sfxIcon">&#128266;</span>
