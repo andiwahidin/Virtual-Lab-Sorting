@@ -1,6 +1,6 @@
 /**
  * LAB MAYA ALGORITMA PENCARIAN (SEARCHING) & PENGURUTAN (SORTING)
- * Dilengkapi Mode Praktik Mandiri Siswa & Validator Kesalahan Iterasi/Teknik
+ * Penilaian & Pencatatan Khusus Mode Aktivitas Siswa (Mode Demonstrasi Tidak Dicatat)
  * Pengembang: Andi Wahidin Burhanuddin — SMA Negeri 12 Wajo
  */
 
@@ -20,6 +20,21 @@ function debugError(moduleName, err) {
   console.error(`[LabMaya][ERROR][${moduleName}]`, err);
 }
 
+function setTextSafe(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+function setHTMLSafe(id, html) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = html;
+}
+
+function toggleClassSafe(id, className, force) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle(className, force);
+}
+
 /* =====================================================
    1. WEB AUDIO API SYNTHESIZER
    ===================================================== */
@@ -32,9 +47,9 @@ function initAudioContext() {
   try {
     if (!audioCtx) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioCtx();
+      if (AudioCtx) audioCtx = new AudioCtx();
     }
-    if (audioCtx.state === 'suspended') {
+    if (audioCtx && audioCtx.state === 'suspended') {
       audioCtx.resume();
     }
   } catch (err) {
@@ -62,61 +77,39 @@ function playTone(freq = 440, type = 'sine', duration = 0.12, gainLevel = 0.08) 
   }
 }
 
-function sfxClick() {
-  playTone(580, 'triangle', 0.08, 0.07);
-}
-
-function sfxCompare() {
-  playTone(510, 'sine', 0.1, 0.06);
-}
-
+function sfxClick() { playTone(580, 'triangle', 0.08, 0.07); }
+function sfxCompare() { playTone(510, 'sine', 0.1, 0.06); }
 function sfxSwap() {
   playTone(360, 'sawtooth', 0.11, 0.06);
   setTimeout(() => playTone(680, 'triangle', 0.14, 0.07), 65);
 }
-
 function sfxSuccess() {
-  const notes = [523.25, 659.25, 783.99, 1046.5];
-  notes.forEach((n, idx) => {
+  [523.25, 659.25, 783.99, 1046.5].forEach((n, idx) => {
     setTimeout(() => playTone(n, 'triangle', 0.18, 0.09), idx * 85);
   });
 }
-
 function sfxError() {
-  playTone(195, 'sawtooth', 0.26, 0.11);
+  playTone(195, 'sawtooth', 0.25, 0.11);
   setTimeout(() => playTone(165, 'sawtooth', 0.24, 0.1), 110);
 }
 
 function toggleSfx() {
   sfxEnabled = !sfxEnabled;
-  const btn = document.getElementById('btnToggleSfx');
-  const icon = document.getElementById('sfxIcon');
-  btn.classList.toggle('active', sfxEnabled);
-  icon.innerHTML = sfxEnabled ? '&#128266;' : '&#128263;';
+  toggleClassSafe('btnToggleSfx', 'active', sfxEnabled);
+  setHTMLSafe('sfxIcon', sfxEnabled ? '&#128266;' : '&#128263;');
   if (sfxEnabled) sfxClick();
 }
 
 function toggleBgm() {
   initAudioContext();
   bgmEnabled = !bgmEnabled;
-  const btn = document.getElementById('btnToggleBgm');
-  btn.classList.toggle('active', bgmEnabled);
-
+  toggleClassSafe('btnToggleBgm', 'active', bgmEnabled);
   if (bgmEnabled) {
     const arpeggio = [261.63, 329.63, 392.0, 493.88, 392.0, 329.63];
     let step = 0;
     bgmInterval = setInterval(() => {
       if (!bgmEnabled || !audioCtx) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(arpeggio[step % arpeggio.length], audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.025, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.42);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.44);
+      playTone(arpeggio[step % arpeggio.length], 'sine', 0.4, 0.025);
       step++;
     }, 480);
   } else {
@@ -141,13 +134,13 @@ function initBackgroundCanvas() {
   });
 
   const symbols = ['0', '1', '[2]', '[3]', '[5]', '[6]', '[7]', 'A>B', 'swap()'];
-  const particles = Array.from({ length: 34 }, () => ({
+  const particles = Array.from({ length: 28 }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 0.42,
-    vy: (Math.random() - 0.5) * 0.42,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
     label: symbols[Math.floor(Math.random() * symbols.length)],
-    size: 11 + Math.random() * 4
+    size: 11 + Math.random() * 3
   }));
 
   function draw() {
@@ -158,23 +151,9 @@ function initBackgroundCanvas() {
       p.y += p.vy;
       if (p.x < 0 || p.x > width) p.vx *= -1;
       if (p.y < 0 || p.y > height) p.vy *= -1;
-
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.22)';
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.2)';
       ctx.font = `bold ${p.size}px monospace`;
       ctx.fillText(p.label, p.x, p.y);
-
-      for (let j = i + 1; j < particles.length; j++) {
-        const q = particles[j];
-        const dist = Math.hypot(p.x - q.x, p.y - q.y);
-        if (dist < 130) {
-          ctx.strokeStyle = `rgba(250, 204, 21, ${0.08 * (1 - dist / 130)})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(q.x, q.y);
-          ctx.stroke();
-        }
-      }
     }
     requestAnimationFrame(draw);
   }
@@ -189,45 +168,39 @@ function startLabFromSplash() {
   sfxClick();
   const overlay = document.getElementById('loadingOverlay');
   const bar = document.getElementById('loadingBar');
-  const pctText = document.getElementById('loadingPercentText');
-  const stepText = document.getElementById('loadingStepText');
   const nodes = document.querySelectorAll('.load-node');
 
-  overlay.classList.add('active');
+  if (overlay) overlay.classList.add('active');
   let progress = 0;
-
   const messages = [
     'Mengalokasikan ruang pencarian & memori array...',
     'Menyiapkan validator teknik Bubble Sort [2, 3, 7, 6, 5]...',
     'Mengaktifkan pendeteksi penyisipan kartu Insertion Sort...',
     'Mengkalibrasi seleksi nilai minimum Selection Sort...',
-    'Menghubungkan pencatat kesalahan siswa ke laporan PDF...'
+    'Menghubungkan pencatat aktivitas siswa ke laporan PDF...'
   ];
 
   const timer = setInterval(() => {
-    progress += 4;
+    progress += 5;
     if (progress > 100) progress = 100;
-    bar.style.width = `${progress}%`;
-    pctText.textContent = `${progress}%`;
-
+    if (bar) bar.style.width = `${progress}%`;
+    setTextSafe('loadingPercentText', `${progress}%`);
     const stageIdx = Math.min(Math.floor(progress / 21), 4);
-    stepText.textContent = messages[stageIdx];
+    setTextSafe('loadingStepText', messages[stageIdx]);
     nodes.forEach((n, idx) => {
       if (idx <= stageIdx) n.classList.add('lit');
     });
-
-    if (progress % 20 === 0) playTone(420 + progress * 3, 'sine', 0.06, 0.04);
 
     if (progress >= 100) {
       clearInterval(timer);
       sfxSuccess();
       setTimeout(() => {
-        overlay.classList.remove('active');
-        document.getElementById('mainHeader').classList.remove('hidden');
+        if (overlay) overlay.classList.remove('active');
+        toggleClassSafe('mainHeader', 'hidden', false);
         navigateTo('home');
-      }, 300);
+      }, 250);
     }
-  }, 45);
+  }, 40);
 }
 
 function navigateTo(viewName) {
@@ -241,6 +214,12 @@ function navigateTo(viewName) {
   document.querySelectorAll('.nav-btn').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.target === viewName);
   });
+
+  if (viewName === 'simulasi') {
+    syncPracticeHighlightsAndPrompt();
+    renderSimulationStage();
+  }
+  debugLog('Navigasi', `Berpindah ke layar: ${viewName}`);
 }
 
 function playCardClickEffect(el) {
@@ -259,73 +238,69 @@ function switchTheoryTab(tabKey, btnEl) {
 }
 
 /* =====================================================
-   4. MESIN PRAKTIK SORTING SISWA & PENCATAT KESALAHAN
+   4. MESIN AKTIVITAS SORTING SISWA & VALIDATOR KESALAHAN
    ===================================================== */
-let currentMission = 1;
+let currentMission = 2;
 const completedMissions = new Set();
-const experimentRecords = [];
+const experimentRecords = []; // Hanya menyimpan hasil Mode Aktivitas Siswa
 
 let simState = {
-  executionMode: 'practice', // 'practice' (siswa melakukan sendiri) atau 'demo'
+  executionMode: 'practice', // 'practice' = Mode Aktivitas Siswa (Dinilai) | 'demo' = Mode Demonstrasi (Tidak Dicatat)
   algo: 'bubble',
   initialArray: [2, 3, 7, 6, 5],
   currentArray: [2, 3, 7, 6, 5],
-
-  // Telemetri & Pencatat Kesalahan Siswa
   iterations: 1,
   comparisons: 0,
   swaps: 0,
   correctActions: 0,
   errorCount: 0,
-  errorList: [], // Menyimpan objek { iter, type, detail }
+  errorList: [],
   finished: false,
-
-  // State Khusus Praktik Mandiri Bubble Sort
-  bubblePass: 1, // Iterasi 1 .. n-1
-  bubbleJ: 0,    // Indeks pasangan j dan j+1 yang sedang dibandingkan
-
-  // State Khusus Praktik Mandiri Insertion Sort
-  insertionIter: 1, // Iterasi 1 .. n-1 (mengambil kartu ke-insertionIter)
-  insertionCursor: 1, // Posisi kartu yang sedang disisipkan ke kiri
-
-  // State Khusus Praktik Mandiri Selection Sort
-  selectionI: 0, // Batas awal Bagian Belum Terurut (Iterasi = selectionI + 1)
-
-  // State Khusus Searching
+  bubblePass: 1,
+  bubbleJ: 0,
+  insertionIter: 1,
+  insertionCursor: 1,
+  selectionI: 0,
   searchCursor: 0,
-
-  // Visual Highlight
-  activeCompareIndices: [],
+  activeCompareIndices: [0, 1],
   activeCardIndex: null,
   activeSwapIndices: [],
   sortedIndices: [],
   wrongShakeIndices: [],
   partitionInfo: { sorted: '()', unsorted: '(2, 3, 7, 6, 5)', minVal: '-' },
-
-  // Antrean untuk Mode Demo Otomatis
   stepsQueue: [],
   stepPointer: 0,
   autoTimer: null
 };
 
 const missionDescriptions = {
-  1: '<strong>Target Misi 1 (Praktik Pencarian / Searching):</strong> Pilih mode <em>Searching</em>, periksa elemen dari kiri ke kanan dengan mengklik elemen sesuai urutan hingga angka target ditemukan, lalu klik <strong>Catat Data &amp; Verifikasi</strong>.',
-  2: '<strong>Target Misi 2 (Praktik Mandiri Bubble Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Praktik Siswa</em>, lakukan perbandingan berdekatan pada deret <code>[2, 3, 7, 6, 5]</code> dengan menekan tombol <strong>Tukar Posisi</strong> atau <strong>Urutan Tetap</strong> hingga selesai, lalu klik <strong>Catat Data &amp; Verifikasi</strong>.',
-  3: '<strong>Target Misi 3 (Praktik Mandiri Insertion Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Praktik Siswa</em>, sisipkan kartu ke-(i+1) pada deret <code>[2, 3, 7, 6, 5]</code> menggunakan tombol <strong>Tukar ke Kiri</strong> atau <strong>Posisi Sudah Tepat</strong>, lalu klik <strong>Catat Data &amp; Verifikasi</strong>.',
-  4: '<strong>Target Misi 4 (Praktik Mandiri Selection Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Praktik Siswa</em>, klik langsung <strong>bilangan terkecil</strong> pada <em>Bagian Belum Terurut</em> di setiap iterasi hingga selesai, lalu klik <strong>Catat Data &amp; Verifikasi</strong>.',
-  5: '<strong>Target Misi 5 (Praktik Sorting Data Terbalik [9, 7, 5, 3, 1]):</strong> Pilih preset <code>[9, 7, 5, 3, 1]</code> dan selesaikan pengurutan menggunakan salah satu teknik (Bubble / Insertion / Selection), lalu klik <strong>Catat Data &amp; Verifikasi</strong>.'
+  1: '<strong>Target Misi 1 (Aktivitas Pencarian / Searching):</strong> Pastikan berada di <em>Mode Aktivitas Siswa</em>, klik elemen secara berurutan dari kiri ke kanan hingga angka target ditemukan, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
+  2: '<strong>Target Misi 2 (Aktivitas Mandiri Bubble Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, bandingkan pasangan berdekatan pada deret <code>[2, 3, 7, 6, 5]</code> dengan menekan tombol <strong>Tukar Posisi</strong> atau <strong>Urutan Tetap</strong> hingga selesai, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
+  3: '<strong>Target Misi 3 (Aktivitas Mandiri Insertion Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, sisipkan kartu ke-(i+1) pada deret <code>[2, 3, 7, 6, 5]</code> menggunakan tombol <strong>Tukar ke Kiri</strong> atau <strong>Posisi Sudah Tepat</strong> hingga selesai, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
+  4: '<strong>Target Misi 4 (Aktivitas Mandiri Selection Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, klik langsung <strong>bilangan terkecil</strong> pada <em>Bagian Belum Terurut</em> di setiap iterasi hingga selesai, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
+  5: '<strong>Target Misi 5 (Aktivitas Sorting Data Terbalik [9, 7, 5, 3, 1]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, selesaikan pengurutan deret terbalik <code>[9, 7, 5, 3, 1]</code> lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.'
 };
 
 function setExecutionMode(mode) {
   sfxClick();
   simState.executionMode = mode;
-  document.getElementById('modeBtnPractice').classList.toggle('active', mode === 'practice');
-  document.getElementById('modeBtnDemo').classList.toggle('active', mode === 'demo');
+  const isPractice = mode === 'practice';
 
-  document.getElementById('practiceDecisionPanel').classList.toggle('hidden', mode !== 'practice');
-  document.getElementById('btnStep').classList.toggle('hidden', mode !== 'demo');
-  document.getElementById('btnAuto').classList.toggle('hidden', mode !== 'demo');
-  document.getElementById('speedControlWrap').classList.toggle('hidden', mode !== 'demo');
+  toggleClassSafe('modeBtnPractice', 'active', isPractice);
+  toggleClassSafe('modeBtnDemo', 'active', !isPractice);
+  toggleClassSafe('practiceDecisionPanel', 'hidden', !isPractice);
+  toggleClassSafe('btnStep', 'hidden', isPractice);
+  toggleClassSafe('btnAuto', 'hidden', isPractice);
+  toggleClassSafe('speedControlWrap', 'hidden', isPractice);
+
+  // Kunci tampilan tombol pencatatan saat di Mode Demonstrasi
+  toggleClassSafe('btnRecordVerify', 'locked-demo', !isPractice);
+  setTextSafe(
+    'btnRecordVerifyText',
+    isPractice
+      ? 'Catat Aktivitas Siswa & Verifikasi Misi'
+      : '🔒 Pencatatan Nonaktif di Mode Demonstrasi (Khusus Mode Aktivitas Siswa)'
+  );
 
   resetSimulationState();
   debugLog('Mode', `Mode eksekusi diubah ke: ${mode}`);
@@ -337,33 +312,26 @@ function selectMission(mNum) {
   document.querySelectorAll('.mission-btn').forEach((btn) => {
     btn.classList.toggle('active', Number(btn.dataset.mission) === mNum);
   });
-  document.getElementById('missionStatusBadge').textContent = `Misi Aktif: #${mNum}`;
-  document.getElementById('missionInstructionBox').innerHTML = missionDescriptions[mNum];
+  setTextSafe('missionStatusBadge', `Misi Aktif: #${mNum}`);
+  setHTMLSafe('missionInstructionBox', missionDescriptions[mNum] || '');
 
   const algoSelect = document.getElementById('simAlgoSelect');
   const presetSelect = document.getElementById('simPresetSelect');
-  if (mNum === 1) {
-    algoSelect.value = 'search_sorted';
-    presetSelect.value = '2,3,7,6,5';
-  } else if (mNum === 2) {
-    algoSelect.value = 'bubble';
-    presetSelect.value = '2,3,7,6,5';
-  } else if (mNum === 3) {
-    algoSelect.value = 'insertion';
-    presetSelect.value = '2,3,7,6,5';
-  } else if (mNum === 4) {
-    algoSelect.value = 'selection';
-    presetSelect.value = '2,3,7,6,5';
-  } else if (mNum === 5) {
-    algoSelect.value = 'bubble';
-    presetSelect.value = '9,7,5,3,1';
+  if (algoSelect && presetSelect) {
+    if (mNum === 1) { algoSelect.value = 'search_sorted'; presetSelect.value = '2,3,7,6,5'; }
+    else if (mNum === 2) { algoSelect.value = 'bubble'; presetSelect.value = '2,3,7,6,5'; }
+    else if (mNum === 3) { algoSelect.value = 'insertion'; presetSelect.value = '2,3,7,6,5'; }
+    else if (mNum === 4) { algoSelect.value = 'selection'; presetSelect.value = '2,3,7,6,5'; }
+    else if (mNum === 5) { algoSelect.value = 'bubble'; presetSelect.value = '9,7,5,3,1'; }
   }
   handleAlgoChange();
 }
 
 function handleAlgoChange() {
-  const algo = document.getElementById('simAlgoSelect').value;
-  document.getElementById('searchTargetWrap').style.display = algo.startsWith('search_') ? 'block' : 'none';
+  const algoEl = document.getElementById('simAlgoSelect');
+  const algo = algoEl ? algoEl.value : 'bubble';
+  const searchWrap = document.getElementById('searchTargetWrap');
+  if (searchWrap) searchWrap.style.display = algo.startsWith('search_') ? 'block' : 'none';
   resetSimulationState();
 }
 
@@ -373,7 +341,8 @@ function handlePresetChange() {
 }
 
 function getSelectedPresetArray() {
-  const val = document.getElementById('simPresetSelect').value;
+  const presetEl = document.getElementById('simPresetSelect');
+  const val = presetEl ? presetEl.value : '2,3,7,6,5';
   if (val === 'random') {
     const pool = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const picked = [];
@@ -391,13 +360,13 @@ function stopAutoPlay() {
     clearInterval(simState.autoTimer);
     simState.autoTimer = null;
   }
-  const btnAuto = document.getElementById('btnAuto');
-  if (btnAuto) btnAuto.innerHTML = '&#9654; Jalankan Demo Otomatis';
+  setHTMLSafe('btnAuto', '&#9654; Jalankan Demo Otomatis');
 }
 
 function resetSimulationState() {
   stopAutoPlay();
-  const algo = document.getElementById('simAlgoSelect').value;
+  const algoEl = document.getElementById('simAlgoSelect');
+  const algo = algoEl ? algoEl.value : 'bubble';
   let base = getSelectedPresetArray();
 
   if (algo === 'search_sorted') {
@@ -407,7 +376,6 @@ function resetSimulationState() {
   simState.algo = algo;
   simState.initialArray = [...base];
   simState.currentArray = [...base];
-
   simState.iterations = 1;
   simState.comparisons = 0;
   simState.swaps = 0;
@@ -416,7 +384,6 @@ function resetSimulationState() {
   simState.errorList = [];
   simState.finished = false;
 
-  // Reset pointer praktik mandiri
   simState.bubblePass = 1;
   simState.bubbleJ = 0;
   simState.insertionIter = 1;
@@ -435,7 +402,6 @@ function resetSimulationState() {
     minVal: '-'
   };
 
-  // Siapkan antrean demo jika siswa beralih ke mode Demo
   simState.stepsQueue = buildAlgorithmSteps(algo, base);
   simState.stepPointer = 0;
 
@@ -446,44 +412,53 @@ function resetSimulationState() {
     search_unsorted: 'TEKNIK SEARCHING — RUANG DATA ACAK',
     search_sorted: 'TEKNIK SEARCHING — RUANG DATA TERURUT'
   };
-  document.getElementById('stageModeLabel').textContent = modeLabels[algo] || 'SIMULASI';
+  setTextSafe('stageModeLabel', modeLabels[algo] || 'SIMULASI');
 
-  // Atur visibilitas tombol aksi praktik sesuai algoritma
-  document.getElementById('bubbleActionGroup').classList.toggle('hidden', algo !== 'bubble');
-  document.getElementById('insertionActionGroup').classList.toggle('hidden', algo !== 'insertion');
-  document.getElementById('clickElementHintGroup').classList.toggle(
-    'hidden',
-    algo !== 'selection' && !algo.startsWith('search_')
-  );
-  document.getElementById('selectionPartitionBox').classList.toggle('hidden', algo !== 'selection');
+  toggleClassSafe('bubbleActionGroup', 'hidden', algo !== 'bubble');
+  toggleClassSafe('insertionActionGroup', 'hidden', algo !== 'insertion');
+  toggleClassSafe('clickElementHintGroup', 'hidden', algo !== 'selection' && !algo.startsWith('search_'));
+  toggleClassSafe('selectionPartitionBox', 'hidden', algo !== 'selection');
+  toggleClassSafe('verifyFeedbackBox', 'hidden', true);
 
   hideInstantFeedback();
   clearStepLog();
   renderErrorLog();
-  appendStepLog(`Sesi dimulai dengan deret awal [${base.join(', ')}].`);
+  appendStepLog(
+    simState.executionMode === 'practice'
+      ? `Sesi Aktivitas Siswa dimulai dengan deret awal [${base.join(', ')}].`
+      : `Mode Demonstrasi (Tidak Dicatat) dimulai dengan deret [${base.join(', ')}].`
+  );
 
   syncPracticeHighlightsAndPrompt();
   renderSimulationStage();
 }
 
-/**
- * Mengatur sorotan (highlight) pasangan elemen dan kalimat instruksi langkah praktik siswa
- */
 function syncPracticeHighlightsAndPrompt() {
   const arr = simState.currentArray;
   const n = arr.length;
-  const promptBox = document.getElementById('studentPromptBox');
-  const iterBadge = document.getElementById('stageIterBadge');
 
   if (simState.finished) {
-    iterBadge.textContent = 'Selesai ✓';
-    promptBox.innerHTML = `&#127881; <strong>Praktik Selesai!</strong> Deret akhir: <code>[${arr.join(', ')}]</code>. Total kesalahan teknik Anda: <strong>${simState.errorCount}</strong>. Klik tombol <strong>"Catat Data &amp; Verifikasi"</strong> di panel kanan!`;
+    setTextSafe('stageIterBadge', 'Selesai ✓');
+    if (simState.executionMode === 'practice') {
+      setHTMLSafe(
+        'studentPromptBox',
+        `&#127881; <strong>Aktivitas Siswa Selesai!</strong> Deret akhir: <code>[${arr.join(', ')}]</code>. Total kesalahan teknik Anda: <strong>${simState.errorCount}</strong> (Akurasi: <strong>${computeAccuracyPercent()}%</strong>). Klik tombol <strong>"Catat Aktivitas Siswa &amp; Verifikasi Misi"</strong> di panel kanan!`
+      );
+    } else {
+      setHTMLSafe(
+        'studentPromptBox',
+        `&#128065;&#65039; <strong>Demonstrasi Selesai!</strong> Hasil akhir: <code>[${arr.join(', ')}]</code>. Karena ini adalah <em>Mode Demonstrasi</em>, data tidak dapat dicatat ke Tabel Percobaan. Silakan beralih ke <strong>Mode Aktivitas Siswa</strong> untuk dinilai!`
+      );
+    }
     return;
   }
 
   if (simState.executionMode === 'demo') {
-    iterBadge.textContent = `Iterasi Ke-${simState.iterations}`;
-    promptBox.innerHTML = `<strong>Mode Demonstrasi Aktif:</strong> Tekan tombol <em>Langkah Demo Berikutnya</em> atau <em>Jalankan Demo Otomatis</em> di bawah.`;
+    setTextSafe('stageIterBadge', `Demo Iterasi Ke-${simState.iterations}`);
+    setHTMLSafe(
+      'studentPromptBox',
+      `<strong>Mode Demonstrasi (Hanya Observasi — Tidak Dicatat):</strong> Tekan tombol <em>Langkah Demo Berikutnya</em> atau <em>Jalankan Demo Otomatis</em> di bawah untuk mengamati cara kerja algoritma.`
+    );
     return;
   }
 
@@ -495,8 +470,11 @@ function syncPracticeHighlightsAndPrompt() {
     simState.activeCardIndex = null;
     simState.sortedIndices = Array.from({ length: pass - 1 }, (_, k) => n - 1 - k);
 
-    iterBadge.textContent = `Iterasi Ke-${pass} (Banding ke-${j + 1} dari ${n - pass})`;
-    promptBox.innerHTML = `<strong>Langkah Bubble Sort (Iterasi ${pass}):</strong> Bandingkan elemen berdekatan pada indeks <strong>[${j + 1}] (nilai ${arr[j]})</strong> dan <strong>[${j + 2}] (nilai ${arr[j + 1]})</strong>. Apakah perlu ditukar atau tetap? Pilih tombol di bawah atau klik salah satu dari kedua elemen tersebut!`;
+    setTextSafe('stageIterBadge', `Iterasi Ke-${pass} (Banding ${j + 1}/${n - pass})`);
+    setHTMLSafe(
+      'studentPromptBox',
+      `<strong>Langkah Bubble Sort (Iterasi ${pass}):</strong> Bandingkan elemen berdekatan pada indeks <strong>[${j + 1}] (nilai ${arr[j]})</strong> dan <strong>[${j + 2}] (nilai ${arr[j + 1]})</strong>. Pilih tombol <strong>Tukar Posisi</strong> atau <strong>Urutan Tetap</strong> di bawah!`
+    );
   } else if (simState.algo === 'insertion') {
     const iter = simState.insertionIter;
     const cur = simState.insertionCursor;
@@ -505,10 +483,11 @@ function syncPracticeHighlightsAndPrompt() {
     simState.activeCompareIndices = cur > 0 ? [cur - 1, cur] : [cur];
     simState.sortedIndices = [];
 
-    iterBadge.textContent = `Iterasi Ke-${iter} (Kartu ke-${iter + 1})`;
-    const cardVal = arr[cur];
-    const leftVal = arr[cur - 1];
-    promptBox.innerHTML = `<strong>Langkah Insertion Sort (Iterasi ${iter}):</strong> Kartu yang sedang disisipkan berada di indeks <strong>[${cur + 1}] (nilai ${cardVal})</strong>, dibandingkan dengan bilangan di sebelah kirinya yaitu indeks <strong>[${cur}] (nilai ${leftVal})</strong>. Apakah kartu <strong>${cardVal}</strong> perlu ditukar ke kiri atau posisinya sudah tepat?`;
+    setTextSafe('stageIterBadge', `Iterasi Ke-${iter} (Kartu ke-${iter + 1})`);
+    setHTMLSafe(
+      'studentPromptBox',
+      `<strong>Langkah Insertion Sort (Iterasi ${iter}):</strong> Kartu yang sedang disisipkan adalah indeks <strong>[${cur + 1}] (nilai ${arr[cur]})</strong>, dibandingkan dengan bilangan di sebelah kirinya yaitu indeks <strong>[${cur}] (nilai ${arr[cur - 1]})</strong>. Pilih tombol di bawah!`
+    );
   } else if (simState.algo === 'selection') {
     const i = simState.selectionI;
     const iter = i + 1;
@@ -525,29 +504,32 @@ function syncPracticeHighlightsAndPrompt() {
       minVal: '?'
     };
 
-    iterBadge.textContent = `Iterasi Ke-${iter}`;
-    promptBox.innerHTML = `<strong>Langkah Selection Sort (Iterasi ${iter}):</strong> Perhatikan <em>Bagian Belum Terurut</em> pada indeks <strong>[${i + 1}] s.d. [${n}]</strong> yaitu <code>(${unsortedPart.join(', ')})</code>. <strong>Klik langsung pada elemen dengan NILAI TERKECIL</strong> dari bagian belum terurut tersebut!`;
+    setTextSafe('stageIterBadge', `Iterasi Ke-${iter}`);
+    setHTMLSafe(
+      'studentPromptBox',
+      `<strong>Langkah Selection Sort (Iterasi ${iter}):</strong> Pada <em>Bagian Belum Terurut</em> indeks <strong>[${i + 1}] s.d. [${n}]</strong> yaitu <code>(${unsortedPart.join(', ')})</code>, <strong>klik langsung pada elemen dengan NILAI TERKECIL</strong>!`
+    );
   } else if (simState.algo.startsWith('search_')) {
-    const target = Number(document.getElementById('searchTargetInput').value) || 6;
+    const targetEl = document.getElementById('searchTargetInput');
+    const target = targetEl ? Number(targetEl.value) || 6 : 6;
     const cur = simState.searchCursor;
     simState.iterations = cur + 1;
     simState.activeCompareIndices = [cur];
-    iterBadge.textContent = `Pengecekan Ke-${cur + 1}`;
-    promptBox.innerHTML = `<strong>Langkah Pencarian (Searching):</strong> Kriteria angka yang dicari adalah <strong>${target}</strong>. Klik elemen pada indeks <strong>[${cur + 1}]</strong> untuk memeriksa apakah nilainya memenuhi kriteria pencarian!`;
+    setTextSafe('stageIterBadge', `Pengecekan Ke-${cur + 1}`);
+    setHTMLSafe(
+      'studentPromptBox',
+      `<strong>Langkah Pencarian (Searching):</strong> Kriteria angka yang dicari adalah <strong>${target}</strong>. Klik elemen pada indeks <strong>[${cur + 1}]</strong> untuk memeriksa nilainya!`
+    );
   }
 }
 
-/**
- * Mencatat kesalahan iterasi / teknik sorting yang dilakukan siswa
- */
 function recordStudentError(errorType, detailMessage, wrongIndices = []) {
   simState.errorCount++;
-  const entry = {
+  simState.errorList.unshift({
     iter: simState.iterations,
     type: errorType,
     detail: detailMessage
-  };
-  simState.errorList.unshift(entry);
+  });
   simState.wrongShakeIndices = wrongIndices;
 
   sfxError();
@@ -560,8 +542,7 @@ function recordStudentError(errorType, detailMessage, wrongIndices = []) {
     simState.wrongShakeIndices = [];
     renderSimulationStage();
   }, 450);
-
-  debugLog('ValidasiKesalahan', `${errorType} - ${detailMessage}`);
+  debugLog('KesalahanSiswa', `${errorType}: ${detailMessage}`);
 }
 
 function recordStudentSuccessStep(message) {
@@ -579,22 +560,20 @@ function showInstantFeedback(isOk, text) {
 }
 
 function hideInstantFeedback() {
-  const box = document.getElementById('instantStepFeedback');
-  if (box) box.classList.add('hidden');
+  toggleClassSafe('instantStepFeedback', 'hidden', true);
 }
 
 function computeAccuracyPercent() {
-  const totalAttempts = simState.correctActions + simState.errorCount;
-  if (totalAttempts === 0) return 100;
-  return Math.round((simState.correctActions / totalAttempts) * 100);
+  const total = simState.correctActions + simState.errorCount;
+  if (total === 0) return 100;
+  return Math.round((simState.correctActions / total) * 100);
 }
 
 /* =====================================================
-   LOGIKA VALIDASI PRAKTIK SISWA: BUBBLE SORT
+   LOGIKA VALIDASI AKTIVITAS SISWA: BUBBLE, INSERTION, SELECTION, SEARCHING
    ===================================================== */
 function handleBubbleDecision(studentChoseSwap) {
   if (simState.finished || simState.executionMode !== 'practice' || simState.algo !== 'bubble') return;
-
   const arr = simState.currentArray;
   const n = arr.length;
   const pass = simState.bubblePass;
@@ -607,20 +586,19 @@ function handleBubbleDecision(studentChoseSwap) {
     if (studentChoseSwap) {
       recordStudentError(
         'Salah Tukar Bubble Sort',
-        `Pada Iterasi ${pass}, Anda memilih TUKAR pada pasangan (${leftVal}, ${rightVal}), padahal ${leftVal} ≤ ${rightVal} sehingga urutannya sudah benar (tetap).`,
+        `Iterasi ${pass}: Anda memilih TUKAR pada (${leftVal}, ${rightVal}), padahal ${leftVal} ≤ ${rightVal} sehingga posisi seharusnya tetap.`,
         [j, j + 1]
       );
     } else {
       recordStudentError(
         'Terlewat Tukar Bubble Sort',
-        `Pada Iterasi ${pass}, Anda memilih TETAP pada pasangan (${leftVal}, ${rightVal}), padahal ${leftVal} > ${rightVal} sehingga wajib ditukar agar bilangan lebih besar naik ke kanan.`,
+        `Iterasi ${pass}: Anda memilih TETAP pada (${leftVal}, ${rightVal}), padahal ${leftVal} > ${rightVal} sehingga wajib ditukar.`,
         [j, j + 1]
       );
     }
     return;
   }
 
-  // Langkah Siswa Benar
   simState.comparisons++;
   if (shouldSwap) {
     arr[j] = rightVal;
@@ -628,18 +606,13 @@ function handleBubbleDecision(studentChoseSwap) {
     simState.swaps++;
     simState.activeSwapIndices = [j, j + 1];
     sfxSwap();
-    recordStudentSuccessStep(
-      `Iterasi ${pass}: Tepat! Karena ${leftVal} > ${rightVal}, posisi ditukar menjadi [${arr.join(', ')}].`
-    );
+    recordStudentSuccessStep(`Iterasi ${pass}: Tepat! Karena ${leftVal} > ${rightVal}, ditukar menjadi [${arr.join(', ')}].`);
   } else {
     simState.activeSwapIndices = [];
     sfxCompare();
-    recordStudentSuccessStep(
-      `Iterasi ${pass}: Tepat! Karena ${leftVal} ≤ ${rightVal}, posisi tetap [${arr.join(', ')}].`
-    );
+    recordStudentSuccessStep(`Iterasi ${pass}: Tepat! Karena ${leftVal} ≤ ${rightVal}, urutan tetap [${arr.join(', ')}].`);
   }
 
-  // Lanjut ke pasangan berikutnya dalam iterasi yang sama atau naik iterasi
   simState.bubbleJ++;
   if (simState.bubbleJ >= n - pass) {
     simState.bubblePass++;
@@ -651,17 +624,12 @@ function handleBubbleDecision(studentChoseSwap) {
       sfxSuccess();
     }
   }
-
   syncPracticeHighlightsAndPrompt();
   renderSimulationStage();
 }
 
-/* =====================================================
-   LOGIKA VALIDASI PRAKTIK SISWA: INSERTION SORT
-   ===================================================== */
 function handleInsertionDecision(decision) {
   if (simState.finished || simState.executionMode !== 'practice' || simState.algo !== 'insertion') return;
-
   const arr = simState.currentArray;
   const n = arr.length;
   const iter = simState.insertionIter;
@@ -673,7 +641,7 @@ function handleInsertionDecision(decision) {
   if (decision === 'swap_left' && !shouldSwapLeft) {
     recordStudentError(
       'Salah Geser Insertion Sort',
-      `Pada Iterasi ${iter}, kartu ${cardVal} tidak lebih kecil daripada bilangan di kirinya (${leftVal}). Kartu ${cardVal} tidak boleh ditukar melewati ${leftVal}!`,
+      `Iterasi ${iter}: Kartu ${cardVal} tidak lebih kecil daripada ${leftVal}, sehingga tidak boleh ditukar melewati ${leftVal}!`,
       [cur - 1, cur]
     );
     return;
@@ -682,13 +650,12 @@ function handleInsertionDecision(decision) {
   if (decision === 'place_here' && shouldSwapLeft) {
     recordStudentError(
       'Berhenti Terlalu Cepat (Insertion Sort)',
-      `Pada Iterasi ${iter}, bilangan di sebelah kiri (${leftVal}) masih lebih besar daripada kartu ${cardVal}. Anda wajib menukar/menggeser kartu ${cardVal} ke kiri terlebih dahulu!`,
+      `Iterasi ${iter}: Bilangan di kiri (${leftVal}) masih lebih besar daripada kartu ${cardVal}. Geser kartu ${cardVal} ke kiri terlebih dahulu!`,
       [cur - 1, cur]
     );
     return;
   }
 
-  // Langkah Siswa Benar
   simState.comparisons++;
   if (decision === 'swap_left') {
     arr[cur - 1] = cardVal;
@@ -696,22 +663,13 @@ function handleInsertionDecision(decision) {
     simState.swaps++;
     simState.insertionCursor--;
     sfxSwap();
-    recordStudentSuccessStep(
-      `Iterasi ${iter}: Tepat! Karena ${cardVal} < ${leftVal}, kartu ${cardVal} ditukar ke kiri menjadi [${arr.join(', ')}].`
-    );
-
-    // Jika sudah sampai di ujung paling kiri (indeks 0), otomatis lanjut ke iterasi berikutnya
-    if (simState.insertionCursor === 0) {
-      advanceInsertionNextCard(n);
-    }
+    recordStudentSuccessStep(`Iterasi ${iter}: Tepat! Karena ${cardVal} < ${leftVal}, kartu ${cardVal} digeser ke kiri menjadi [${arr.join(', ')}].`);
+    if (simState.insertionCursor === 0) advanceInsertionNextCard(n);
   } else {
     sfxCompare();
-    recordStudentSuccessStep(
-      `Iterasi ${iter}: Tepat! Karena ${cardVal} ≥ ${leftVal}, kartu ${cardVal} sudah berada pada posisi yang benar.`
-    );
+    recordStudentSuccessStep(`Iterasi ${iter}: Tepat! Karena ${cardVal} ≥ ${leftVal}, posisi kartu ${cardVal} sudah benar.`);
     advanceInsertionNextCard(n);
   }
-
   syncPracticeHighlightsAndPrompt();
   renderSimulationStage();
 }
@@ -729,35 +687,23 @@ function advanceInsertionNextCard(n) {
   }
 }
 
-/* =====================================================
-   LOGIKA KLIK ELEMEN OLEH SISWA (SELECTION, BUBBLE, INSERTION, SEARCHING)
-   ===================================================== */
 function handleElementClickInPractice(clickedIdx) {
-  if (simState.finished) return;
-
-  if (simState.executionMode === 'demo') {
-    sfxClick();
-    return;
-  }
-
+  if (simState.finished || simState.executionMode === 'demo') return;
   const arr = simState.currentArray;
   const n = arr.length;
 
-  // 1. Jika sedang praktik Selection Sort
   if (simState.algo === 'selection') {
     const i = simState.selectionI;
     const iter = i + 1;
-
     if (clickedIdx < i) {
       recordStudentError(
         'Pelanggaran Partisi Selection Sort',
-        `Pada Iterasi ${iter}, Anda mengklik indeks [${clickedIdx + 1}] (nilai ${arr[clickedIdx]}) yang sudah berada di Bagian Terurut! Pilihlah dari Bagian Belum Terurut [${i + 1}..${n}].`,
+        `Iterasi ${iter}: Indeks [${clickedIdx + 1}] (${arr[clickedIdx]}) sudah berada di Bagian Terurut! Pilihlah dari Bagian Belum Terurut [${i + 1}..${n}].`,
         [clickedIdx]
       );
       return;
     }
 
-    // Cari nilai terkecil di Bagian Belum Terurut [i .. n-1]
     const unsortedSlice = arr.slice(i);
     const minVal = Math.min(...unsortedSlice);
     const clickedVal = arr[clickedIdx];
@@ -765,13 +711,12 @@ function handleElementClickInPractice(clickedIdx) {
     if (clickedVal !== minVal) {
       recordStudentError(
         'Salah Seleksi Nilai Terkecil',
-        `Pada Iterasi ${iter}, Anda memilih angka ${clickedVal} pada Bagian Belum Terurut (${unsortedSlice.join(', ')}), padahal nilai terkecil yang seharusnya diseleksi adalah ${minVal}!`,
+        `Iterasi ${iter}: Anda mengklik ${clickedVal} pada (${unsortedSlice.join(', ')}), padahal nilai terkecil yang wajib diseleksi adalah ${minVal}!`,
         [clickedIdx]
       );
       return;
     }
 
-    // Siswa memilih nilai terkecil dengan benar!
     simState.comparisons += Math.max(1, n - 1 - i);
     if (clickedIdx !== i) {
       const temp = arr[i];
@@ -787,20 +732,12 @@ function handleElementClickInPractice(clickedIdx) {
 
     simState.selectionI++;
     const sortedNow = arr.slice(0, simState.selectionI);
-    const unsortedNow = arr.slice(simState.selectionI);
-
-    recordStudentSuccessStep(
-      `Iterasi ${iter}: Tepat! Nilai terkecil ${minVal} diseleksi ke Bagian Terurut menjadi (${sortedNow.join(', ')}).`
-    );
+    recordStudentSuccessStep(`Iterasi ${iter}: Tepat! Nilai terkecil ${minVal} dimasukkan ke Bagian Terurut menjadi (${sortedNow.join(', ')}).`);
 
     if (simState.selectionI >= n) {
       simState.finished = true;
       simState.sortedIndices = arr.map((_, idx) => idx);
-      simState.partitionInfo = {
-        sorted: `(${arr.join(', ')})`,
-        unsorted: '()',
-        minVal
-      };
+      simState.partitionInfo = { sorted: `(${arr.join(', ')})`, unsorted: '()', minVal };
       sfxSuccess();
     } else {
       syncPracticeHighlightsAndPrompt();
@@ -810,54 +747,45 @@ function handleElementClickInPractice(clickedIdx) {
     return;
   }
 
-  // 2. Jika sedang praktik Bubble Sort dan siswa mengklik salah satu elemen di luar pasangan aktif
   if (simState.algo === 'bubble') {
     const j = simState.bubbleJ;
     if (clickedIdx !== j && clickedIdx !== j + 1) {
       recordStudentError(
         'Salah Urutan Indeks Bubble Sort',
-        `Pada Iterasi ${simState.bubblePass}, pasangan berdekatan yang wajib dibandingkan saat ini adalah indeks [${j + 1}] dan [${j + 2}], bukan indeks [${clickedIdx + 1}]!`,
+        `Iterasi ${simState.bubblePass}: Pasangan berdekatan saat ini adalah indeks [${j + 1}] dan [${j + 2}], bukan indeks [${clickedIdx + 1}]!`,
         [clickedIdx]
       );
       return;
     }
-    // Jika mengklik pasangan aktif, bantu beri tahu untuk menggunakan tombol keputusan
     sfxClick();
-    showInstantFeedback(
-      true,
-      `Indeks [${j + 1}] (${arr[j]}) & [${j + 2}] (${arr[j + 1]}) sedang dibandingkan. Tekan tombol "Tukar Posisi" atau "Urutan Tetap" di bawah!`
-    );
+    showInstantFeedback(true, `Gunakan tombol "Tukar Posisi" atau "Urutan Tetap" di bawah untuk pasangan (${arr[j]}, ${arr[j + 1]})!`);
     return;
   }
 
-  // 3. Jika sedang praktik Insertion Sort dan siswa mengklik elemen yang salah
   if (simState.algo === 'insertion') {
     const cur = simState.insertionCursor;
     if (clickedIdx !== cur && clickedIdx !== cur - 1) {
       recordStudentError(
         'Salah Pilih Kartu Insertion Sort',
-        `Pada Iterasi ${simState.insertionIter}, kartu yang sedang disisipkan adalah indeks [${cur + 1}] (nilai ${arr[cur]}) terhadap indeks [${cur}] (nilai ${arr[cur - 1]}), bukan indeks [${clickedIdx + 1}]!`,
+        `Iterasi ${simState.insertionIter}: Kartu aktif berada di indeks [${cur + 1}] (${arr[cur]}), bukan indeks [${clickedIdx + 1}]!`,
         [clickedIdx]
       );
       return;
     }
     sfxClick();
-    showInstantFeedback(
-      true,
-      `Gunakan tombol "Tukar / Geser Kartu ke Kiri" atau "Posisi Sudah Tepat" di bawah untuk menyisipkan kartu ${arr[cur]}!`
-    );
+    showInstantFeedback(true, `Gunakan tombol "Tukar / Geser Kartu ke Kiri" atau "Posisi Sudah Tepat" di bawah!`);
     return;
   }
 
-  // 4. Jika sedang praktik Pencarian (Searching)
   if (simState.algo.startsWith('search_')) {
-    const target = Number(document.getElementById('searchTargetInput').value) || 6;
+    const targetEl = document.getElementById('searchTargetInput');
+    const target = targetEl ? Number(targetEl.value) || 6 : 6;
     const expectedIdx = simState.searchCursor;
 
     if (clickedIdx !== expectedIdx) {
       recordStudentError(
         'Pengecekan Pencarian Melompat',
-        `Strategi pencarian berurutan memeriksa dari indeks [${expectedIdx + 1}] terlebih dahulu, tetapi Anda melompat ke indeks [${clickedIdx + 1}]!`,
+        `Periksa secara berurutan mulai dari indeks [${expectedIdx + 1}], jangan melompat ke indeks [${clickedIdx + 1}]!`,
         [clickedIdx]
       );
       return;
@@ -869,20 +797,14 @@ function handleElementClickInPractice(clickedIdx) {
       simState.sortedIndices = [clickedIdx];
       simState.finished = true;
       sfxSuccess();
-      recordStudentSuccessStep(
-        `Langkah ${clickedIdx + 1}: Indeks [${clickedIdx + 1}] bernilai ${val} == Kriteria (${target}). Objek DITEMUKAN!`
-      );
+      recordStudentSuccessStep(`Langkah ${clickedIdx + 1}: Indeks [${clickedIdx + 1}] bernilai ${val} == Kriteria (${target}). DITEMUKAN!`);
     } else if (simState.algo === 'search_sorted' && val > target) {
       simState.finished = true;
       sfxSuccess();
-      recordStudentSuccessStep(
-        `Langkah ${clickedIdx + 1}: Indeks [${clickedIdx + 1}] bernilai ${val} > ${target}. Karena data terurut, pencarian selesai (target tidak ada di kanan).`
-      );
+      recordStudentSuccessStep(`Langkah ${clickedIdx + 1}: Karena data terurut dan ${val} > ${target}, pencarian berhenti cepat.`);
     } else {
       sfxCompare();
-      recordStudentSuccessStep(
-        `Langkah ${clickedIdx + 1}: Indeks [${clickedIdx + 1}] bernilai ${val} != Kriteria (${target}). Lanjut ke indeks berikutnya.`
-      );
+      recordStudentSuccessStep(`Langkah ${clickedIdx + 1}: Indeks [${clickedIdx + 1}] bernilai ${val} != ${target}. Lanjut ke elemen berikutnya.`);
       simState.searchCursor++;
       if (simState.searchCursor >= n) {
         simState.finished = true;
@@ -900,6 +822,8 @@ function handleElementClickInPractice(clickedIdx) {
 function renderSimulationStage() {
   const container = document.getElementById('arrayVisualContainer');
   const idxRow = document.getElementById('arrayIndexRow');
+  if (!container || !idxRow) return;
+
   container.innerHTML = '';
   idxRow.innerHTML = '';
 
@@ -913,7 +837,7 @@ function renderSimulationStage() {
 
     el.className = `arr-item ${styleClass}`;
     if (styleClass === 'style-selection') {
-      const h = 42 + Math.round((val / maxVal) * 85);
+      const h = 42 + Math.round((val / maxVal) * 78);
       el.style.height = `${h}px`;
     }
 
@@ -934,46 +858,45 @@ function renderSimulationStage() {
   });
 
   if (simState.algo === 'selection') {
-    document.getElementById('spSortedText').textContent = simState.partitionInfo.sorted;
-    document.getElementById('spUnsortedText').textContent = simState.partitionInfo.unsorted;
-    document.getElementById('spMinText').textContent = simState.partitionInfo.minVal;
+    setTextSafe('spSortedText', simState.partitionInfo.sorted);
+    setTextSafe('spUnsortedText', simState.partitionInfo.unsorted);
+    setTextSafe('spMinText', simState.partitionInfo.minVal);
   }
 
-  document.getElementById('metricIteration').textContent = simState.iterations;
-  document.getElementById('metricComparisons').textContent = simState.comparisons;
-  document.getElementById('metricSwaps').textContent = simState.swaps;
-  document.getElementById('metricErrors').textContent = simState.errorCount;
-  document.getElementById('metricAccuracy').textContent = `${computeAccuracyPercent()}%`;
+  setTextSafe('metricIteration', simState.iterations);
+  setTextSafe('metricComparisons', simState.comparisons);
+  setTextSafe('metricSwaps', simState.swaps);
+  setTextSafe('metricErrors', simState.errorCount);
+  setTextSafe('metricAccuracy', simState.executionMode === 'practice' ? `${computeAccuracyPercent()}%` : '-');
 
   const statusEl = document.getElementById('metricStatus');
-  if (simState.finished) {
-    statusEl.textContent = simState.algo.startsWith('search_') ? 'Selesai Cari' : 'Terurut Menaik';
-    statusEl.className = 'm-val status-done';
-  } else {
-    statusEl.textContent = simState.executionMode === 'practice' ? 'Praktik Siswa' : 'Mode Demo';
-    statusEl.className = 'm-val status-wait';
+  if (statusEl) {
+    if (simState.executionMode === 'demo') {
+      statusEl.textContent = 'Demo (Tak Dinilai)';
+      statusEl.className = 'm-val status-wait';
+    } else if (simState.finished) {
+      statusEl.textContent = simState.algo.startsWith('search_') ? 'Selesai Cari ✓' : 'Terurut Menaik ✓';
+      statusEl.className = 'm-val status-done';
+    } else {
+      statusEl.textContent = 'Aktivitas Siswa';
+      statusEl.className = 'm-val status-wait';
+    }
   }
 
-  document.getElementById('summaryInitial').textContent = `[${simState.initialArray.join(', ')}]`;
-  document.getElementById('summaryCurrent').textContent = `[${simState.currentArray.join(', ')}]`;
+  setTextSafe('summaryInitial', `[${simState.initialArray.join(', ')}]`);
+  setTextSafe('summaryCurrent', `[${simState.currentArray.join(', ')}]`);
 }
 
 function renderErrorLog() {
   const ul = document.getElementById('studentErrorLog');
-  const badge = document.getElementById('errorCountBadge');
-  if (!ul || !badge) return;
-
-  badge.textContent = simState.errorCount;
+  setTextSafe('errorCountBadge', simState.errorCount);
+  if (!ul) return;
   if (simState.errorList.length === 0) {
     ul.innerHTML = `<li class="no-err-item">&#10004; Belum ada kesalahan teknik yang tercatat pada sesi ini.</li>`;
     return;
   }
-
   ul.innerHTML = simState.errorList
-    .map(
-      (err, idx) =>
-        `<li><strong>#${simState.errorList.length - idx} [Iterasi ${err.iter} — ${err.type}]:</strong> ${err.detail}</li>`
-    )
+    .map((err, idx) => `<li><strong>#${simState.errorList.length - idx} [Iterasi ${err.iter} — ${err.type}]:</strong> ${err.detail}</li>`)
     .join('');
 }
 
@@ -999,7 +922,7 @@ function clearStepLog() {
 }
 
 /* =====================================================
-   MODE DEMONSTRASI OTOMATIS (UNTUK PERBANDINGAN)
+   MODE DEMONSTRASI OTOMATIS (HANYA OBSERVASI — TIDAK DICATAT)
    ===================================================== */
 function buildAlgorithmSteps(algo, baseArray) {
   const arr = [...baseArray];
@@ -1012,31 +935,18 @@ function buildAlgorithmSteps(algo, baseArray) {
     for (let iter = 1; iter <= n - 1; iter++) {
       for (let j = 0; j < n - iter; j++) {
         compCount++;
-        const a = arr[j];
-        const b = arr[j + 1];
+        const a = arr[j], b = arr[j + 1];
         steps.push({
-          type: 'compare',
-          iter,
-          compCount,
-          swapCount,
-          arraySnapshot: [...arr],
-          compareIndices: [j, j + 1],
-          swapIndices: [],
+          type: 'compare', iter, compCount, swapCount, arraySnapshot: [...arr],
+          compareIndices: [j, j + 1], swapIndices: [],
           sortedIndices: Array.from({ length: iter - 1 }, (_, k) => n - 1 - k),
           message: `Demo Iterasi ${iter}: Bandingkan [${j + 1}]=${a} dan [${j + 2}]=${b}.`
         });
         if (a > b) {
-          arr[j] = b;
-          arr[j + 1] = a;
-          swapCount++;
+          arr[j] = b; arr[j + 1] = a; swapCount++;
           steps.push({
-            type: 'swap',
-            iter,
-            compCount,
-            swapCount,
-            arraySnapshot: [...arr],
-            compareIndices: [],
-            swapIndices: [j, j + 1],
+            type: 'swap', iter, compCount, swapCount, arraySnapshot: [...arr],
+            compareIndices: [], swapIndices: [j, j + 1],
             sortedIndices: Array.from({ length: iter - 1 }, (_, k) => n - 1 - k),
             message: `Demo Iterasi ${iter}: Karena ${a} > ${b}, tukar menjadi [${arr.join(', ')}].`
           });
@@ -1051,35 +961,19 @@ function buildAlgorithmSteps(algo, baseArray) {
         compCount++;
         const leftVal = arr[curIdx - 1];
         steps.push({
-          type: 'compare',
-          iter,
-          compCount,
-          swapCount,
-          arraySnapshot: [...arr],
-          compareIndices: [curIdx - 1, curIdx],
-          swapIndices: [],
-          sortedIndices: [],
+          type: 'compare', iter, compCount, swapCount, arraySnapshot: [...arr],
+          compareIndices: [curIdx - 1, curIdx], swapIndices: [], sortedIndices: [],
           message: `Demo Iterasi ${iter}: Bandingkan kartu ${pickedVal} dengan ${leftVal}.`
         });
         if (leftVal > arr[curIdx]) {
-          arr[curIdx - 1] = arr[curIdx];
-          arr[curIdx] = leftVal;
-          swapCount++;
+          arr[curIdx - 1] = arr[curIdx]; arr[curIdx] = leftVal; swapCount++;
           steps.push({
-            type: 'swap',
-            iter,
-            compCount,
-            swapCount,
-            arraySnapshot: [...arr],
-            compareIndices: [],
-            swapIndices: [curIdx - 1, curIdx],
-            sortedIndices: [],
+            type: 'swap', iter, compCount, swapCount, arraySnapshot: [...arr],
+            compareIndices: [], swapIndices: [curIdx - 1, curIdx], sortedIndices: [],
             message: `Demo Iterasi ${iter}: Geser ${pickedVal} ke kiri menjadi [${arr.join(', ')}].`
           });
           curIdx--;
-        } else {
-          break;
-        }
+        } else break;
       }
     }
   } else if (algo === 'selection') {
@@ -1092,19 +986,11 @@ function buildAlgorithmSteps(algo, baseArray) {
       }
       const foundMin = arr[minIdx];
       if (minIdx !== i) {
-        const tmp = arr[i];
-        arr[i] = arr[minIdx];
-        arr[minIdx] = tmp;
-        swapCount++;
+        const tmp = arr[i]; arr[i] = arr[minIdx]; arr[minIdx] = tmp; swapCount++;
       }
       steps.push({
-        type: 'swap',
-        iter,
-        compCount,
-        swapCount,
-        arraySnapshot: [...arr],
-        compareIndices: [],
-        swapIndices: [i, minIdx],
+        type: 'swap', iter, compCount, swapCount, arraySnapshot: [...arr],
+        compareIndices: [], swapIndices: [i, minIdx],
         sortedIndices: Array.from({ length: i + 1 }, (_, k) => k),
         partition: {
           sorted: `(${arr.slice(0, i + 1).join(', ')})`,
@@ -1115,22 +1001,16 @@ function buildAlgorithmSteps(algo, baseArray) {
       });
     }
   } else if (algo.startsWith('search_')) {
-    const target = Number(document.getElementById('searchTargetInput').value) || 6;
+    const targetEl = document.getElementById('searchTargetInput');
+    const target = targetEl ? Number(targetEl.value) || 6 : 6;
     for (let i = 0; i < n; i++) {
       compCount++;
       const match = arr[i] === target;
       steps.push({
-        type: match ? 'swap' : 'compare',
-        iter: i + 1,
-        compCount,
-        swapCount: 0,
-        arraySnapshot: [...arr],
-        compareIndices: [i],
-        swapIndices: match ? [i] : [],
+        type: match ? 'swap' : 'compare', iter: i + 1, compCount, swapCount: 0,
+        arraySnapshot: [...arr], compareIndices: [i], swapIndices: match ? [i] : [],
         sortedIndices: match ? [i] : [],
-        message: match
-          ? `Demo Langkah ${i + 1}: Indeks [${i + 1}]=${arr[i]} cocok dengan target ${target}!`
-          : `Demo Langkah ${i + 1}: Indeks [${i + 1}]=${arr[i]} != ${target}.`
+        message: match ? `Demo Langkah ${i + 1}: Indeks [${i + 1}]=${arr[i]} cocok!` : `Demo Langkah ${i + 1}: Indeks [${i + 1}]=${arr[i]} != ${target}.`
       });
       if (match) break;
     }
@@ -1148,7 +1028,6 @@ function stepSimulation() {
     sfxSuccess();
     return;
   }
-
   const step = simState.stepsQueue[simState.stepPointer++];
   simState.currentArray = [...step.arraySnapshot];
   simState.iterations = step.iter;
@@ -1158,16 +1037,11 @@ function stepSimulation() {
   simState.activeSwapIndices = step.swapIndices || [];
   simState.sortedIndices = step.sortedIndices || [];
   if (step.partition) simState.partitionInfo = step.partition;
-
   appendStepLog(step.message);
-  if (step.type === 'swap') sfxSwap();
-  else sfxCompare();
-
+  if (step.type === 'swap') sfxSwap(); else sfxCompare();
   if (simState.stepPointer >= simState.stepsQueue.length) {
     simState.finished = true;
-    if (!simState.algo.startsWith('search_')) {
-      simState.sortedIndices = simState.currentArray.map((_, i) => i);
-    }
+    if (!simState.algo.startsWith('search_')) simState.sortedIndices = simState.currentArray.map((_, i) => i);
     sfxSuccess();
   }
   syncPracticeHighlightsAndPrompt();
@@ -1176,29 +1050,48 @@ function stepSimulation() {
 
 function toggleAutoPlay() {
   sfxClick();
-  if (simState.autoTimer) {
-    stopAutoPlay();
-    return;
-  }
+  if (simState.autoTimer) { stopAutoPlay(); return; }
   if (simState.finished) resetSimulationState();
-  const speed = Number(document.getElementById('speedRange').value) || 750;
-  document.getElementById('btnAuto').innerHTML = '&#9208; Jeda Demo';
+  const speedEl = document.getElementById('speedRange');
+  const speed = speedEl ? Number(speedEl.value) || 750 : 750;
+  setHTMLSafe('btnAuto', '&#9208; Jeda Demo');
   simState.autoTimer = setInterval(stepSimulation, speed);
 }
 
 /* =====================================================
-   5. PENCATATAN TABEL PERCOBAAN BESERTA KESALAHAN SISWA
+   5. PENCATATAN TABEL PERCOBAAN (HANYA MODE AKTIVITAS SISWA)
    ===================================================== */
 function recordAndVerifyExperiment() {
   const fb = document.getElementById('verifyFeedbackBox');
-  fb.classList.remove('hidden', 'ok', 'warn');
+  if (fb) fb.classList.remove('hidden', 'ok', 'warn');
+
+  // BLOKIR PENCATATAN JIKA SEDANG DI MODE DEMONSTRASI
+  if (simState.executionMode !== 'practice') {
+    sfxError();
+    if (fb) {
+      fb.classList.add('warn');
+      fb.innerHTML = `&#128683; <strong>Mode Demonstrasi Tidak Dicatat!</strong> Penilaian hanya berlaku untuk aktivitas mandiri siswa. Silakan klik tombol <strong>"&#9997;&#65039; Mode Aktivitas Siswa (Dinilai &amp; Dicatat)"</strong> di bagian atas meja kerja lalu lakukan pengurutan sendiri.`;
+    }
+    debugLog('PencatatanDitolak', 'Percobaan mencatat dari Mode Demonstrasi ditolak.');
+    return;
+  }
+
+  // WAJIBKAN SISWA MENYELESAIKAN AKTIVITAS PRAKTIK SEBELUM DICATAT
+  if (!simState.finished) {
+    sfxError();
+    if (fb) {
+      fb.classList.add('warn');
+      fb.innerHTML = `&#9888;&#65039; <strong>Aktivitas Belum Selesai!</strong> Selesaikan seluruh langkah iterasi pada <em>Mode Aktivitas Siswa</em> hingga berstatus <strong>Selesai / Terurut Menaik</strong> sebelum mencatat data ke tabel.`;
+    }
+    return;
+  }
 
   const algoNames = {
     bubble: 'Bubble Sort',
     insertion: 'Insertion Sort',
     selection: 'Selection Sort',
-    search_unsorted: 'Searching (Acak)',
-    search_sorted: 'Searching (Terurut)'
+    search_unsorted: 'Searching (Data Acak)',
+    search_sorted: 'Searching (Data Terurut)'
   };
 
   const errorSummary =
@@ -1208,7 +1101,7 @@ function recordAndVerifyExperiment() {
 
   const record = {
     no: experimentRecords.length + 1,
-    algo: `${algoNames[simState.algo] || simState.algo} (${simState.executionMode === 'practice' ? 'Praktik' : 'Demo'})`,
+    algo: `${algoNames[simState.algo] || simState.algo} (Aktivitas Siswa)`,
     initial: `[${simState.initialArray.join(', ')}]`,
     final: `[${simState.currentArray.join(', ')}]`,
     iterations: simState.iterations,
@@ -1224,18 +1117,11 @@ function recordAndVerifyExperiment() {
 
   const initStr = simState.initialArray.join(',');
   let missionPassed = false;
-
-  if (currentMission === 1 && simState.algo.startsWith('search_') && simState.finished) {
-    missionPassed = true;
-  } else if (currentMission === 2 && simState.algo === 'bubble' && initStr === '2,3,7,6,5' && simState.finished) {
-    missionPassed = true;
-  } else if (currentMission === 3 && simState.algo === 'insertion' && initStr === '2,3,7,6,5' && simState.finished) {
-    missionPassed = true;
-  } else if (currentMission === 4 && simState.algo === 'selection' && initStr === '2,3,7,6,5' && simState.finished) {
-    missionPassed = true;
-  } else if (currentMission === 5 && initStr === '9,7,5,3,1' && simState.finished) {
-    missionPassed = true;
-  }
+  if (currentMission === 1 && simState.algo.startsWith('search_') && simState.finished) missionPassed = true;
+  else if (currentMission === 2 && simState.algo === 'bubble' && initStr === '2,3,7,6,5' && simState.finished) missionPassed = true;
+  else if (currentMission === 3 && simState.algo === 'insertion' && initStr === '2,3,7,6,5' && simState.finished) missionPassed = true;
+  else if (currentMission === 4 && simState.algo === 'selection' && initStr === '2,3,7,6,5' && simState.finished) missionPassed = true;
+  else if (currentMission === 5 && initStr === '9,7,5,3,1' && simState.finished) missionPassed = true;
 
   if (missionPassed) {
     completedMissions.add(currentMission);
@@ -1245,26 +1131,29 @@ function recordAndVerifyExperiment() {
       if (!btn.textContent.includes('✓')) btn.textContent += ' ✓';
     }
     sfxSuccess();
-    fb.classList.add('ok');
-    fb.innerHTML = `&#9989; <strong>Data &amp; Catatan Kesalahan (${simState.errorCount} kesalahan, Akurasi ${record.accuracy}) berhasil direkam! Misi #${currentMission} Tuntas!</strong>`;
+    if (fb) {
+      fb.classList.add('ok');
+      fb.innerHTML = `&#9989; <strong>Aktivitas Siswa &amp; Catatan Kesalahan (${simState.errorCount} kesalahan, Akurasi ${record.accuracy}) berhasil direkam! Misi #${currentMission} Terverifikasi Tuntas!</strong>`;
+    }
   } else {
-    sfxClick();
-    fb.classList.add('warn');
-    fb.innerHTML = `&#128221; <strong>Data &amp; Catatan Kesalahan (${simState.errorCount} kesalahan) berhasil dimasukkan ke Tabel!</strong> Selesaikan pengurutan sesuai instruksi misi untuk menandai Misi #${currentMission} tuntas.`;
+    sfxSuccess();
+    if (fb) {
+      fb.classList.add('ok');
+      fb.innerHTML = `&#9989; <strong>Data Aktivitas Siswa (${simState.errorCount} kesalahan, Akurasi ${record.accuracy}) berhasil dimasukkan ke Tabel!</strong> (Untuk menandai Misi #${currentMission} tuntas, gunakan algoritma dan deret sesuai instruksi misi).`;
+    }
   }
+  debugLog('TabelAktivitasSiswa', 'Data berhasil dicatat:', record);
 }
 
 function renderExperimentTable() {
   const tbody = document.getElementById('experimentTableBody');
   if (!tbody) return;
   if (experimentRecords.length === 0) {
-    tbody.innerHTML = `<tr class="empty-row"><td colspan="10">Belum ada data percobaan yang dicatat. Lakukan praktik sorting di atas lalu klik <strong>"Catat Data &amp; Verifikasi"</strong>.</td></tr>`;
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="10">Belum ada data aktivitas siswa yang dicatat. Selesaikan pengurutan pada <strong>Mode Aktivitas Siswa</strong> lalu klik <strong>"Catat Aktivitas Siswa &amp; Verifikasi Misi"</strong>.</td></tr>`;
     return;
   }
-
   tbody.innerHTML = experimentRecords
-    .map(
-      (r) => `
+    .map((r) => `
       <tr>
         <td>${r.no}</td>
         <td><strong>${r.algo}</strong></td>
@@ -1277,8 +1166,7 @@ function renderExperimentTable() {
         <td><strong>${r.accuracy}</strong></td>
         <td style="font-size:0.78rem; max-width:300px;">${r.errorDetails}</td>
       </tr>
-    `
-    )
+    `)
     .join('');
 }
 
@@ -1289,42 +1177,32 @@ function clearExperimentTable() {
 }
 
 /* =====================================================
-   6. DIAGNOSTIK LKPD & EKSPOR PDF A4 BESERTA LOG KESALAHAN
+   6. DIAGNOSTIK LKPD & EKSPOR PDF A4
    ===================================================== */
 function checkDiagnostic(qNum) {
   const inputEl = document.getElementById(`lkpd_q${qNum}`);
   const fbEl = document.getElementById(`diag_fb_${qNum}`);
+  if (!inputEl || !fbEl) return;
   const raw = (inputEl.value || '').trim().toLowerCase();
 
-  let isCorrect = false;
-  let msg = '';
-
+  let isCorrect = false, msg = '';
   if (qNum === 5) {
     isCorrect = raw === '1' || raw.includes('satu');
-    msg = isCorrect
-      ? '✓ Tepat! Deret [1, 2, 4, 3, 5] hanya memerlukan 1 kali pertukaran antara nilai 4 dan 3.'
-      : '✗ Kurang tepat. Perhatikan posisi angka 4 dan 3 pada deret [1, 2, 4, 3, 5] (Buku hal. 82).';
+    msg = isCorrect ? '✓ Tepat! Deret [1, 2, 4, 3, 5] hanya memerlukan 1 kali pertukaran antara nilai 4 dan 3.' : '✗ Kurang tepat. Perhatikan posisi angka 4 dan 3 pada deret [1, 2, 4, 3, 5].';
   } else if (qNum === 6) {
     isCorrect = raw === '7' || raw.includes('tujuh');
-    msg = isCorrect
-      ? '✓ Benar! Setelah Iterasi Pertama Bubble Sort selesai, bilangan tertinggi yaitu 7 berada di ujung paling kanan [2, 3, 6, 5, 7].'
-      : '✗ Belum tepat. Ingat prinsip Bubble Sort: nilai terbesar akan mengapung ke ujung kanan di akhir iterasi pertama.';
+    msg = isCorrect ? '✓ Benar! Setelah Iterasi Pertama Bubble Sort selesai, angka 7 berada di ujung paling kanan.' : '✗ Belum tepat. Nilai terbesar akan mengapung ke ujung kanan di akhir iterasi pertama.';
   } else if (qNum === 7) {
     isCorrect = raw.includes('insertion');
-    msg = isCorrect
-      ? '✓ Tepat sekali! Insertion Sort bekerja dengan menyisipkan (insertion) kartu satu per satu ke posisi yang benar.'
-      : '✗ Kurang tepat. Ingat istilah bahasa Inggris untuk pengurutan dengan cara penyisipan (Buku hal. 86-88).';
+    msg = isCorrect ? '✓ Tepat sekali! Insertion Sort bekerja dengan menyisipkan kartu satu per satu.' : '✗ Kurang tepat. Ingat istilah pengurutan dengan cara penyisipan (Insertion Sort).';
   } else if (qNum === 8) {
     isCorrect = raw === '5' || raw.includes('lima');
-    msg = isCorrect
-      ? '✓ Tepat! Dari bagian belum terurut (7, 6, 5), nilai terkecil yang diseleksi adalah 5 (Buku hal. 89).'
-      : '✗ Belum tepat. Bandingkan angka di dalam (7, 6, 5)—manakah bilangan yang paling kecil?';
+    msg = isCorrect ? '✓ Tepat! Dari bagian belum terurut (7, 6, 5), nilai terkecil yang diseleksi adalah 5.' : '✗ Belum tepat. Bandingkan angka di dalam (7, 6, 5)—manakah yang paling kecil?';
   }
 
   fbEl.className = `diag-feedback ${isCorrect ? 'correct' : 'wrong'}`;
   fbEl.textContent = msg;
-  if (isCorrect) sfxSuccess();
-  else sfxError();
+  if (isCorrect) sfxSuccess(); else sfxError();
 }
 
 function exportLKPDToPDF() {
@@ -1334,27 +1212,19 @@ function exportLKPDToPDF() {
       alert('Pustaka jsPDF belum termuat. Pastikan koneksi internet aktif.');
       return;
     }
-
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
-    const studentName = document.getElementById('studentName').value.trim() || 'Siswa_Tanpa_Nama';
-    const studentClass = document.getElementById('studentClass').value.trim() || 'X';
-    const dateStr = new Date().toLocaleDateString('id-ID', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric'
-    });
+    const studentName = (document.getElementById('studentName')?.value || '').trim() || 'Siswa_Tanpa_Nama';
+    const studentClass = (document.getElementById('studentClass')?.value || '').trim() || 'X';
+    const dateStr = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
 
     let y = 18;
     const leftMargin = 16;
     const maxWidth = 178;
 
-    function checkPageBreak(extraHeight = 12) {
-      if (y + extraHeight > 268) {
-        doc.addPage();
-        y = 18;
-      }
+    function checkPageBreak(extra = 12) {
+      if (y + extra > 268) { doc.addPage(); y = 18; }
     }
 
     doc.setFont('helvetica', 'bold');
@@ -1368,7 +1238,6 @@ function exportLKPDToPDF() {
     doc.setFontSize(9);
     doc.text('UPT SMA Negeri 12 Wajo — Pengembang: Andi Wahidin Burhanuddin', 105, y, { align: 'center' });
     y += 4;
-    doc.setLineWidth(0.5);
     doc.line(leftMargin, y, leftMargin + maxWidth, y);
     y += 7;
 
@@ -1380,121 +1249,86 @@ function exportLKPDToPDF() {
     doc.text(`Kelas      : ${studentClass}`, leftMargin, y);
     y += 8;
 
-    // Bagian I: Rekap Tabel Percobaan & Diagnostik Kesalahan Siswa
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10.5);
-    doc.text('I. REKAPITULASI DATA PERCOBAAN & DIAGNOSTIK KESALAHAN TEKNIK SISWA', leftMargin, y);
+    doc.text('I. REKAPITULASI AKTIVITAS PRAKTIK & DIAGNOSTIK KESALAHAN TEKNIK SISWA', leftMargin, y);
     y += 5;
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(8.8);
     if (experimentRecords.length === 0) {
-      doc.text('- Belum ada rekaman tabel percobaan yang dicatat pada sesi simulasi.', leftMargin, y);
+      doc.text('- Belum ada rekaman aktivitas siswa yang dicatat pada sesi simulasi.', leftMargin, y);
       y += 7;
     } else {
       experimentRecords.forEach((rec) => {
         checkPageBreak(14);
         const line1 = `${rec.no}. ${rec.algo} | Awal: ${rec.initial} -> Akhir: ${rec.final} | Iterasi: ${rec.iterations}, Banding: ${rec.comparisons}, Tukar: ${rec.swaps} | Kesalahan: ${rec.errorCount} (Akurasi: ${rec.accuracy})`;
         const line2 = `   Rincian Diagnostik Kesalahan: ${rec.errorDetails}`;
-        const wrap1 = doc.splitTextToSize(line1, maxWidth);
         doc.setFont('helvetica', 'bold');
-        doc.text(wrap1, leftMargin, y);
-        y += wrap1.length * 4.5;
-
+        const w1 = doc.splitTextToSize(line1, maxWidth);
+        doc.text(w1, leftMargin, y);
+        y += w1.length * 4.5;
         doc.setFont('helvetica', 'normal');
-        const wrap2 = doc.splitTextToSize(line2, maxWidth);
-        checkPageBreak(wrap2.length * 4.5 + 2);
-        doc.text(wrap2, leftMargin, y);
-        y += wrap2.length * 4.5 + 2.5;
+        const w2 = doc.splitTextToSize(line2, maxWidth);
+        checkPageBreak(w2.length * 4.5 + 2);
+        doc.text(w2, leftMargin, y);
+        y += w2.length * 4.5 + 2.5;
       });
       y += 2;
     }
 
     const questions = [
-      {
-        no: 1,
-        q: 'Jelaskan 3 elemen formal pada masalah pencarian beserta alasan mengapa mencari buku di lemari yang sudah terurut lebih cepat dibandingkan yang berantakan!',
-        a: document.getElementById('lkpd_q1').value.trim() || '(Belum diisi)'
-      },
-      {
-        no: 2,
-        q: 'Berdasarkan praktik Bubble Sort pada deret [2, 3, 7, 6, 5], jelaskan apa yang terjadi pada Iterasi Pertama dan Iterasi Kedua serta mengapa Iterasi 3 & 4 tidak boleh ditukar!',
-        a: document.getElementById('lkpd_q2').value.trim() || '(Belum diisi)'
-      },
-      {
-        no: 3,
-        q: 'Pada praktik Insertion Sort untuk deret kartu [2, 3, 7, 6, 5], jelaskan proses penyisipan kartu 6 (Iterasi 3) dan kartu 5 (Iterasi 4) serta kesalahan yang perlu dihindari!',
-        a: document.getElementById('lkpd_q3').value.trim() || '(Belum diisi)'
-      },
-      {
-        no: 4,
-        q: 'Pada praktik Selection Sort untuk deret (2, 3, 7, 6, 5), bagaimana perubahan isi Bagian Terurut, Bagian Belum Terurut, dan Nilai Terkecil di tiap tahap?',
-        a: document.getElementById('lkpd_q4').value.trim() || '(Belum diisi)'
-      },
-      {
-        no: 5,
-        q: 'Berapa kali pertukaran posisi yang diperlukan untuk mengurutkan deret [1, 2, 4, 3, 5] menjadi [1, 2, 3, 4, 5]?',
-        a: document.getElementById('lkpd_q5').value.trim() || '(Belum diisi)'
-      },
-      {
-        no: 6,
-        q: 'Pada Bubble Sort deret [2, 3, 7, 6, 5], berapakah nilai tertinggi yang menempati ujung kanan setelah Iterasi Pertama selesai?',
-        a: document.getElementById('lkpd_q6').value.trim() || '(Belum diisi)'
-      },
-      {
-        no: 7,
-        q: 'Algoritma pengurutan apakah yang bekerja dengan menyisipkan elemen ke-(i+1) ke posisi yang tepat seperti menyusun kartu?',
-        a: document.getElementById('lkpd_q7').value.trim() || '(Belum diisi)'
-      },
-      {
-        no: 8,
-        q: 'Pada tabel Selection Sort ketika Bagian Belum Terurut berisi (7, 6, 5), berapakah Nilai Terkecil yang diseleksi?',
-        a: document.getElementById('lkpd_q8').value.trim() || '(Belum diisi)'
-      },
-      {
-        no: 9,
-        q: 'Bandingkan efisiensi ketiga algoritma pada deret hampir terurut [2, 3, 7, 6, 5] vs deret terbalik [9, 7, 5, 3, 1]!',
-        a: document.getElementById('lkpd_q9').value.trim() || '(Belum diisi)'
-      },
-      {
-        no: 10,
-        q: 'Buatlah kesimpulan akhir mengenai hubungan antara Pengurutan dan Pencarian serta evaluasi dari catatan kesalahan teknik selama praktikum!',
-        a: document.getElementById('lkpd_q10').value.trim() || '(Belum diisi)'
-      }
+      '1. Jelaskan 3 elemen formal pada masalah pencarian beserta alasan mengapa mencari buku di lemari yang sudah terurut lebih cepat dibandingkan yang berantakan!',
+      '2. Berdasarkan aktivitas praktik Bubble Sort pada deret [2, 3, 7, 6, 5], jelaskan apa yang terjadi pada Iterasi Pertama dan Iterasi Kedua serta mengapa Iterasi 3 & 4 tidak boleh ditukar!',
+      '3. Pada aktivitas praktik Insertion Sort untuk deret kartu [2, 3, 7, 6, 5], jelaskan proses penyisipan kartu 6 (Iterasi 3) dan kartu 5 (Iterasi 4)!',
+      '4. Pada aktivitas praktik Selection Sort untuk deret (2, 3, 7, 6, 5), bagaimana perubahan isi Bagian Terurut dan Bagian Belum Terurut dari awal hingga selesai?',
+      '5. Berapa kali pertukaran posisi yang diperlukan untuk mengurutkan deret [1, 2, 4, 3, 5] menjadi [1, 2, 3, 4, 5]?',
+      '6. Pada Bubble Sort deret [2, 3, 7, 6, 5], berapakah nilai tertinggi yang menempati ujung kanan setelah Iterasi Pertama selesai?',
+      '7. Algoritma pengurutan apakah yang bekerja dengan menyisipkan elemen ke-(i+1) ke posisi yang tepat seperti menyusun kartu?',
+      '8. Pada tabel Selection Sort ketika Bagian Belum Terurut berisi (7, 6, 5), berapakah Nilai Terkecil yang wajib diseleksi?',
+      '9. Bandingkan efisiensi ketiga algoritma pada deret hampir terurut [2, 3, 7, 6, 5] vs deret terbalik [9, 7, 5, 3, 1]!',
+      '10. Buatlah kesimpulan akhir mengenai hubungan antara Pengurutan dan Pencarian serta refleksi dari catatan kesalahan teknik selama praktikum!'
     ];
 
     checkPageBreak(14);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10.5);
+    doc.setFontSize(10);
     doc.text('II. JAWABAN EVALUASI LKPD (NOMOR 1 - 10)', leftMargin, y);
     y += 6;
 
-    questions.forEach((item) => {
-      checkPageBreak(20);
+    for (let i = 1; i <= 10; i++) {
+      checkPageBreak(18);
+      const ans = (document.getElementById(`lkpd_q${i}`)?.value || '').trim() || '(Belum diisi)';
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(9.5);
-      const qLines = doc.splitTextToSize(`${item.no}. ${item.q}`, maxWidth);
+      doc.setFontSize(9.2);
+      const qLines = doc.splitTextToSize(questions[i - 1], maxWidth);
       doc.text(qLines, leftMargin, y);
-      y += qLines.length * 4.5 + 1.5;
+      y += qLines.length * 4.5 + 1;
 
       doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9.2);
-      const aLines = doc.splitTextToSize(`Jawaban: ${item.a}`, maxWidth - 4);
-      checkPageBreak(aLines.length * 4.5 + 4);
+      const aLines = doc.splitTextToSize(`Jawaban: ${ans}`, maxWidth - 4);
+      checkPageBreak(aLines.length * 4.5 + 3);
       doc.text(aLines, leftMargin + 3, y);
-      y += aLines.length * 4.5 + 4;
-    });
+      y += aLines.length * 4.5 + 3.5;
+    }
 
     const cleanName = studentName.replace(/[^a-zA-Z0-9_-]/g, '_');
     doc.save(`LKPD_Searching_Sorting_${cleanName}.pdf`);
     sfxSuccess();
   } catch (err) {
     debugError('PDF', err);
-    alert('Terjadi kendala saat membuat PDF.');
+    alert('Terjadi kendala saat mengekspor PDF.');
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+/* =====================================================
+   INISIALISASI APLIKASI
+   ===================================================== */
+function bootApp() {
   initBackgroundCanvas();
-  selectMission(1);
-});
+  selectMission(2);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootApp);
+} else {
+  bootApp();
+}
