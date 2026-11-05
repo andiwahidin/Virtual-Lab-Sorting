@@ -1,5 +1,6 @@
 /**
  * LAB MAYA ALGORITMA PENCARIAN (SEARCHING) & PENGURUTAN (SORTING)
+ * Mencakup: Sequential Search, Binary Search, Bubble Sort, Insertion Sort, Selection Sort
  * Penilaian & Pencatatan Khusus Mode Aktivitas Siswa (Mode Demonstrasi Tidak Dicatat)
  * Pengembang: Andi Wahidin Burhanuddin — SMA Negeri 12 Wajo
  */
@@ -36,7 +37,7 @@ function toggleClassSafe(id, className, force) {
 }
 
 /* =====================================================
-   1. WEB AUDIO API SYNTHESIZER
+   1. WEB AUDIO API SYNTHESIZER (SFX & BGM)
    ===================================================== */
 let audioCtx = null;
 let sfxEnabled = true;
@@ -133,7 +134,7 @@ function initBackgroundCanvas() {
     height = canvas.height = window.innerHeight;
   });
 
-  const symbols = ['0', '1', '[2]', '[3]', '[5]', '[6]', '[7]', 'A>B', 'swap()'];
+  const symbols = ['0', '1', '[2]', '[3]', '[5]', '[6]', '[7]', 'mid', 'A>B', 'swap()'];
   const particles = Array.from({ length: 28 }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,
@@ -173,7 +174,7 @@ function startLabFromSplash() {
   if (overlay) overlay.classList.add('active');
   let progress = 0;
   const messages = [
-    'Mengalokasikan ruang pencarian & memori array...',
+    'Mengalokasikan ruang Sequential & Binary Search...',
     'Menyiapkan validator teknik Bubble Sort [2, 3, 7, 6, 5]...',
     'Mengaktifkan pendeteksi penyisipan kartu Insertion Sort...',
     'Mengkalibrasi seleksi nilai minimum Selection Sort...',
@@ -238,15 +239,15 @@ function switchTheoryTab(tabKey, btnEl) {
 }
 
 /* =====================================================
-   4. MESIN AKTIVITAS SORTING SISWA & VALIDATOR KESALAHAN
+   4. MESIN AKTIVITAS SISWA (SEARCHING & SORTING)
    ===================================================== */
-let currentMission = 2;
+let currentMission = 1;
 const completedMissions = new Set();
 const experimentRecords = []; // Hanya menyimpan hasil Mode Aktivitas Siswa
 
 let simState = {
   executionMode: 'practice', // 'practice' = Mode Aktivitas Siswa (Dinilai) | 'demo' = Mode Demonstrasi (Tidak Dicatat)
-  algo: 'bubble',
+  algo: 'search_sequential',
   initialArray: [2, 3, 7, 6, 5],
   currentArray: [2, 3, 7, 6, 5],
   iterations: 1,
@@ -256,29 +257,48 @@ let simState = {
   errorCount: 0,
   errorList: [],
   finished: false,
+
+  // Pointer Bubble Sort
   bubblePass: 1,
   bubbleJ: 0,
+
+  // Pointer Insertion Sort
   insertionIter: 1,
   insertionCursor: 1,
+
+  // Pointer Selection Sort
   selectionI: 0,
+
+  // Pointer Sequential Search
   searchCursor: 0,
-  activeCompareIndices: [0, 1],
+
+  // Pointer Binary Search
+  binaryLow: 0,
+  binaryHigh: 4,
+  binaryMid: null,
+  binaryPhase: 'pick_mid', // 'pick_mid' (klik elemen tengah) | 'choose_dir' (pilih kiri/kanan/ketemu)
+
+  // Sorotan Visual
+  activeCompareIndices: [0],
   activeCardIndex: null,
   activeSwapIndices: [],
   sortedIndices: [],
   wrongShakeIndices: [],
   partitionInfo: { sorted: '()', unsorted: '(2, 3, 7, 6, 5)', minVal: '-' },
+
+  // Antrean Mode Demo
   stepsQueue: [],
   stepPointer: 0,
   autoTimer: null
 };
 
 const missionDescriptions = {
-  1: '<strong>Target Misi 1 (Aktivitas Pencarian / Searching):</strong> Pastikan berada di <em>Mode Aktivitas Siswa</em>, klik elemen secara berurutan dari kiri ke kanan hingga angka target ditemukan, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
-  2: '<strong>Target Misi 2 (Aktivitas Mandiri Bubble Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, bandingkan pasangan berdekatan pada deret <code>[2, 3, 7, 6, 5]</code> dengan menekan tombol <strong>Tukar Posisi</strong> atau <strong>Urutan Tetap</strong> hingga selesai, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
-  3: '<strong>Target Misi 3 (Aktivitas Mandiri Insertion Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, sisipkan kartu ke-(i+1) pada deret <code>[2, 3, 7, 6, 5]</code> menggunakan tombol <strong>Tukar ke Kiri</strong> atau <strong>Posisi Sudah Tepat</strong> hingga selesai, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
-  4: '<strong>Target Misi 4 (Aktivitas Mandiri Selection Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, klik langsung <strong>bilangan terkecil</strong> pada <em>Bagian Belum Terurut</em> di setiap iterasi hingga selesai, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
-  5: '<strong>Target Misi 5 (Aktivitas Sorting Data Terbalik [9, 7, 5, 3, 1]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, selesaikan pengurutan deret terbalik <code>[9, 7, 5, 3, 1]</code> lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.'
+  1: '<strong>Target Misi 1 (Sequential Search):</strong> Pastikan berada di <em>Mode Aktivitas Siswa</em>, periksa elemen satu per satu dari indeks [1] ke kanan hingga angka target ditemukan, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
+  2: '<strong>Target Misi 2 (Binary Search):</strong> Pada <em>Mode Aktivitas Siswa</em>, klik elemen titik tengah (<strong>Mid</strong>) dari rentang aktif <code>[Low..High]</code> lalu putuskan arah pencarian (Kiri / Ditemukan / Kanan) hingga selesai, kemudian klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
+  3: '<strong>Target Misi 3 (Aktivitas Bubble Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, bandingkan pasangan berdekatan pada deret <code>[2, 3, 7, 6, 5]</code> dengan menekan tombol <strong>Tukar Posisi</strong> atau <strong>Urutan Tetap</strong> hingga selesai, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
+  4: '<strong>Target Misi 4 (Aktivitas Insertion Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, sisipkan kartu ke-(i+1) pada deret <code>[2, 3, 7, 6, 5]</code> menggunakan tombol <strong>Tukar ke Kiri</strong> atau <strong>Posisi Sudah Tepat</strong> hingga selesai, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
+  5: '<strong>Target Misi 5 (Aktivitas Selection Sort [2, 3, 7, 6, 5]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, klik langsung <strong>bilangan terkecil</strong> pada <em>Bagian Belum Terurut</em> di setiap iterasi hingga selesai, lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.',
+  6: '<strong>Target Misi 6 (Aktivitas Sorting Data Terbalik [9, 7, 5, 3, 1]):</strong> Dalam <em>Mode Aktivitas Siswa</em>, selesaikan pengurutan deret terbalik <code>[9, 7, 5, 3, 1]</code> lalu klik <strong>Catat Aktivitas Siswa &amp; Verifikasi Misi</strong>.'
 };
 
 function setExecutionMode(mode) {
@@ -318,18 +338,47 @@ function selectMission(mNum) {
   const algoSelect = document.getElementById('simAlgoSelect');
   const presetSelect = document.getElementById('simPresetSelect');
   if (algoSelect && presetSelect) {
-    if (mNum === 1) { algoSelect.value = 'search_sorted'; presetSelect.value = '2,3,7,6,5'; }
-    else if (mNum === 2) { algoSelect.value = 'bubble'; presetSelect.value = '2,3,7,6,5'; }
-    else if (mNum === 3) { algoSelect.value = 'insertion'; presetSelect.value = '2,3,7,6,5'; }
-    else if (mNum === 4) { algoSelect.value = 'selection'; presetSelect.value = '2,3,7,6,5'; }
-    else if (mNum === 5) { algoSelect.value = 'bubble'; presetSelect.value = '9,7,5,3,1'; }
+    if (mNum === 1) {
+      setSelectAlgoValue(algoSelect, ['search_sequential', 'search_unsorted']);
+      presetSelect.value = '2,3,7,6,5';
+    } else if (mNum === 2) {
+      setSelectAlgoValue(algoSelect, ['search_binary', 'search_sorted']);
+      presetSelect.value = '2,3,7,6,5';
+    } else if (mNum === 3) {
+      algoSelect.value = 'bubble';
+      presetSelect.value = '2,3,7,6,5';
+    } else if (mNum === 4) {
+      algoSelect.value = 'insertion';
+      presetSelect.value = '2,3,7,6,5';
+    } else if (mNum === 5) {
+      algoSelect.value = 'selection';
+      presetSelect.value = '2,3,7,6,5';
+    } else if (mNum === 6) {
+      algoSelect.value = 'bubble';
+      presetSelect.value = '9,7,5,3,1';
+    }
   }
   handleAlgoChange();
 }
 
+function setSelectAlgoValue(selectEl, candidates) {
+  for (const val of candidates) {
+    if ([...selectEl.options].some((o) => o.value === val)) {
+      selectEl.value = val;
+      return;
+    }
+  }
+}
+
+function normalizeAlgoName(rawAlgo) {
+  if (rawAlgo === 'search_unsorted') return 'search_sequential';
+  if (rawAlgo === 'search_sorted') return 'search_binary';
+  return rawAlgo || 'bubble';
+}
+
 function handleAlgoChange() {
   const algoEl = document.getElementById('simAlgoSelect');
-  const algo = algoEl ? algoEl.value : 'bubble';
+  const algo = normalizeAlgoName(algoEl ? algoEl.value : 'bubble');
   const searchWrap = document.getElementById('searchTargetWrap');
   if (searchWrap) searchWrap.style.display = algo.startsWith('search_') ? 'block' : 'none';
   resetSimulationState();
@@ -366,10 +415,11 @@ function stopAutoPlay() {
 function resetSimulationState() {
   stopAutoPlay();
   const algoEl = document.getElementById('simAlgoSelect');
-  const algo = algoEl ? algoEl.value : 'bubble';
+  const algo = normalizeAlgoName(algoEl ? algoEl.value : 'bubble');
   let base = getSelectedPresetArray();
 
-  if (algo === 'search_sorted') {
+  // Binary Search mewajibkan data dalam keadaan terurut menaik
+  if (algo === 'search_binary') {
     base = [...base].sort((a, b) => a - b);
   }
 
@@ -391,6 +441,11 @@ function resetSimulationState() {
   simState.selectionI = 0;
   simState.searchCursor = 0;
 
+  simState.binaryLow = 0;
+  simState.binaryHigh = base.length - 1;
+  simState.binaryMid = null;
+  simState.binaryPhase = 'pick_mid';
+
   simState.activeCompareIndices = [];
   simState.activeCardIndex = null;
   simState.activeSwapIndices = [];
@@ -409,15 +464,17 @@ function resetSimulationState() {
     bubble: 'TEKNIK BUBBLE SORT (GELEMBUNG BERDEKATAN)',
     insertion: 'TEKNIK INSERTION SORT (PENYISIPAN KARTU)',
     selection: 'TEKNIK SELECTION SORT (SELEKSI NILAI TERKECIL)',
-    search_unsorted: 'TEKNIK SEARCHING — RUANG DATA ACAK',
-    search_sorted: 'TEKNIK SEARCHING — RUANG DATA TERURUT'
+    search_sequential: 'PENCARIAN LINIER (SEQUENTIAL SEARCH)',
+    search_binary: 'PENCARIAN BINER (BINARY SEARCH — DATA WAJIB TERURUT)'
   };
   setTextSafe('stageModeLabel', modeLabels[algo] || 'SIMULASI');
 
   toggleClassSafe('bubbleActionGroup', 'hidden', algo !== 'bubble');
   toggleClassSafe('insertionActionGroup', 'hidden', algo !== 'insertion');
+  toggleClassSafe('binaryActionGroup', 'hidden', true);
   toggleClassSafe('clickElementHintGroup', 'hidden', algo !== 'selection' && !algo.startsWith('search_'));
   toggleClassSafe('selectionPartitionBox', 'hidden', algo !== 'selection');
+  toggleClassSafe('binaryRangeBox', 'hidden', algo !== 'search_binary');
   toggleClassSafe('verifyFeedbackBox', 'hidden', true);
 
   hideInstantFeedback();
@@ -442,12 +499,12 @@ function syncPracticeHighlightsAndPrompt() {
     if (simState.executionMode === 'practice') {
       setHTMLSafe(
         'studentPromptBox',
-        `&#127881; <strong>Aktivitas Siswa Selesai!</strong> Deret akhir: <code>[${arr.join(', ')}]</code>. Total kesalahan teknik Anda: <strong>${simState.errorCount}</strong> (Akurasi: <strong>${computeAccuracyPercent()}%</strong>). Klik tombol <strong>"Catat Aktivitas Siswa &amp; Verifikasi Misi"</strong> di panel kanan!`
+        `&#127881; <strong>Aktivitas Siswa Selesai!</strong> Kondisi akhir: <code>[${arr.join(', ')}]</code>. Total kesalahan teknik Anda: <strong>${simState.errorCount}</strong> (Akurasi: <strong>${computeAccuracyPercent()}%</strong>). Klik tombol <strong>"Catat Aktivitas Siswa &amp; Verifikasi Misi"</strong> di panel kanan!`
       );
     } else {
       setHTMLSafe(
         'studentPromptBox',
-        `&#128065;&#65039; <strong>Demonstrasi Selesai!</strong> Hasil akhir: <code>[${arr.join(', ')}]</code>. Karena ini adalah <em>Mode Demonstrasi</em>, data tidak dapat dicatat ke Tabel Percobaan. Silakan beralih ke <strong>Mode Aktivitas Siswa</strong> untuk dinilai!`
+        `&#128065;&#65039; <strong>Demonstrasi Selesai!</strong> Hasil akhir: <code>[${arr.join(', ')}]</code>. Karena ini adalah <em>Mode Demonstrasi</em>, data tidak dicatat ke Tabel Percobaan. Beralihlah ke <strong>Mode Aktivitas Siswa</strong> untuk dinilai!`
       );
     }
     return;
@@ -457,7 +514,7 @@ function syncPracticeHighlightsAndPrompt() {
     setTextSafe('stageIterBadge', `Demo Iterasi Ke-${simState.iterations}`);
     setHTMLSafe(
       'studentPromptBox',
-      `<strong>Mode Demonstrasi (Hanya Observasi — Tidak Dicatat):</strong> Tekan tombol <em>Langkah Demo Berikutnya</em> atau <em>Jalankan Demo Otomatis</em> di bawah untuk mengamati cara kerja algoritma.`
+      `<strong>Mode Demonstrasi (Hanya Observasi — Tidak Dicatat):</strong> Tekan tombol <em>Langkah Demo Berikutnya</em> atau <em>Jalankan Demo Otomatis</em> di bawah untuk mengamati jalannya algoritma.`
     );
     return;
   }
@@ -509,17 +566,46 @@ function syncPracticeHighlightsAndPrompt() {
       'studentPromptBox',
       `<strong>Langkah Selection Sort (Iterasi ${iter}):</strong> Pada <em>Bagian Belum Terurut</em> indeks <strong>[${i + 1}] s.d. [${n}]</strong> yaitu <code>(${unsortedPart.join(', ')})</code>, <strong>klik langsung pada elemen dengan NILAI TERKECIL</strong>!`
     );
-  } else if (simState.algo.startsWith('search_')) {
-    const targetEl = document.getElementById('searchTargetInput');
-    const target = targetEl ? Number(targetEl.value) || 6 : 6;
+  } else if (simState.algo === 'search_sequential') {
+    const target = Number(document.getElementById('searchTargetInput')?.value) || 6;
     const cur = simState.searchCursor;
     simState.iterations = cur + 1;
     simState.activeCompareIndices = [cur];
-    setTextSafe('stageIterBadge', `Pengecekan Ke-${cur + 1}`);
+    setTextSafe('stageIterBadge', `Sequential Langkah Ke-${cur + 1}`);
     setHTMLSafe(
       'studentPromptBox',
-      `<strong>Langkah Pencarian (Searching):</strong> Kriteria angka yang dicari adalah <strong>${target}</strong>. Klik elemen pada indeks <strong>[${cur + 1}]</strong> untuk memeriksa nilainya!`
+      `<strong>Langkah Pencarian Linier / Sequential Search (Iterasi ${cur + 1}):</strong> Kriteria angka yang dicari adalah <strong>${target}</strong>. Klik elemen secara berurutan pada indeks <strong>[${cur + 1}]</strong> untuk memeriksa apakah nilainya cocok!`
     );
+  } else if (simState.algo === 'search_binary') {
+    const target = Number(document.getElementById('searchTargetInput')?.value) || 6;
+    const low = simState.binaryLow;
+    const high = simState.binaryHigh;
+    const expectedMid = Math.floor((low + high) / 2);
+
+    setTextSafe('binLowText', `[${low + 1}] (nilai ${arr[low]})`);
+    setTextSafe('binHighText', `[${high + 1}] (nilai ${arr[high]})`);
+
+    if (simState.binaryPhase === 'pick_mid') {
+      simState.activeCompareIndices = [];
+      setTextSafe('binMidText', 'Klik elemen Mid!');
+      toggleClassSafe('binaryActionGroup', 'hidden', true);
+      toggleClassSafe('clickElementHintGroup', 'hidden', false);
+      setTextSafe('stageIterBadge', `Binary Iterasi Ke-${simState.iterations} (Pilih Mid)`);
+      setHTMLSafe(
+        'studentPromptBox',
+        `<strong>Langkah 1 Binary Search (Iterasi ${simState.iterations}):</strong> Rentang pencarian aktif adalah <strong>Low = [${low + 1}]</strong> s.d. <strong>High = [${high + 1}]</strong>. Hitung posisi tengah <code>Mid = floor((${low + 1} + ${high + 1}) / 2)</code> lalu <strong>klik langsung elemen titik tengah (Mid)</strong> tersebut!`
+      );
+    } else {
+      simState.activeCompareIndices = [expectedMid];
+      setTextSafe('binMidText', `[${expectedMid + 1}] (nilai ${arr[expectedMid]})`);
+      toggleClassSafe('binaryActionGroup', 'hidden', false);
+      toggleClassSafe('clickElementHintGroup', 'hidden', true);
+      setTextSafe('stageIterBadge', `Binary Iterasi Ke-${simState.iterations} (Bandingkan Mid)`);
+      setHTMLSafe(
+        'studentPromptBox',
+        `<strong>Langkah 2 Binary Search (Iterasi ${simState.iterations}):</strong> Titik tengah <strong>Mid = [${expectedMid + 1}]</strong> bernilai <strong>${arr[expectedMid]}</strong>, sedangkan Target yang dicari adalah <strong>${target}</strong>. Pilih keputusan arah pencarian pada tombol di bawah!`
+      );
+    }
   }
 }
 
@@ -570,7 +656,8 @@ function computeAccuracyPercent() {
 }
 
 /* =====================================================
-   LOGIKA VALIDASI AKTIVITAS SISWA: BUBBLE, INSERTION, SELECTION, SEARCHING
+   LOGIKA VALIDASI AKTIVITAS SISWA:
+   BUBBLE, INSERTION, SELECTION, SEQUENTIAL, & BINARY SEARCH
    ===================================================== */
 function handleBubbleDecision(studentChoseSwap) {
   if (simState.finished || simState.executionMode !== 'practice' || simState.algo !== 'bubble') return;
@@ -692,6 +779,7 @@ function handleElementClickInPractice(clickedIdx) {
   const arr = simState.currentArray;
   const n = arr.length;
 
+  // 1. Praktik Selection Sort
   if (simState.algo === 'selection') {
     const i = simState.selectionI;
     const iter = i + 1;
@@ -747,6 +835,7 @@ function handleElementClickInPractice(clickedIdx) {
     return;
   }
 
+  // 2. Praktik Bubble Sort (Validasi klik di luar pasangan aktif)
   if (simState.algo === 'bubble') {
     const j = simState.bubbleJ;
     if (clickedIdx !== j && clickedIdx !== j + 1) {
@@ -762,6 +851,7 @@ function handleElementClickInPractice(clickedIdx) {
     return;
   }
 
+  // 3. Praktik Insertion Sort (Validasi klik di luar kartu aktif)
   if (simState.algo === 'insertion') {
     const cur = simState.insertionCursor;
     if (clickedIdx !== cur && clickedIdx !== cur - 1) {
@@ -777,15 +867,15 @@ function handleElementClickInPractice(clickedIdx) {
     return;
   }
 
-  if (simState.algo.startsWith('search_')) {
-    const targetEl = document.getElementById('searchTargetInput');
-    const target = targetEl ? Number(targetEl.value) || 6 : 6;
+  // 4A. Praktik Pencarian Linier (Sequential Search)
+  if (simState.algo === 'search_sequential') {
+    const target = Number(document.getElementById('searchTargetInput')?.value) || 6;
     const expectedIdx = simState.searchCursor;
 
     if (clickedIdx !== expectedIdx) {
       recordStudentError(
-        'Pengecekan Pencarian Melompat',
-        `Periksa secara berurutan mulai dari indeks [${expectedIdx + 1}], jangan melompat ke indeks [${clickedIdx + 1}]!`,
+        'Salah Urutan Sequential Search',
+        `Sequential Search wajib memeriksa berurutan dari kiri ke kanan! Periksa indeks [${expectedIdx + 1}] terlebih dahulu, jangan melompat ke indeks [${clickedIdx + 1}].`,
         [clickedIdx]
       );
       return;
@@ -797,23 +887,133 @@ function handleElementClickInPractice(clickedIdx) {
       simState.sortedIndices = [clickedIdx];
       simState.finished = true;
       sfxSuccess();
-      recordStudentSuccessStep(`Langkah ${clickedIdx + 1}: Indeks [${clickedIdx + 1}] bernilai ${val} == Kriteria (${target}). DITEMUKAN!`);
-    } else if (simState.algo === 'search_sorted' && val > target) {
-      simState.finished = true;
-      sfxSuccess();
-      recordStudentSuccessStep(`Langkah ${clickedIdx + 1}: Karena data terurut dan ${val} > ${target}, pencarian berhenti cepat.`);
+      recordStudentSuccessStep(`Iterasi ${simState.iterations}: Indeks [${clickedIdx + 1}] bernilai ${val} == Target (${target}). Objek DITEMUKAN!`);
     } else {
       sfxCompare();
-      recordStudentSuccessStep(`Langkah ${clickedIdx + 1}: Indeks [${clickedIdx + 1}] bernilai ${val} != ${target}. Lanjut ke elemen berikutnya.`);
+      recordStudentSuccessStep(`Iterasi ${simState.iterations}: Indeks [${clickedIdx + 1}] bernilai ${val} != Target (${target}). Lanjut periksa indeks berikutnya.`);
       simState.searchCursor++;
       if (simState.searchCursor >= n) {
         simState.finished = true;
         sfxSuccess();
+        appendStepLog(`Seluruh ruang pencarian telah diperiksa. Target ${target} tidak ditemukan.`);
       }
     }
     syncPracticeHighlightsAndPrompt();
     renderSimulationStage();
+    return;
   }
+
+  // 4B. Praktik Pencarian Biner (Binary Search) — Tahap 1: Klik Elemen Titik Tengah (Mid)
+  if (simState.algo === 'search_binary') {
+    if (simState.binaryPhase !== 'pick_mid') {
+      sfxClick();
+      showInstantFeedback(true, 'Titik tengah (Mid) sudah dipilih. Gunakan 3 tombol arah di bawah (Cari di Kiri / Ditemukan / Cari di Kanan)!');
+      return;
+    }
+
+    const low = simState.binaryLow;
+    const high = simState.binaryHigh;
+    const expectedMid = Math.floor((low + high) / 2);
+
+    if (clickedIdx < low || clickedIdx > high) {
+      recordStudentError(
+        'Klik di Luar Rentang Binary Search',
+        `Iterasi ${simState.iterations}: Indeks [${clickedIdx + 1}] sudah dieliminasi! Rentang aktif saat ini adalah [${low + 1}] s.d. [${high + 1}].`,
+        [clickedIdx]
+      );
+      return;
+    }
+
+    if (clickedIdx !== expectedMid) {
+      recordStudentError(
+        'Salah Pilih Titik Tengah (Mid)',
+        `Iterasi ${simState.iterations}: Dari Low=[${low + 1}] dan High=[${high + 1}], titik tengah seharusnya Mid = floor((${low + 1}+${high + 1})/2) = indeks [${expectedMid + 1}] (nilai ${arr[expectedMid]}), bukan indeks [${clickedIdx + 1}]!`,
+        [clickedIdx]
+      );
+      return;
+    }
+
+    // Siswa tepat mengklik Mid
+    simState.binaryMid = expectedMid;
+    simState.binaryPhase = 'choose_dir';
+    sfxCompare();
+    recordStudentSuccessStep(`Iterasi ${simState.iterations}: Tepat! Titik tengah berada di indeks [${expectedMid + 1}] dengan nilai ${arr[expectedMid]}. Sekarang pilih arah pencarian!`);
+    syncPracticeHighlightsAndPrompt();
+    renderSimulationStage();
+  }
+}
+
+/**
+ * Validasi Tahap 2 Binary Search: Keputusan Arah Pencarian (Kiri / Ditemukan / Kanan)
+ */
+function handleBinaryDirection(choice) {
+  if (simState.finished || simState.executionMode !== 'practice' || simState.algo !== 'search_binary') return;
+  if (simState.binaryPhase !== 'choose_dir') return;
+
+  const arr = simState.currentArray;
+  const target = Number(document.getElementById('searchTargetInput')?.value) || 6;
+  const mid = simState.binaryMid;
+  const midVal = arr[mid];
+
+  let correctChoice = 'found';
+  if (target < midVal) correctChoice = 'left';
+  else if (target > midVal) correctChoice = 'right';
+
+  if (choice !== correctChoice) {
+    if (choice === 'found') {
+      recordStudentError(
+        'Salah Klaim Temuan Binary Search',
+        `Iterasi ${simState.iterations}: Nilai tengah adalah ${midVal}, sedangkan Target adalah ${target} (${midVal} != ${target}). Target belum ditemukan!`,
+        [mid]
+      );
+    } else if (choice === 'left') {
+      recordStudentError(
+        'Salah Arah Binary Search (Pilih Kiri)',
+        `Iterasi ${simState.iterations}: Target (${target}) tidak lebih kecil dari nilai tengah (${midVal}). Seharusnya ${correctChoice === 'right' ? 'cari di bagian KANAN' : 'klaim Target Ditemukan'}!`,
+        [mid]
+      );
+    } else {
+      recordStudentError(
+        'Salah Arah Binary Search (Pilih Kanan)',
+        `Iterasi ${simState.iterations}: Target (${target}) tidak lebih besar dari nilai tengah (${midVal}). Seharusnya ${correctChoice === 'left' ? 'cari di bagian KIRI' : 'klaim Target Ditemukan'}!`,
+        [mid]
+      );
+    }
+    return;
+  }
+
+  simState.comparisons++;
+  if (choice === 'found') {
+    simState.sortedIndices = [mid];
+    simState.finished = true;
+    toggleClassSafe('binaryActionGroup', 'hidden', true);
+    sfxSuccess();
+    recordStudentSuccessStep(`Iterasi ${simState.iterations}: Tepat! Nilai tengah [${mid + 1}]=${midVal} sama dengan Target (${target}). Pencarian Biner Selesai!`);
+  } else if (choice === 'left') {
+    simState.binaryHigh = mid - 1;
+    sfxSwap();
+    recordStudentSuccessStep(`Iterasi ${simState.iterations}: Tepat! Karena Target (${target}) < ${midVal}, eliminasi bagian kanan. Batas baru High = [${simState.binaryHigh + 1}].`);
+  } else if (choice === 'right') {
+    simState.binaryLow = mid + 1;
+    sfxSwap();
+    recordStudentSuccessStep(`Iterasi ${simState.iterations}: Tepat! Karena Target (${target}) > ${midVal}, eliminasi bagian kiri. Batas baru Low = [${simState.binaryLow + 1}].`);
+  }
+
+  if (!simState.finished) {
+    if (simState.binaryLow > simState.binaryHigh) {
+      simState.finished = true;
+      toggleClassSafe('binaryActionGroup', 'hidden', true);
+      sfxSuccess();
+      appendStepLog(`Rentang pencarian habis (Low > High). Target ${target} tidak ditemukan di dalam deret.`);
+    } else {
+      simState.iterations++;
+      simState.binaryPhase = 'pick_mid';
+      simState.binaryMid = null;
+    }
+  }
+
+  syncPracticeHighlightsAndPrompt();
+  renderSimulationStage();
 }
 
 /* =====================================================
@@ -846,6 +1046,15 @@ function renderSimulationStage() {
     if (simState.activeSwapIndices.includes(idx)) el.classList.add('swapping');
     if (simState.sortedIndices.includes(idx)) el.classList.add('sorted-done');
     if (simState.wrongShakeIndices.includes(idx)) el.classList.add('wrong-shake');
+
+    if (simState.algo === 'search_binary' && !simState.finished) {
+      if (idx < simState.binaryLow || idx > simState.binaryHigh) {
+        el.classList.add('eliminated-range');
+      }
+      if (simState.binaryPhase === 'choose_dir' && idx === simState.binaryMid) {
+        el.classList.add('mid-selected');
+      }
+    }
 
     el.textContent = val;
     el.onclick = () => handleElementClickInPractice(idx);
@@ -1000,9 +1209,8 @@ function buildAlgorithmSteps(algo, baseArray) {
         message: `Demo Iterasi ${iter}: Seleksi nilai terkecil ${foundMin} ke Bagian Terurut.`
       });
     }
-  } else if (algo.startsWith('search_')) {
-    const targetEl = document.getElementById('searchTargetInput');
-    const target = targetEl ? Number(targetEl.value) || 6 : 6;
+  } else if (algo === 'search_sequential') {
+    const target = Number(document.getElementById('searchTargetInput')?.value) || 6;
     for (let i = 0; i < n; i++) {
       compCount++;
       const match = arr[i] === target;
@@ -1010,9 +1218,42 @@ function buildAlgorithmSteps(algo, baseArray) {
         type: match ? 'swap' : 'compare', iter: i + 1, compCount, swapCount: 0,
         arraySnapshot: [...arr], compareIndices: [i], swapIndices: match ? [i] : [],
         sortedIndices: match ? [i] : [],
-        message: match ? `Demo Langkah ${i + 1}: Indeks [${i + 1}]=${arr[i]} cocok!` : `Demo Langkah ${i + 1}: Indeks [${i + 1}]=${arr[i]} != ${target}.`
+        message: match
+          ? `Demo Sequential Langkah ${i + 1}: Indeks [${i + 1}]=${arr[i]} cocok dengan Target (${target})!`
+          : `Demo Sequential Langkah ${i + 1}: Indeks [${i + 1}]=${arr[i]} != ${target}.`
       });
       if (match) break;
+    }
+  } else if (algo === 'search_binary') {
+    const target = Number(document.getElementById('searchTargetInput')?.value) || 6;
+    let low = 0, high = n - 1, iter = 1;
+    while (low <= high) {
+      compCount++;
+      const mid = Math.floor((low + high) / 2);
+      const midVal = arr[mid];
+      if (midVal === target) {
+        steps.push({
+          type: 'swap', iter, compCount, swapCount: 0,
+          arraySnapshot: [...arr], compareIndices: [mid], swapIndices: [mid], sortedIndices: [mid],
+          message: `Demo Binary Iterasi ${iter}: Mid=[${mid + 1}] bernilai ${midVal} == Target (${target}). Ditemukan!`
+        });
+        break;
+      } else if (target < midVal) {
+        steps.push({
+          type: 'compare', iter, compCount, swapCount: 0,
+          arraySnapshot: [...arr], compareIndices: [mid], swapIndices: [], sortedIndices: [],
+          message: `Demo Binary Iterasi ${iter}: Mid=[${mid + 1}] (${midVal}) > Target (${target}), cari di bagian Kiri.`
+        });
+        high = mid - 1;
+      } else {
+        steps.push({
+          type: 'compare', iter, compCount, swapCount: 0,
+          arraySnapshot: [...arr], compareIndices: [mid], swapIndices: [], sortedIndices: [],
+          message: `Demo Binary Iterasi ${iter}: Mid=[${mid + 1}] (${midVal}) < Target (${target}), cari di bagian Kanan.`
+        });
+        low = mid + 1;
+      }
+      iter++;
     }
   }
   return steps;
@@ -1022,7 +1263,9 @@ function stepSimulation() {
   if (simState.finished) return;
   if (simState.stepPointer >= simState.stepsQueue.length) {
     simState.finished = true;
-    simState.sortedIndices = simState.currentArray.map((_, i) => i);
+    if (!simState.algo.startsWith('search_')) {
+      simState.sortedIndices = simState.currentArray.map((_, i) => i);
+    }
     syncPracticeHighlightsAndPrompt();
     renderSimulationStage();
     sfxSuccess();
@@ -1059,29 +1302,29 @@ function toggleAutoPlay() {
 }
 
 /* =====================================================
-   5. PENCATATAN TABEL PERCOBAAN (HANYA MODE AKTIVITAS SISWA)
+   5. PENCATATAN TABEL PERCOBAAN (KHUSUS MODE AKTIVITAS SISWA)
    ===================================================== */
 function recordAndVerifyExperiment() {
   const fb = document.getElementById('verifyFeedbackBox');
   if (fb) fb.classList.remove('hidden', 'ok', 'warn');
 
-  // BLOKIR PENCATATAN JIKA SEDANG DI MODE DEMONSTRASI
+  // BLOKIR PENCATATAN DARI MODE DEMONSTRASI
   if (simState.executionMode !== 'practice') {
     sfxError();
     if (fb) {
       fb.classList.add('warn');
-      fb.innerHTML = `&#128683; <strong>Mode Demonstrasi Tidak Dicatat!</strong> Penilaian hanya berlaku untuk aktivitas mandiri siswa. Silakan klik tombol <strong>"&#9997;&#65039; Mode Aktivitas Siswa (Dinilai &amp; Dicatat)"</strong> di bagian atas meja kerja lalu lakukan pengurutan sendiri.`;
+      fb.innerHTML = `&#128683; <strong>Mode Demonstrasi Tidak Dicatat!</strong> Penilaian hanya berlaku untuk aktivitas mandiri siswa. Silakan klik tombol <strong>"&#9997;&#65039; Mode Aktivitas Siswa (Dinilai &amp; Dicatat)"</strong> di bagian atas meja kerja lalu lakukan langkah praktikum sendiri.`;
     }
     debugLog('PencatatanDitolak', 'Percobaan mencatat dari Mode Demonstrasi ditolak.');
     return;
   }
 
-  // WAJIBKAN SISWA MENYELESAIKAN AKTIVITAS PRAKTIK SEBELUM DICATAT
+  // WAJIBKAN SISWA MENYELESAIKAN AKTIVITAS SEBELUM DICATAT
   if (!simState.finished) {
     sfxError();
     if (fb) {
       fb.classList.add('warn');
-      fb.innerHTML = `&#9888;&#65039; <strong>Aktivitas Belum Selesai!</strong> Selesaikan seluruh langkah iterasi pada <em>Mode Aktivitas Siswa</em> hingga berstatus <strong>Selesai / Terurut Menaik</strong> sebelum mencatat data ke tabel.`;
+      fb.innerHTML = `&#9888;&#65039; <strong>Aktivitas Belum Selesai!</strong> Selesaikan seluruh langkah iterasi pada <em>Mode Aktivitas Siswa</em> hingga berstatus <strong>Selesai</strong> sebelum mencatat data ke tabel.`;
     }
     return;
   }
@@ -1090,8 +1333,8 @@ function recordAndVerifyExperiment() {
     bubble: 'Bubble Sort',
     insertion: 'Insertion Sort',
     selection: 'Selection Sort',
-    search_unsorted: 'Searching (Data Acak)',
-    search_sorted: 'Searching (Data Terurut)'
+    search_sequential: 'Sequential Search (Linier)',
+    search_binary: 'Binary Search (Biner)'
   };
 
   const errorSummary =
@@ -1099,11 +1342,16 @@ function recordAndVerifyExperiment() {
       ? '0 Kesalahan (Sempurna)'
       : simState.errorList.map((e) => `[Iter ${e.iter}] ${e.type}: ${e.detail}`).join(' | ');
 
+  const targetVal = Number(document.getElementById('searchTargetInput')?.value) || 6;
+  const finalResultText = simState.algo.startsWith('search_')
+    ? `Cari ${targetVal} pada [${simState.currentArray.join(', ')}]`
+    : `[${simState.currentArray.join(', ')}]`;
+
   const record = {
     no: experimentRecords.length + 1,
     algo: `${algoNames[simState.algo] || simState.algo} (Aktivitas Siswa)`,
     initial: `[${simState.initialArray.join(', ')}]`,
-    final: `[${simState.currentArray.join(', ')}]`,
+    final: finalResultText,
     iterations: simState.iterations,
     comparisons: simState.comparisons,
     swaps: simState.swaps,
@@ -1117,11 +1365,12 @@ function recordAndVerifyExperiment() {
 
   const initStr = simState.initialArray.join(',');
   let missionPassed = false;
-  if (currentMission === 1 && simState.algo.startsWith('search_') && simState.finished) missionPassed = true;
-  else if (currentMission === 2 && simState.algo === 'bubble' && initStr === '2,3,7,6,5' && simState.finished) missionPassed = true;
-  else if (currentMission === 3 && simState.algo === 'insertion' && initStr === '2,3,7,6,5' && simState.finished) missionPassed = true;
-  else if (currentMission === 4 && simState.algo === 'selection' && initStr === '2,3,7,6,5' && simState.finished) missionPassed = true;
-  else if (currentMission === 5 && initStr === '9,7,5,3,1' && simState.finished) missionPassed = true;
+  if (currentMission === 1 && simState.algo === 'search_sequential' && simState.finished) missionPassed = true;
+  else if (currentMission === 2 && simState.algo === 'search_binary' && simState.finished) missionPassed = true;
+  else if (currentMission === 3 && simState.algo === 'bubble' && initStr === '2,3,7,6,5' && simState.finished) missionPassed = true;
+  else if (currentMission === 4 && simState.algo === 'insertion' && initStr === '2,3,7,6,5' && simState.finished) missionPassed = true;
+  else if (currentMission === 5 && simState.algo === 'selection' && initStr === '2,3,7,6,5' && simState.finished) missionPassed = true;
+  else if (currentMission === 6 && initStr === '9,7,5,3,1' && simState.finished) missionPassed = true;
 
   if (missionPassed) {
     completedMissions.add(currentMission);
@@ -1139,7 +1388,7 @@ function recordAndVerifyExperiment() {
     sfxSuccess();
     if (fb) {
       fb.classList.add('ok');
-      fb.innerHTML = `&#9989; <strong>Data Aktivitas Siswa (${simState.errorCount} kesalahan, Akurasi ${record.accuracy}) berhasil dimasukkan ke Tabel!</strong> (Untuk menandai Misi #${currentMission} tuntas, gunakan algoritma dan deret sesuai instruksi misi).`;
+      fb.innerHTML = `&#9989; <strong>Data Aktivitas Siswa (${simState.errorCount} kesalahan, Akurasi ${record.accuracy}) berhasil dimasukkan ke Tabel!</strong> (Untuk menandai Misi #${currentMission} tuntas, gunakan teknik dan deret sesuai instruksi misi).`;
     }
   }
   debugLog('TabelAktivitasSiswa', 'Data berhasil dicatat:', record);
@@ -1149,7 +1398,7 @@ function renderExperimentTable() {
   const tbody = document.getElementById('experimentTableBody');
   if (!tbody) return;
   if (experimentRecords.length === 0) {
-    tbody.innerHTML = `<tr class="empty-row"><td colspan="10">Belum ada data aktivitas siswa yang dicatat. Selesaikan pengurutan pada <strong>Mode Aktivitas Siswa</strong> lalu klik <strong>"Catat Aktivitas Siswa &amp; Verifikasi Misi"</strong>.</td></tr>`;
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="10">Belum ada data aktivitas siswa yang dicatat. Selesaikan praktikum pada <strong>Mode Aktivitas Siswa</strong> lalu klik <strong>"Catat Aktivitas Siswa &amp; Verifikasi Misi"</strong>.</td></tr>`;
     return;
   }
   tbody.innerHTML = experimentRecords
@@ -1187,8 +1436,11 @@ function checkDiagnostic(qNum) {
 
   let isCorrect = false, msg = '';
   if (qNum === 5) {
-    isCorrect = raw === '1' || raw.includes('satu');
-    msg = isCorrect ? '✓ Tepat! Deret [1, 2, 4, 3, 5] hanya memerlukan 1 kali pertukaran antara nilai 4 dan 3.' : '✗ Kurang tepat. Perhatikan posisi angka 4 dan 3 pada deret [1, 2, 4, 3, 5].';
+    // Mendukung jawaban nilai tengah Binary Search [2, 3, 5, 6, 7] yaitu 5 (maupun pertanyaan lama 1)
+    isCorrect = raw === '5' || raw.includes('lima') || raw === '1' || raw.includes('satu');
+    msg = isCorrect
+      ? '✓ Tepat! Pada deret terurut [2, 3, 5, 6, 7], posisi tengah Mid = (1 + 5) / 2 = indeks [3] yang bernilai 5.'
+      : '✗ Kurang tepat. Lihat elemen ke-3 (titik tengah / Mid) dari deret terurut [2, 3, 5, 6, 7].';
   } else if (qNum === 6) {
     isCorrect = raw === '7' || raw.includes('tujuh');
     msg = isCorrect ? '✓ Benar! Setelah Iterasi Pertama Bubble Sort selesai, angka 7 berada di ujung paling kanan.' : '✗ Belum tepat. Nilai terbesar akan mengapung ke ujung kanan di akhir iterasi pertama.';
@@ -1232,7 +1484,7 @@ function exportLKPDToPDF() {
     doc.text('LAPORAN PRAKTIKUM LAB MAYA INFORMATIKA KELAS X', 105, y, { align: 'center' });
     y += 6;
     doc.setFontSize(11);
-    doc.text('Topik: Algoritma Pencarian (Searching) & Pengurutan (Sorting)', 105, y, { align: 'center' });
+    doc.text('Topik: Sequential & Binary Search serta Bubble, Insertion, & Selection Sort', 105, y, { align: 'center' });
     y += 5;
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9);
@@ -1276,15 +1528,15 @@ function exportLKPDToPDF() {
     }
 
     const questions = [
-      '1. Jelaskan 3 elemen formal pada masalah pencarian beserta alasan mengapa mencari buku di lemari yang sudah terurut lebih cepat dibandingkan yang berantakan!',
+      '1. Jelaskan perbedaan cara kerja antara Pencarian Linier (Sequential Search) dan Pencarian Biner (Binary Search) serta alasan mengapa Binary Search mewajibkan data terurut terlebih dahulu!',
       '2. Berdasarkan aktivitas praktik Bubble Sort pada deret [2, 3, 7, 6, 5], jelaskan apa yang terjadi pada Iterasi Pertama dan Iterasi Kedua serta mengapa Iterasi 3 & 4 tidak boleh ditukar!',
       '3. Pada aktivitas praktik Insertion Sort untuk deret kartu [2, 3, 7, 6, 5], jelaskan proses penyisipan kartu 6 (Iterasi 3) dan kartu 5 (Iterasi 4)!',
       '4. Pada aktivitas praktik Selection Sort untuk deret (2, 3, 7, 6, 5), bagaimana perubahan isi Bagian Terurut dan Bagian Belum Terurut dari awal hingga selesai?',
-      '5. Berapa kali pertukaran posisi yang diperlukan untuk mengurutkan deret [1, 2, 4, 3, 5] menjadi [1, 2, 3, 4, 5]?',
+      '5. Pada Pencarian Biner (Binary Search) untuk deret terurut [2, 3, 5, 6, 7] dengan Low=[1] dan High=[5], berapakah nilai angka yang berada tepat di posisi titik tengah (Mid) pada pemeriksaan pertama?',
       '6. Pada Bubble Sort deret [2, 3, 7, 6, 5], berapakah nilai tertinggi yang menempati ujung kanan setelah Iterasi Pertama selesai?',
       '7. Algoritma pengurutan apakah yang bekerja dengan menyisipkan elemen ke-(i+1) ke posisi yang tepat seperti menyusun kartu?',
       '8. Pada tabel Selection Sort ketika Bagian Belum Terurut berisi (7, 6, 5), berapakah Nilai Terkecil yang wajib diseleksi?',
-      '9. Bandingkan efisiensi ketiga algoritma pada deret hampir terurut [2, 3, 7, 6, 5] vs deret terbalik [9, 7, 5, 3, 1]!',
+      '9. Bandingkan efisiensi ketiga algoritma pengurutan pada deret hampir terurut [2, 3, 7, 6, 5] vs deret terbalik [9, 7, 5, 3, 1]!',
       '10. Buatlah kesimpulan akhir mengenai hubungan antara Pengurutan dan Pencarian serta refleksi dari catatan kesalahan teknik selama praktikum!'
     ];
 
@@ -1324,7 +1576,7 @@ function exportLKPDToPDF() {
    ===================================================== */
 function bootApp() {
   initBackgroundCanvas();
-  selectMission(2);
+  selectMission(1);
 }
 
 if (document.readyState === 'loading') {
