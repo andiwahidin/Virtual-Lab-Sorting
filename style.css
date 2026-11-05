@@ -1414,3 +1414,193 @@ body {
   .idx-cell { width: 48px; }
   .metrics-grid-6 { grid-template-columns: repeat(2, 1fr); }
 }
+
+
+/* Tambahan Visual Sequential Search & Binary Search */
+.core-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.mini-search-nodes {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.msn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  color: #cbd5e1;
+  font-weight: 800;
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+}
+
+.msn.seq-check {
+  background: #fde047;
+  color: #020b14;
+  border-color: #facc15;
+}
+
+.msn.seq-found {
+  background: #10b981;
+  color: #022c22;
+  border-color: #a7f3d0;
+}
+
+.msn.bin-elim {
+  opacity: 0.3;
+  text-decoration: line-through;
+  border-style: dashed;
+}
+
+.msn.bin-mid {
+  background: #38bdf8;
+  color: #020b14;
+  border-color: #facc15;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+/* Pointer Badges LOW / MID / HIGH pada Simulasi Binary Search */
+.arr-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.arr-item.style-search {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.9);
+  color: #f8fafc;
+  border: 2.5px solid #38bdf8;
+  font-size: 1.18rem;
+  font-weight: 800;
+}
+
+.arr-item.eliminated-node {
+  opacity: 0.26 !important;
+  filter: grayscale(85%);
+  border-style: dashed !important;
+  transform: scale(0.92);
+}
+
+.arr-item.mid-highlight {
+  background: linear-gradient(135deg, #38bdf8, #facc15) !important;
+  color: #020b14 !important;
+  outline: 3px solid #facc15;
+  outline-offset: 3px;
+  transform: translateY(-8px);
+}
+
+.pointer-badges-row {
+  display: flex;
+  gap: 3px;
+  min-height: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ptr-tag {
+  font-size: 0.63rem;
+  font-weight: 900;
+  padding: 1px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.4px;
+}
+
+.ptr-low {
+  background: rgba(56, 189, 248, 0.22);
+  color: #38bdf8;
+  border: 1px solid #38bdf8;
+}
+
+.ptr-mid {
+  background: #facc15;
+  color: #020b14;
+  border: 1px solid #fde047;
+}
+
+.ptr-high {
+  background: rgba(244, 63, 94, 0.22);
+  color: #fb7185;
+  border: 1px solid #fb7185;
+}
+
+.ptr-seq {
+  background: #facc15;
+  color: #020b14;
+}
+
+.binary-telemetry-box {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+  background: rgba(7, 38, 61, 0.72);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.btn-found-act {
+  background: var(--accent-emerald);
+  color: #022c22;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.search-compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+  margin-bottom: 16px;
+}
+
+.search-method-card {
+  background: rgba(2, 11, 20, 0.74);
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.search-method-card h4 {
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+  font-size: 1.04rem;
+}
+
+.formula-pill {
+  display: inline-block;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  color: var(--accent-cyan);
+  font-family: monospace;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 8px;
+  margin: 8px 0;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 920px) {
+  .core-grid-4, .search-compare-grid {
+    grid-template-columns: 1fr;
+  }
+  .binary-telemetry-box {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+Displaying Virtual-Lab-Searching-Sorting/style.css.
