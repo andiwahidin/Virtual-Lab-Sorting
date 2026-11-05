@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lab Maya Pencarian (Sequential &amp; Binary Search) &amp; Pengurutan (Sorting) — Informatika Kelas X</title>
+  <title>Lab Maya Algoritma Searching & Sorting — Informatika Kelas X</title>
   <link rel="stylesheet" href="style.css?v=4" />
   <!-- Pustaka jsPDF 2.5.1 untuk ekspor LKPD ke PDF A4 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -34,8 +34,8 @@
   <div id="loadingOverlay" class="loading-overlay" aria-hidden="true">
     <div class="loading-card">
       <div class="loading-badge">INISIALISASI LABORATORIUM KOMPUTASI</div>
-      <h2 class="loading-title">Menyiapkan Mesin Searching, Sorting &amp; Validator Aktivitas Siswa...</h2>
-      <p id="loadingStepText" class="loading-step">Mengalokasikan ruang pencarian Sequential &amp; Binary Search...</p>
+      <h2 class="loading-title">Menyiapkan Mesin Algoritma &amp; Validator Aktivitas Siswa...</h2>
+      <p id="loadingStepText" class="loading-step">Mengalokasikan ruang Sequential &amp; Binary Search...</p>
 
       <div class="loading-nodes" id="loadingNodes">
         <div class="load-node" data-idx="0"><span>2</span><small>[1]</small></div>
@@ -86,38 +86,38 @@
         <div class="splash-badge">INFORMATIKA SMA/MA/SMK KELAS X (EDISI REVISI) • BAB 2</div>
         <h1 class="splash-title">Laboratorium Virtual Algoritma Pencarian &amp; Pengurutan</h1>
         <p class="splash-desc">
-          Eksplorasi interaktif strategi algoritmik: mempraktikkan langsung <strong>Pencarian Linier (Sequential Search)</strong> &amp; <strong>Pencarian Biner (Binary Search)</strong> serta teknik pengurutan <strong>Bubble Sort</strong>, <strong>Insertion Sort</strong>, dan <strong>Selection Sort</strong> dengan pencatatan diagnostik khusus aktivitas siswa.
+          Eksplorasi interaktif cara memilih algoritma untuk masalah kehidupan nyata: mempraktikkan <strong>Sequential Search</strong> &amp; <strong>Binary Search</strong> serta teknik <strong>Bubble Sort</strong>, <strong>Insertion Sort</strong>, dan <strong>Selection Sort</strong> dengan pencatatan diagnostik khusus aktivitas siswa.
         </p>
 
         <div class="splash-core-panel">
           <div class="core-panel-header">
-            <span>VISUALISASI INTI: STRATEGI PENCARIAN (SEQUENTIAL VS BINARY SEARCH) &amp; PENGURUTAN DATA</span>
+            <span>VISUALISASI INTI: TRANSFORMASI DERET UJI [2, 3, 7, 6, 5] &rarr; [2, 3, 5, 6, 7]</span>
           </div>
           <div class="core-grid">
             <div class="core-box">
-              <div class="core-tag">1. Sequential Search</div>
-              <div class="mini-search-nodes">
-                <span class="msn seq-check">2</span>
-                <span class="msn seq-check">3</span>
-                <span class="msn seq-check">7</span>
-                <span class="msn seq-found">6</span>
-                <span class="msn">5</span>
+              <div class="core-tag">a. Bubble Sort</div>
+              <div class="mini-bubbles">
+                <span class="mb">2</span>
+                <span class="mb">3</span>
+                <span class="mb swap-hi">6</span>
+                <span class="mb swap-dark">7</span>
+                <span class="mb">5</span>
               </div>
-              <p>Periksa satu per satu berurutan dari kiri ke kanan (tidak wajib terurut).</p>
+              <p>Bandingkan &amp; tukar elemen berdekatan secara berulang dari kiri ke kanan.</p>
             </div>
             <div class="core-box">
-              <div class="core-tag">2. Binary Search</div>
-              <div class="mini-search-nodes">
-                <span class="msn bin-elim">2</span>
-                <span class="msn bin-elim">3</span>
-                <span class="msn bin-mid">5</span>
-                <span class="msn seq-found">6</span>
-                <span class="msn">7</span>
+              <div class="core-tag">b. Insertion Sort</div>
+              <div class="mini-cards">
+                <span class="mc">2</span>
+                <span class="mc">3</span>
+                <span class="mc ins-hi">5</span>
+                <span class="mc">6</span>
+                <span class="mc">7</span>
               </div>
-              <p>Bagi dua ruang terurut di titik tengah (<code>mid</code>) &amp; eliminasi separuh data.</p>
+              <p>Ambil kartu ke-(i+1) lalu sisipkan mundur ke posisi yang tepat di kiri.</p>
             </div>
             <div class="core-box">
-              <div class="core-tag">3. Bubble / Insertion / Selection</div>
+              <div class="core-tag">c. Selection Sort</div>
               <div class="mini-bars">
                 <span class="mbar s-done" style="height:18px">2</span>
                 <span class="mbar s-done" style="height:25px">3</span>
@@ -125,12 +125,12 @@
                 <span class="mbar s-un" style="height:42px">6</span>
                 <span class="mbar s-un" style="height:50px">7</span>
               </div>
-              <p>Urutkan data menaik agar pencarian Binary Search dapat bekerja optimal.</p>
+              <p>Seleksi nilai terkecil dari Bagian Belum Terurut ke Bagian Terurut.</p>
             </div>
           </div>
 
           <div class="splash-features">
-            <span class="feat-pill">&#128269; Simulasi Sequential &amp; Binary Search (Low-Mid-High)</span>
+            <span class="feat-pill">&#128269; Sequential &amp; Binary Search</span>
             <span class="feat-pill">&#9997;&#65039; Penilaian Khusus Mode Aktivitas Siswa</span>
             <span class="feat-pill">&#128196; LKPD 10 Soal &amp; Ekspor PDF A4</span>
           </div>
@@ -145,7 +145,7 @@
         </button>
 
         <div class="splash-footer">
-          Dikembangkan oleh <strong>Andi Wahidin Burhanuddin</strong> &bull; SMA Negeri 12 Wajo, Sulawesi Selatan
+          Dikembangkan oleh <strong>Andi Wahidin Burhanuddin</strong> &bull; UPT SMA Negeri 12 Wajo, Sulawesi Selatan
         </div>
       </div>
     </section>
@@ -157,10 +157,10 @@
       <div class="home-hero">
         <span class="section-badge">MEMILIH ALGORITMA UNTUK MASALAH KEHIDUPAN NYATA</span>
         <h2 class="home-question">
-          Mengapa Mencari Kata di Kamus dengan Membuka Halaman Tengah (Binary Search) Jauh Lebih Cepat daripada Membaca dari Halaman Pertama (Sequential Search)?
+          Mengapa Petugas Perpustakaan Dapat Menemukan Buku Lebih Cepat dibandingkan Mencari di Lemari yang Berantakan?
         </h2>
         <p class="home-subtitle">
-          Ketika data belum terurut, kita harus memeriksa satu per satu dengan <strong>Sequential Search</strong>. Namun setelah data diurutkan dengan <strong>Sorting</strong>, kita dapat memotong separuh ruang pencarian di setiap langkah menggunakan <strong>Binary Search</strong>!
+          Ketika koleksi buku atau data telah diurutkan (<em>sorted</em>), kita tidak perlu lagi memeriksa satu per satu dari awal (<em>Sequential Search</em>), melainkan dapat langsung memotong ruang pencarian menjadi dua bagian (<em>Binary Search</em>). Pilih menu di bawah ini untuk memulai eksplorasi!
         </p>
       </div>
 
@@ -173,7 +173,7 @@
             </svg>
           </div>
           <h3>Materi &amp; Teori Visual</h3>
-          <p>Pelajari konsep mendalam Sequential Search vs Binary Search (rumus mid, low, high) serta telusur Bubble, Insertion, dan Selection Sort.</p>
+          <p>Pelajari Sequential Search &amp; Binary Search beserta telusur langkah demi langkah Bubble Sort, Insertion Sort, dan Selection Sort pada deret [2, 3, 7, 6, 5].</p>
           <span class="menu-link">Buka Materi &rarr;</span>
         </div>
 
@@ -186,7 +186,7 @@
             </svg>
           </div>
           <h3>Simulasi &amp; Aktivitas Siswa</h3>
-          <p>Praktikkan langsung Sequential Search, Binary Search (pilih titik tengah &amp; eliminasi paruh), serta 3 teknik Sorting pada Mode Aktivitas Siswa!</p>
+          <p>Praktikkan langsung Sequential Search, Binary Search, Bubble, Insertion, dan Selection Sort! Hanya hasil Mode Aktivitas Siswa yang dicatat untuk penilaian.</p>
           <span class="menu-link">Mulai Praktik &rarr;</span>
         </div>
 
@@ -202,7 +202,7 @@
             </svg>
           </div>
           <h3>Prosedur Praktikum</h3>
-          <p>Panduan 7 langkah kerja berurutan mulai dari eksperimen Sequential &amp; Binary Search, praktik Sorting mandiri, hingga ekspor PDF.</p>
+          <p>Panduan 7 langkah kerja berurutan mulai dari pemilihan skenario 6 misi, praktik mandiri, evaluasi kesalahan iterasi, hingga ekspor PDF.</p>
           <span class="menu-link">Lihat Prosedur &rarr;</span>
         </div>
 
@@ -216,7 +216,7 @@
             </svg>
           </div>
           <h3>LKPD Digital &amp; PDF</h3>
-          <p>Kerjakan 10 soal evaluasi tentang Sequential Search, Binary Search, dan Sorting, lalu unduh laporan lengkap berformat PDF A4.</p>
+          <p>Kerjakan 10 soal evaluasi dan ekspor hasil aktivitas praktikum beserta rekap kesalahan iterasi &amp; akurasi ke berkas PDF A4.</p>
           <span class="menu-link">Kerjakan LKPD &rarr;</span>
         </div>
 
@@ -239,166 +239,88 @@
          ========================================== -->
     <section id="view-teori" class="view">
       <div class="view-header">
-        <span class="section-badge">REFERENSI BUKU TEKS INFORMATIKA KELAS X</span>
-        <h2>Materi &amp; Teori Visual: Pencarian (Sequential &amp; Binary Search) dan Pengurutan (Sorting)</h2>
-        <p>Klik pada kartu atau tab konsep di bawah ini untuk memahami cara kerja algoritma pencarian dan pengurutan secara mendalam.</p>
+        <span class="section-badge">REFERENSI BUKU TEKS INFORMATIKA KELAS X (HAL. 80–89)</span>
+        <h2>Materi &amp; Teori Visual: Pencarian (Searching) dan Pengurutan (Sorting)</h2>
+        <p>Klik pada kartu konsep di bawah ini untuk mempelajari aturan setiap algoritma sebelum melakukan aktivitas praktik di meja simulasi.</p>
       </div>
 
-      <!-- BLOK 1: ELEMEN MASALAH PENCARIAN -->
+      <!-- Bagian 1: Pencarian (Searching) + Sequential vs Binary Search -->
       <div class="theory-block">
-        <h3 class="block-title">1. Konsep Dasar &amp; 3 Elemen Masalah Pencarian (Searching)</h3>
+        <h3 class="block-title">1. Pencarian (Searching): Sequential Search &amp; Binary Search</h3>
         <p class="theory-lead">
-          <strong>Pencarian (Searching)</strong> adalah proses menemukan suatu objek, data, atau nilai tertentu yang memenuhi kriteria di dalam suatu <strong>ruang pencarian</strong>. Setiap masalah pencarian memiliki 3 elemen utama:
+          <strong>Apa itu mencari?</strong> Mencari adalah usaha menemukan "sesuatu" yang dapat berupa benda, angka, konsep, atau informasi yang memenuhi kriteria tertentu dalam suatu <strong>ruang pencarian</strong>.
         </p>
 
         <div class="theory-cards-3">
           <div class="t-card clickable-card" onclick="playCardClickEffect(this)">
             <div class="t-num">Elemen 1</div>
             <h4>Sekumpulan Benda / Objek</h4>
-            <p>Ruang pencarian tempat objek berada, misalnya deretan buku di perpustakaan, daftar kontak di ponsel, atau elemen angka di dalam larik (<em>array</em>).</p>
+            <p>Ruang pencarian tempat objek berada, misalnya seluruh koleksi buku di rak perpustakaan, tumpukan pakaian di lemari, atau deret angka di dalam larik.</p>
           </div>
           <div class="t-card clickable-card" onclick="playCardClickEffect(this)">
             <div class="t-num">Elemen 2</div>
             <h4>Kriteria Objek yang Dicari</h4>
-            <p>Nilai kunci (<em>target key</em>) atau ciri spesifik yang ingin ditemukan, misalnya NISN siswa tertentu, kata di dalam kamus, atau angka target <code>X</code>.</p>
+            <p>Ciri spesifik dari target yang ingin ditemukan, misalnya judul buku tertentu, motif batik seragam sekolah, atau nilai angka target.</p>
           </div>
           <div class="t-card clickable-card" onclick="playCardClickEffect(this)">
             <div class="t-num">Elemen 3</div>
             <h4>Pengecekan Benda / Objek</h4>
-            <p>Mekanisme algoritmik untuk membandingkan elemen yang sedang diperiksa terhadap kriteria target hingga objek ditemukan atau ruang pencarian habis.</p>
+            <p>Proses memeriksa apakah benda atau elemen yang sedang diamati memenuhi kriteria pencarian atau tidak.</p>
+          </div>
+        </div>
+
+        <div class="strategy-banner">
+          <strong>Strategi Pencarian:</strong> Mengambil pakaian secara <em>acak</em> berisiko memeriksa benda yang sama berulang kali. Dalam komputasi, terdapat dua teknik pencarian utama yang digunakan bergantung pada apakah data sudah terurut atau belum:
+        </div>
+
+        <!-- Perbandingan Sequential Search vs Binary Search -->
+        <div class="algo-explain-grid" style="margin-top: 18px;">
+          <div class="trace-box">
+            <h5>a. Pencarian Linier (Sequential / Linear Search)</h5>
+            <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 8px;">
+              Memeriksa elemen satu per satu secara berurutan dari indeks paling awal (kiri) hingga akhir (kanan) sampai target ditemukan atau seluruh ruang pencarian habis diperiksa.
+            </p>
+            <ul class="trace-list">
+              <li><strong>Prasyarat Data:</strong> Bebas (dapat digunakan pada data <em>acak/belum terurut</em> maupun <em>sudah terurut</em>).</li>
+              <li><strong>Contoh pada <code>[2, 3, 7, 6, 5]</code> (Mencari angka <code>6</code>):</strong>
+                <br>Periksa indeks <code>[1]=2</code> (bukan) &rarr; <code>[2]=3</code> (bukan) &rarr; <code>[3]=7</code> (bukan) &rarr; <code>[4]=6</code> (<strong>Cocok/Ditemukan!</strong> dalam 4 kali perbandingan).
+              </li>
+            </ul>
+          </div>
+
+          <div class="trace-box">
+            <h5>b. Pencarian Biner (Binary Search — Bagi Dua)</h5>
+            <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 8px;">
+              Memotong ruang pencarian menjadi dua bagian secara berulang dengan memeriksa elemen yang berada tepat di titik tengah (<code>Mid</code>).
+            </p>
+            <ul class="trace-list">
+              <li><strong>Prasyarat Mutlak:</strong> Data <strong>WAJIB SUDAH TERURUT</strong> terlebih dahulu (misalnya: <code>[2, 3, 5, 6, 7]</code>).</li>
+              <li><strong>Langkah Kerja pada rentang <code>Low</code> s.d. <code>High</code>:</strong>
+                <br>1. Hitung titik tengah: <code>Mid = floor((Low + High) / 2)</code>.
+                <br>2. Jika <code>Data[Mid] == Target</code> &rarr; <strong>Ditemukan!</strong>
+                <br>3. Jika <code>Target &lt; Data[Mid]</code> &rarr; Eliminasi bagian kanan, cari di kiri (<code>High = Mid - 1</code>).
+                <br>4. Jika <code>Target &gt; Data[Mid]</code> &rarr; Eliminasi bagian kiri, cari di kanan (<code>Low = Mid + 1</code>).
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <!-- BLOK 2: SEQUENTIAL SEARCH VS BINARY SEARCH -->
+      <!-- Bagian 2: Dasar Pengurutan (Sorting) -->
       <div class="theory-block">
-        <h3 class="block-title">2. Bedah Algoritma Pencarian: Pencarian Linier (Sequential Search) vs Pencarian Biner (Binary Search)</h3>
+        <h3 class="block-title">2. Konsep Dasar Pengurutan (Sorting)</h3>
         <p class="theory-lead">
-          Dalam Informatika, terdapat dua metode pencarian fundamental yang pemilihannya sangat bergantung pada <strong>apakah data sudah terurut atau belum</strong>:
-        </p>
-
-        <div class="algo-tabs">
-          <button type="button" class="algo-tab-btn active" onclick="switchSearchTheoryTab('sequential', this)">a. Pencarian Linier (Sequential Search)</button>
-          <button type="button" class="algo-tab-btn" onclick="switchSearchTheoryTab('binary', this)">b. Pencarian Biner (Binary Search)</button>
-          <button type="button" class="algo-tab-btn" onclick="switchSearchTheoryTab('compare_search', this)">c. Tabel Perbandingan Sequential vs Binary</button>
-        </div>
-
-        <!-- Tab Sequential Search -->
-        <div id="search-tab-sequential" class="algo-tab-content active">
-          <div class="algo-explain-grid">
-            <div>
-              <h4>Prinsip &amp; Langkah Kerja Pencarian Linier (Sequential / Linear Search)</h4>
-              <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:8px;">
-                <strong>Sequential Search</strong> memeriksa elemen satu per satu secara berurutan mulai dari indeks pertama (paling kiri) hingga indeks terakhir. Metode ini <strong>dapat digunakan pada data acak (belum terurut) maupun data terurut</strong>.
-              </p>
-              <ol class="clean-ol">
-                <li>Mulai dari elemen pertama pada indeks ke-1 (<code>i = 1</code>).</li>
-                <li>Bandingkan nilai elemen <code>A[i]</code> dengan nilai <code>Target</code> yang dicari.</li>
-                <li>Jika <code>A[i] == Target</code>, pencarian berhasil dan berhenti (kembalikan posisi indeks <code>i</code>).</li>
-                <li>Jika <code>A[i] != Target</code>, maju ke indeks berikutnya (<code>i = i + 1</code>) dan ulangi langkah 2.</li>
-                <li>Jika sampai indeks terakhir (<code>n</code>) target tidak ditemukan, maka data dinyatakan tidak ada di dalam ruang pencarian.</li>
-              </ol>
-            </div>
-            <div class="trace-box">
-              <h5>Telusur Sequential Search: Cari Angka <code>6</code> pada Deret <code>[2, 3, 7, 6, 5]</code></h5>
-              <ul class="trace-list">
-                <li><strong>Langkah 1 (Indeks [1]):</strong> Periksa nilai <code>2</code>. Apakah <code>2 == 6</code>? <em>Tidak</em> &rarr; lanjut ke kanan.</li>
-                <li><strong>Langkah 2 (Indeks [2]):</strong> Periksa nilai <code>3</code>. Apakah <code>3 == 6</code>? <em>Tidak</em> &rarr; lanjut ke kanan.</li>
-                <li><strong>Langkah 3 (Indeks [3]):</strong> Periksa nilai <code>7</code>. Apakah <code>7 == 6</code>? <em>Tidak</em> &rarr; lanjut ke kanan.</li>
-                <li><strong>Langkah 4 (Indeks [4]):</strong> Periksa nilai <code>6</code>. Apakah <code>6 == 6</code>? <strong>COCOK! Target ditemukan pada Indeks [4]</strong> (membutuhkan 4 kali perbandingan).</li>
-              </ul>
-              <div class="strategy-banner" style="margin-top:8px;">
-                <strong>Catatan Efisiensi:</strong> Kasus terbaik (<em>Best Case</em>) adalah <strong>1 kali perbandingan</strong> (jika target di indeks pertama), sedangkan kasus terburuk (<em>Worst Case</em>) adalah <strong>N kali perbandingan</strong> (kompleksitas waktu <code>O(n)</code>).
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab Binary Search -->
-        <div id="search-tab-binary" class="algo-tab-content">
-          <div class="algo-explain-grid">
-            <div>
-              <h4>Prinsip &amp; Langkah Kerja Pencarian Biner (Binary Search / Bagi Dua)</h4>
-              <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:6px;">
-                <strong>Binary Search</strong> bekerja dengan prinsip <em>Divide and Conquer</em> (memecah ruang pencarian menjadi dua bagian sama besar). <strong>Syarat mutlak: Data WAJIB sudah terurut</strong> (misalnya terurut menaik dari kecil ke besar).
-              </p>
-              <div class="formula-pill">Rumus Indeks Tengah: mid = Math.floor((low + high) / 2)</div>
-              <ol class="clean-ol">
-                <li>Tentukan batas bawah <code>low = 1</code> dan batas atas <code>high = n</code>.</li>
-                <li>Selama <code>low &le; high</code>, hitung posisi tengah: <code>mid = &lfloor;(low + high) / 2&rfloor;</code>.</li>
-                <li>Bandingkan nilai elemen tengah <code>A[mid]</code> dengan <code>Target</code>:
-                  <ul style="padding-left:18px; margin-top:4px;">
-                    <li>Jika <code>A[mid] == Target</code>: <strong>Target ditemukan!</strong> Pencarian selesai.</li>
-                    <li>Jika <code>Target &lt; A[mid]</code>: Target pasti di <strong>paruh kiri</strong>. Eliminasi kanan dengan mengubah <code>high = mid - 1</code>.</li>
-                    <li>Jika <code>Target &gt; A[mid]</code>: Target pasti di <strong>paruh kanan</strong>. Eliminasi kiri dengan mengubah <code>low = mid + 1</code>.</li>
-                  </ul>
-                </li>
-              </ol>
-            </div>
-            <div class="trace-box">
-              <h5>Telusur Binary Search: Cari Angka <code>19</code> pada Deret Terurut 9 Elemen <code>[2, 5, 8, 12, 15, 19, 23, 27, 31]</code></h5>
-              <ul class="trace-list">
-                <li><strong>Iterasi 1:</strong> <code>low = 1</code>, <code>high = 9</code> &rarr; <code>mid = &lfloor;(1+9)/2&rfloor; = 5</code>. Nilai <code>A[5] = 15</code>. Karena target <code>19 &gt; 15</code>, eliminasi paruh kiri `[1..5]` dan geser <code>low = 5 + 1 = 6</code>.</li>
-                <li><strong>Iterasi 2:</strong> <code>low = 6</code>, <code>high = 9</code> &rarr; <code>mid = &lfloor;(6+9)/2&rfloor; = 7</code>. Nilai <code>A[7] = 23</code>. Karena target <code>19 &lt; 23</code>, eliminasi paruh kanan `[7..9]` dan geser <code>high = 7 - 1 = 6</code>.</li>
-                <li><strong>Iterasi 3:</strong> <code>low = 6</code>, <code>high = 6</code> &rarr; <code>mid = &lfloor;(6+6)/2&rfloor; = 6</code>. Nilai <code>A[6] = 19</code>. <strong>COCOK! Target ditemukan hanya dalam 3 kali perbandingan</strong> (dibandingkan Sequential Search yang butuh 6 perbandingan).</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab Tabel Perbandingan Sequential vs Binary -->
-        <div id="search-tab-compare_search" class="algo-tab-content">
-          <div class="table-responsive">
-            <table class="mini-theory-table">
-              <thead>
-                <tr>
-                  <th>Aspek Pembanding</th>
-                  <th>Pencarian Linier (Sequential Search)</th>
-                  <th>Pencarian Biner (Binary Search)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Prasyarat Kondisi Data</strong></td>
-                  <td>Tidak perlu terurut (bisa untuk data acak maupun data terurut).</td>
-                  <td><strong>Wajib sudah terurut</strong> (menaik/menurun) terlebih dahulu.</td>
-                </tr>
-                <tr>
-                  <td><strong>Mekanisme Pemeriksaan</strong></td>
-                  <td>Memeriksa elemen satu per satu secara beruntun dari awal sampai akhir.</td>
-                  <td>Membagi dua ruang pencarian di titik tengah (<code>mid</code>) dan membuang separuh ruang di setiap langkah.</td>
-                </tr>
-                <tr>
-                  <td><strong>Jumlah Perbandingan Maksimum (Worst Case)</strong></td>
-                  <td>Sebanyak <code>N</code> langkah (kompleksitas linier <code>O(n)</code>). Untuk 1.024 data butuh hingga 1.024 cek.</td>
-                  <td>Sebanyak <code>&lfloor;log2(N)&rfloor; + 1</code> langkah (kompleksitas logaritmik <code>O(log n)</code>). Untuk 1.024 data hanya butuh maksimal ~10 cek!</td>
-                </tr>
-                <tr>
-                  <td><strong>Kapan Sebaiknya Digunakan?</strong></td>
-                  <td>Saat jumlah data sedikit, data sering berubah acak, atau hanya dicari satu kali.</td>
-                  <td>Saat jumlah data besar dan sudah diurutkan (misal pencarian katalog, kamus, database indeks).</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- BLOK 3: KONSEP DASAR PENGURUTAN -->
-      <div class="theory-block">
-        <h3 class="block-title">3. Konsep Dasar Pengurutan (Sorting) sebagai Fondasi Pencarian Cepat</h3>
-        <p class="theory-lead">
-          Agar <strong>Binary Search</strong> dapat diterapkan, data acak harus diurutkan terlebih dahulu melalui proses <strong>Pengurutan (Sorting)</strong>—misalnya secara <strong>menaik (ascending)</strong> dari nilai terkecil ke terbesar.
+          <strong>Pengurutan (Sorting)</strong> dilakukan untuk mengatur agar suatu kelompok benda, objek, atau entitas diletakkan mengikuti aturan tertentu—misalnya mengurutkan angka secara <strong>terurut menaik (ascending)</strong> atau <strong>menurun (descending)</strong>.
         </p>
 
         <div class="intro-sort-demo clickable-card" onclick="playCardClickEffect(this)">
           <div class="isd-left">
-            <span class="mini-label">DUA OPERASI INTI PENGURUTAN (HAL. 82)</span>
-            <h4>Mengurutkan 5 Angka Acak dengan Pembandingan &amp; Pertukaran</h4>
-            <p>Pada deret <code>[1, 2, 4, 3, 5]</code>, kita cukup menukar posisi nilai <strong>4</strong> dan <strong>3</strong> agar menjadi terurut menaik <code>[1, 2, 3, 4, 5]</code>. Terdapat <strong>2 langkah penting</strong> dalam setiap algoritma pengurutan:</p>
+            <span class="mini-label">CONTOH PENGANTAR BUKU (HAL. 82)</span>
+            <h4>Mengurutkan 5 Angka Acak dengan 1 Kali Pertukaran</h4>
+            <p>Pada deret <code>[1, 2, 4, 3, 5]</code>, kita cukup menukar posisi nilai <strong>4</strong> dan <strong>3</strong> agar menjadi terurut menaik <code>[1, 2, 3, 4, 5]</code>. Terdapat <strong>2 langkah penting</strong> dalam pengurutan:</p>
             <ol class="clean-ol">
               <li><strong>Pembandingan (Comparison):</strong> Membandingkan dua buah nilai untuk melihat mana yang lebih besar (<code>&gt;</code>), lebih kecil (<code>&lt;</code>), atau sama dengan (<code>=</code>).</li>
-              <li><strong>Penempatan / Pertukaran (Placement / Swap):</strong> Menempatkan atau menukar posisi bilangan setelah pembandingan.</li>
+              <li><strong>Penempatan / Pertukaran (Placement / Swap):</strong> Menempatkan bilangan setelah melakukan pembandingan.</li>
             </ol>
           </div>
           <div class="isd-right">
@@ -421,9 +343,9 @@
         </div>
       </div>
 
-      <!-- BLOK 4: BEDAH 3 ALGORITMA SORTING -->
+      <!-- Bagian 3: Bedah 3 Algoritma Pengurutan -->
       <div class="theory-block">
-        <h3 class="block-title">4. Bedah 3 Algoritma Pengurutan pada Deret Uji [2, 3, 7, 6, 5]</h3>
+        <h3 class="block-title">3. Bedah 3 Algoritma Pengurutan pada Deret Uji [2, 3, 7, 6, 5]</h3>
 
         <div class="algo-tabs">
           <button type="button" class="algo-tab-btn active" onclick="switchTheoryTab('bubble', this)">a. Bubble Sort</button>
@@ -438,7 +360,7 @@
               <ol class="clean-ol">
                 <li>Bandingkan nilai data ke-1 dan data ke-2. Jika data ke-1 &gt; data ke-2, tukar posisinya. Jika tidak, posisi tetap.</li>
                 <li>Ulangi langkah 1 pada pasangan berdekatan berikutnya: data ke-2 &amp; ke-3, hingga data ke-(n-1) &amp; ke-n (nilai tertinggi akan berada di ujung kanan setelah 1 iterasi selesai).</li>
-                <li>Ulangi langkah 1 dan 2 untuk <code>n-1</code>, <code>n-2</code>, dst. sampai seluruh elemen terurut.</li>
+                <li>Ulangi langkah 1 dan 2 untuk <code>n-1</code>, <code>n-2</code>, dst. sampai habis.</li>
               </ol>
             </div>
             <div class="trace-box">
@@ -511,9 +433,9 @@
       </div>
 
       <div class="hots-callout">
-        <div class="hots-badge">&#128161; SIAP MEMPRAKTIKKAN SEQUENTIAL SEARCH, BINARY SEARCH, DAN SORTING?</div>
+        <div class="hots-badge">&#128161; SIAP MELAKUKAN AKTIVITAS PRAKTIKUM?</div>
         <p>
-          Pada menu <strong>Simulasi</strong>, Anda dapat mempraktikkan langsung cara kerja <strong>Sequential Search</strong>, menentukan titik tengah &amp; paruh ruang pada <strong>Binary Search</strong>, serta menjalankan ketiga algoritma <strong>Sorting</strong> melalui <strong>Mode Aktivitas Siswa</strong>!
+          Pada menu <strong>Simulasi</strong>, Anda akan mempraktikkan sendiri setiap langkah iterasi dari <em>Sequential Search</em>, <em>Binary Search</em>, <em>Bubble Sort</em>, <em>Insertion Sort</em>, dan <em>Selection Sort</em> melalui <strong>Mode Aktivitas Siswa</strong>. Hanya aktivitas mandiri Anda yang akan dicatat dan dinilai ke dalam Tabel Percobaan dan laporan PDF!
         </p>
         <button type="button" class="btn-gold" onclick="navigateTo('simulasi')">Buka Meja Praktik Simulasi &rarr;</button>
       </div>
@@ -523,13 +445,13 @@
          LAYAR 4: SIMULASI INTERAKTIF & VALIDATOR AKTIVITAS SISWA
          ========================================== -->
     <section id="view-simulasi" class="view">
-      <!-- Bagian Atas: Tujuan Pembelajaran & Pemilih Misi -->
+      <!-- Bagian Atas: Tujuan Pembelajaran & Pemilih 6 Misi -->
       <div class="sim-top-grid">
         <div class="glass-panel">
           <span class="mini-label">TUJUAN PEMBELAJARAN PRAKTIKUM</span>
-          <h3 class="panel-heading">Simulasi Interaktif Sequential Search, Binary Search &amp; 3 Teknik Sorting</h3>
+          <h3 class="panel-heading">Aktivitas Praktik Searching &amp; Sorting beserta Diagnostik Kesalahan</h3>
           <p class="panel-text">
-            Siswa mengeksekusi sendiri tahapan <strong>Pencarian Linier (Sequential Search)</strong>, <strong>Pencarian Biner (Binary Search)</strong>, serta pengurutan <strong>Bubble Sort</strong>, <strong>Insertion Sort</strong>, dan <strong>Selection Sort</strong> pada <strong>Mode Aktivitas Siswa</strong>. Setiap kesalahan langkah dideteksi dan direkam secara langsung.
+            Siswa mengeksekusi sendiri tahapan iterasi <strong>Sequential Search</strong>, <strong>Binary Search</strong>, <strong>Bubble Sort</strong>, <strong>Insertion Sort</strong>, dan <strong>Selection Sort</strong> pada <strong>Mode Aktivitas Siswa</strong>. Mode Demonstrasi hanya untuk pengamatan visual dan tidak dicatat sebagai nilai.
           </p>
         </div>
 
@@ -541,10 +463,10 @@
           <div class="mission-selector" id="missionButtons">
             <button type="button" class="mission-btn active" data-mission="1" onclick="selectMission(1)">Misi 1: Sequential Search</button>
             <button type="button" class="mission-btn" data-mission="2" onclick="selectMission(2)">Misi 2: Binary Search</button>
-            <button type="button" class="mission-btn" data-mission="3" onclick="selectMission(3)">Misi 3: Bubble Sort</button>
-            <button type="button" class="mission-btn" data-mission="4" onclick="selectMission(4)">Misi 4: Insertion Sort</button>
-            <button type="button" class="mission-btn" data-mission="5" onclick="selectMission(5)">Misi 5: Selection Sort</button>
-            <button type="button" class="mission-btn" data-mission="6" onclick="selectMission(6)">Misi 6: Tantangan Data Terbalik</button>
+            <button type="button" class="mission-btn" data-mission="3" onclick="selectMission(3)">Misi 3: Aktivitas Bubble</button>
+            <button type="button" class="mission-btn" data-mission="4" onclick="selectMission(4)">Misi 4: Aktivitas Insertion</button>
+            <button type="button" class="mission-btn" data-mission="5" onclick="selectMission(5)">Misi 5: Aktivitas Selection</button>
+            <button type="button" class="mission-btn" data-mission="6" onclick="selectMission(6)">Misi 6: Data Terbalik</button>
           </div>
           <div id="missionInstructionBox" class="mission-instruction"></div>
         </div>
@@ -570,14 +492,14 @@
             <div class="control-group">
               <label for="simAlgoSelect">Teknik Algoritma:</label>
               <select id="simAlgoSelect" onchange="handleAlgoChange()">
-                <optgroup label="1. Algoritma Pencarian (Searching)">
-                  <option value="sequential_search" selected>a. Pencarian Linier (Sequential Search)</option>
-                  <option value="binary_search">b. Pencarian Biner (Binary Search — Data Terurut)</option>
+                <optgroup label="Teknik Pencarian (Searching)">
+                  <option value="search_sequential" selected>a. Pencarian Linier (Sequential Search — Data Acak/Terurut)</option>
+                  <option value="search_binary">b. Pencarian Biner (Binary Search — Data Wajib Terurut)</option>
                 </optgroup>
-                <optgroup label="2. Algoritma Pengurutan (Sorting)">
-                  <option value="bubble">c. Bubble Sort (Gelembung Berdekatan)</option>
-                  <option value="insertion">d. Insertion Sort (Penyisipan Kartu)</option>
-                  <option value="selection">e. Selection Sort (Seleksi Nilai Terkecil)</option>
+                <optgroup label="Teknik Pengurutan (Sorting)">
+                  <option value="bubble">a. Bubble Sort (Gelembung Berdekatan)</option>
+                  <option value="insertion">b. Insertion Sort (Penyisipan Kartu)</option>
+                  <option value="selection">c. Selection Sort (Seleksi Nilai Terkecil)</option>
                 </optgroup>
               </select>
             </div>
@@ -585,17 +507,16 @@
             <div class="control-group">
               <label for="simPresetSelect">Preset Deret Bilangan:</label>
               <select id="simPresetSelect" onchange="handlePresetChange()">
-                <option value="2,3,7,6,5" selected>Deret Uji Utama Buku [2, 3, 7, 6, 5]</option>
-                <option value="2,5,8,12,15,19,23,27,31">Deret Terurut 9 Elemen [2, 5, 8, 12, 15, 19, 23, 27, 31]</option>
-                <option value="12,5,23,8,19,2,31,15,27">Deret Acak 9 Elemen [12, 5, 23, 8, 19, 2, 31, 15, 27]</option>
-                <option value="1,2,4,3,5">Deret Pengantar Buku [1, 2, 4, 3, 5]</option>
-                <option value="9,7,5,3,1">Deret Terbalik [9, 7, 5, 3, 1]</option>
-                <option value="random">Bangkitkan Deret Acak Baru</option>
+                <option value="2,3,7,6,5" selected>Kasus Utama Buku [2, 3, 7, 6, 5]</option>
+                <option value="1,2,4,3,5">Kasus Pengantar Buku [1, 2, 4, 3, 5]</option>
+                <option value="9,7,5,3,1">Kasus Terbalik [9, 7, 5, 3, 1]</option>
+                <option value="8,4,6,2,5">Data Acak [8, 4, 6, 2, 5]</option>
+                <option value="random">Bangkitkan 5 Angka Acak Baru</option>
               </select>
             </div>
 
             <div class="control-group" id="searchTargetWrap">
-              <label for="searchTargetInput">Kriteria Target Dicari:</label>
+              <label for="searchTargetInput">Kriteria Angka Dicari:</label>
               <input type="number" id="searchTargetInput" value="6" min="1" max="99" onchange="resetSimulationState()" />
             </div>
           </div>
@@ -604,45 +525,36 @@
           <div class="visual-stage">
             <div class="stage-top-bar">
               <span id="stageModeLabel" class="stage-mode-tag">PENCARIAN LINIER (SEQUENTIAL SEARCH)</span>
-              <span id="stageIterBadge" class="stage-iter-pill">Langkah Ke-1</span>
+              <span id="stageIterBadge" class="stage-iter-pill">Sequential Langkah Ke-1</span>
             </div>
 
             <!-- Kotak Instruksi Langkah Aktif bagi Siswa -->
-            <div id="studentPromptBox" class="student-prompt-box"></div>
+            <div id="studentPromptBox" class="student-prompt-box">
+              <strong>Langkah Pencarian Linier / Sequential Search (Iterasi 1):</strong> Kriteria angka yang dicari adalah <strong>6</strong>. Klik elemen secara berurutan pada indeks <strong>[1]</strong> untuk memeriksa apakah nilainya cocok!
+            </div>
             <span id="stageActionBanner" class="hidden"></span>
 
             <!-- Representasi Elemen Array -->
-            <div id="arrayVisualContainer" class="array-visual-container"></div>
+            <div id="arrayVisualContainer" class="array-visual-container">
+              <div class="arr-item style-bubble comparing" onclick="handleElementClickInPractice(0)">2</div>
+              <div class="arr-item style-bubble" onclick="handleElementClickInPractice(1)">3</div>
+              <div class="arr-item style-bubble" onclick="handleElementClickInPractice(2)">7</div>
+              <div class="arr-item style-bubble" onclick="handleElementClickInPractice(3)">6</div>
+              <div class="arr-item style-bubble" onclick="handleElementClickInPractice(4)">5</div>
+            </div>
 
-            <!-- Baris Indeks Posisi [1] .. [N] -->
-            <div id="arrayIndexRow" class="array-index-row"></div>
+            <!-- Baris Indeks Posisi [1] .. [5] -->
+            <div id="arrayIndexRow" class="array-index-row">
+              <div class="idx-cell">[1]</div>
+              <div class="idx-cell">[2]</div>
+              <div class="idx-cell">[3]</div>
+              <div class="idx-cell">[4]</div>
+              <div class="idx-cell">[5]</div>
+            </div>
 
             <!-- Panel Tombol Keputusan Aktivitas Siswa -->
             <div id="practiceDecisionPanel" class="practice-decision-panel">
-              <!-- Tombol Keputusan Sequential Search -->
-              <div id="sequentialActionGroup" class="action-btn-group hidden">
-                <button type="button" class="btn-practice btn-found-act" onclick="handleSequentialDecision(true)">
-                  &#10004; Cocok dengan Target (Ditemukan!)
-                </button>
-                <button type="button" class="btn-practice btn-keep-act" onclick="handleSequentialDecision(false)">
-                  &#10145; Belum Cocok (Lanjut Indeks Berikutnya)
-                </button>
-              </div>
-
-              <!-- Tombol Keputusan Binary Search (Setelah Mid Diklik) -->
-              <div id="binaryActionGroup" class="action-btn-group hidden">
-                <button type="button" class="btn-practice btn-swap-act" onclick="handleBinaryDirectionDecision('left')">
-                  &#11013; Cari di Paruh Kiri (Target &lt; Tengah &rarr; high = mid - 1)
-                </button>
-                <button type="button" class="btn-practice btn-found-act" onclick="handleBinaryDirectionDecision('found')">
-                  &#127919; Target Ditemukan! (Target == Nilai Tengah)
-                </button>
-                <button type="button" class="btn-practice btn-keep-act" onclick="handleBinaryDirectionDecision('right')">
-                  &#10145; Cari di Paruh Kanan (Target &gt; Tengah &rarr; low = mid + 1)
-                </button>
-              </div>
-
-              <!-- Tombol Keputusan Bubble Sort -->
+              <!-- Tombol Khusus Bubble Sort -->
               <div id="bubbleActionGroup" class="action-btn-group hidden">
                 <button type="button" class="btn-practice btn-swap-act" onclick="handleBubbleDecision(true)">
                   &#8644; Tukar Posisi (Kiri &gt; Kanan)
@@ -652,7 +564,7 @@
                 </button>
               </div>
 
-              <!-- Tombol Keputusan Insertion Sort -->
+              <!-- Tombol Khusus Insertion Sort -->
               <div id="insertionActionGroup" class="action-btn-group hidden">
                 <button type="button" class="btn-practice btn-swap-act" onclick="handleInsertionDecision('swap_left')">
                   &#8592; Tukar / Geser Kartu ke Kiri (Kiri &gt; Kartu)
@@ -662,32 +574,26 @@
                 </button>
               </div>
 
-              <div id="clickElementHintGroup" class="click-hint-banner hidden">
-                &#128070; <strong id="clickHintText">Aksi Siswa: Klik langsung pada elemen di atas yang sesuai dengan aturan langkah saat ini!</strong>
+              <!-- Tombol Khusus Binary Search (Muncul Setelah Siswa Mengklik Elemen Mid) -->
+              <div id="binaryActionGroup" class="action-btn-group hidden">
+                <button type="button" class="btn-practice btn-keep-act" onclick="handleBinaryDirection('left')">
+                  &#8592; Cari di Bagian Kiri (Target &lt; Nilai Tengah)
+                </button>
+                <button type="button" class="btn-practice btn-found-act" onclick="handleBinaryDirection('found')">
+                  &#127919; Target Ditemukan! (Target == Nilai Tengah)
+                </button>
+                <button type="button" class="btn-practice btn-swap-act" onclick="handleBinaryDirection('right')">
+                  Cari di Bagian Kanan (Target &gt; Nilai Tengah) &#8594;
+                </button>
+              </div>
+
+              <!-- Petunjuk Klik Elemen Langsung (Selection Sort, Sequential Search, & Pilih Mid Binary Search) -->
+              <div id="clickElementHintGroup" class="click-hint-banner">
+                &#128070; <strong>Aksi Siswa:</strong> Klik langsung pada elemen di atas yang sesuai dengan aturan langkah saat ini!
               </div>
             </div>
 
             <div id="instantStepFeedback" class="instant-step-feedback hidden"></div>
-
-            <!-- Panel Telemetri Khusus Binary Search (Low, Mid, High, Ruang Aktif) -->
-            <div id="binaryTelemetryBox" class="binary-telemetry-box hidden">
-              <div class="sp-col">
-                <span class="sp-label">Batas Bawah (LOW)</span>
-                <div id="binLowText" class="sp-val">Indeks [1]</div>
-              </div>
-              <div class="sp-col">
-                <span class="sp-label">Titik Tengah (MID = &lfloor;(L+H)/2&rfloor;)</span>
-                <div id="binMidText" class="sp-val highlight">? (Klik Mid)</div>
-              </div>
-              <div class="sp-col">
-                <span class="sp-label">Batas Atas (HIGH)</span>
-                <div id="binHighText" class="sp-val">Indeks [9]</div>
-              </div>
-              <div class="sp-col">
-                <span class="sp-label">Sisa Ruang Pencarian</span>
-                <div id="binSpaceText" class="sp-val">9 Elemen</div>
-              </div>
-            </div>
 
             <!-- Tabel Partisi Khusus Selection Sort (Hal. 89) -->
             <div id="selectionPartitionBox" class="selection-partition-box hidden">
@@ -702,6 +608,22 @@
               <div class="sp-col">
                 <span class="sp-label">Nilai Terkecil Ditemukan</span>
                 <div id="spMinText" class="sp-val highlight">-</div>
+              </div>
+            </div>
+
+            <!-- Kotak Indikator Rentang Khusus Binary Search -->
+            <div id="binaryRangeBox" class="selection-partition-box hidden">
+              <div class="sp-col">
+                <span class="sp-label">Batas Kiri (Low)</span>
+                <div id="binLowText" class="sp-val">[1]</div>
+              </div>
+              <div class="sp-col">
+                <span class="sp-label">Titik Tengah (Mid)</span>
+                <div id="binMidText" class="sp-val highlight">Klik elemen Mid!</div>
+              </div>
+              <div class="sp-col">
+                <span class="sp-label">Batas Kanan (High)</span>
+                <div id="binHighText" class="sp-val">[5]</div>
               </div>
             </div>
           </div>
@@ -731,7 +653,7 @@
 
           <div class="metrics-grid-6">
             <div class="metric-box">
-              <span class="m-label">Langkah / Iterasi</span>
+              <span class="m-label">Iterasi Saat Ini</span>
               <strong id="metricIteration" class="m-val">1</strong>
             </div>
             <div class="metric-box">
@@ -739,7 +661,7 @@
               <strong id="metricComparisons" class="m-val cyan">0</strong>
             </div>
             <div class="metric-box">
-              <span class="m-label" id="metricSwapLabel">Tukar / Bagi Ruang</span>
+              <span class="m-label">Pertukaran</span>
               <strong id="metricSwaps" class="m-val gold">0</strong>
             </div>
             <div class="metric-box error-metric-box">
@@ -758,7 +680,7 @@
 
           <div class="State-summary-box">
             <div><span>Deret Awal:</span> <code id="summaryInitial">[2, 3, 7, 6, 5]</code></div>
-            <div><span>Kondisi / Target:</span> <code id="summaryCurrent">[2, 3, 7, 6, 5]</code></div>
+            <div><span>Kondisi Saat Ini:</span> <code id="summaryCurrent">[2, 3, 7, 6, 5]</code></div>
           </div>
 
           <!-- Panel Khusus: Catatan Kesalahan Iterasi / Teknik Siswa -->
@@ -778,7 +700,9 @@
               <span>&#128221; Jejak Langkah &amp; Iterasi</span>
               <button type="button" class="btn-mini-clear" onclick="clearStepLog()">Bersihkan Log</button>
             </div>
-            <ul id="simStepLog" class="sim-step-log"></ul>
+            <ul id="simStepLog" class="sim-step-log">
+              <li>Sesi aktivitas siswa dimulai dengan deret awal [2, 3, 7, 6, 5].</li>
+            </ul>
           </div>
 
           <!-- Tombol Catat Data & Verifikasi (Khusus Mode Aktivitas Siswa) -->
@@ -796,7 +720,7 @@
       <div class="glass-panel experiment-table-panel">
         <div class="et-header">
           <div>
-            <span class="mini-label">REKAPITULASI AKTIVITAS PRAKTIK SEARCHING &amp; SORTING SISWA (OTOMATIS TERCANTUM DI PDF LKPD)</span>
+            <span class="mini-label">REKAPITULASI AKTIVITAS PRAKTIK &amp; KESALAHAN TEKNIK SISWA (HANYA MODE AKTIVITAS SISWA — OTOMATIS TERCANTUM DI PDF LKPD)</span>
             <h3>Tabel Data Hasil Aktivitas Percobaan Siswa</h3>
           </div>
           <button type="button" class="btn-danger-outline" onclick="clearExperimentTable()">Hapus Semua Data</button>
@@ -808,10 +732,10 @@
                 <th>No</th>
                 <th>Teknik Algoritma (Aktivitas Siswa)</th>
                 <th>Data Awal</th>
-                <th>Hasil Akhir / Status Target</th>
-                <th>Langkah/Iterasi</th>
+                <th>Hasil Akhir</th>
+                <th>Iterasi</th>
                 <th>Banding</th>
-                <th>Tukar/Bagi</th>
+                <th>Tukar</th>
                 <th>Jml Kesalahan</th>
                 <th>Akurasi</th>
                 <th>Rincian Kesalahan Iterasi / Teknik Siswa</th>
@@ -819,7 +743,7 @@
             </thead>
             <tbody id="experimentTableBody">
               <tr class="empty-row">
-                <td colspan="10">Belum ada data aktivitas siswa yang dicatat. Selesaikan pencarian atau pengurutan pada <strong>Mode Aktivitas Siswa</strong> lalu klik <strong>"Catat Aktivitas Siswa &amp; Verifikasi Misi"</strong>.</td>
+                <td colspan="10">Belum ada data aktivitas siswa yang dicatat. Selesaikan praktikum pada <strong>Mode Aktivitas Siswa</strong> lalu klik <strong>"Catat Aktivitas Siswa &amp; Verifikasi Misi"</strong>.</td>
               </tr>
             </tbody>
           </table>
@@ -833,16 +757,16 @@
     <section id="view-prosedur" class="view">
       <div class="view-header">
         <span class="section-badge">PANDUAN KERJA LABORATORIUM VIRTUAL</span>
-        <h2>7 Langkah Prosedur Praktikum Searching &amp; Sorting</h2>
-        <p>Ikuti tahapan berurutan berikut untuk mempraktikkan Pencarian Linier (Sequential Search), Pencarian Biner (Binary Search), dan Pengurutan (Sorting).</p>
+        <h2>7 Langkah Prosedur Praktikum &amp; Evaluasi Kesalahan</h2>
+        <p>Ikuti tahapan berurutan berikut untuk mempraktikkan Sequential/Binary Search dan teknik Sorting pada Mode Aktivitas Siswa serta merekap hasilnya ke laporan PDF.</p>
       </div>
 
       <div class="procedure-list">
         <div class="proc-card">
           <div class="proc-num">1</div>
           <div class="proc-body">
-            <h3>Pelajari Teori Sequential Search, Binary Search, dan 3 Teknik Sorting</h3>
-            <p>Buka menu <strong>Teori</strong> untuk memahami perbedaan pemeriksaan beruntun pada <em>Sequential Search</em>, pembagian titik tengah <code>mid = &lfloor;(low + high) / 2&rfloor;</code> pada <em>Binary Search</em>, serta aturan <em>Bubble</em>, <em>Insertion</em>, dan <em>Selection Sort</em>.</p>
+            <h3>Pelajari Aturan Sequential/Binary Search serta Bubble, Insertion, &amp; Selection Sort di Menu Teori</h3>
+            <p>Buka menu <strong>Teori</strong> untuk memahami perbedaan pemeriksaan berurutan (<em>Sequential Search</em>), pembagian titik tengah (<em>Binary Search</em>), serta ketiga algoritma pengurutan.</p>
           </div>
         </div>
 
@@ -850,31 +774,31 @@
           <div class="proc-num">2</div>
           <div class="proc-body">
             <h3>Pastikan "Mode Aktivitas Siswa" Aktif pada Meja Kerja Simulasi</h3>
-            <p>Masuk ke menu <strong>Simulasi</strong> dan pastikan tombol <strong>Mode Aktivitas Siswa (Dinilai &amp; Dicatat)</strong> aktif agar seluruh langkah dan akurasi Anda dapat direkam ke tabel percobaan.</p>
+            <p>Masuk ke menu <strong>Simulasi</strong> dan gunakan <strong>Mode Aktivitas Siswa (Dinilai &amp; Dicatat)</strong>. Mode Demonstrasi hanya berfungsi untuk melihat contoh animasi dan tidak dapat dicatat ke dalam tabel penilaian.</p>
           </div>
         </div>
 
         <div class="proc-card">
           <div class="proc-num">3</div>
           <div class="proc-body">
-            <h3>Jalankan Misi 1 (Sequential Search) &amp; Misi 2 (Binary Search)</h3>
-            <p>Pada <strong>Misi 1 (Sequential Search)</strong>, periksa elemen satu per satu dari indeks <code>[1]</code> hingga target ditemukan. Pada <strong>Misi 2 (Binary Search)</strong>, klik elemen titik tengah <code>mid = &lfloor;(low + high)/2&rfloor;</code>, lalu putuskan apakah target berada di <strong>Paruh Kiri</strong>, <strong>Tepat di Tengah</strong>, atau <strong>Paruh Kanan</strong>.</p>
+            <h3>Pilih Misi Berjenjang (Misi 1 s.d. Misi 6)</h3>
+            <p>Klik tombol <strong>Misi 1</strong> hingga <strong>Misi 6</strong> di bagian atas layar simulasi. Sistem akan menyiapkan teknik algoritma dan deret uji yang sesuai.</p>
           </div>
         </div>
 
         <div class="proc-card">
           <div class="proc-num">4</div>
           <div class="proc-body">
-            <h3>Jalankan Misi 3, 4, 5, dan 6 untuk Praktik Pengurutan (Sorting)</h3>
-            <p>Praktikkan <em>Bubble Sort</em> (Misi 3), <em>Insertion Sort</em> (Misi 4), <em>Selection Sort</em> (Misi 5), serta pengurutan deret terbalik (Misi 6) sesuai aturan masing-masing algoritma.</p>
+            <h3>Jalankan Langkah Searching &amp; Sorting Sesuai Instruksi Iterasi Aktif</h3>
+            <p>Pada <em>Sequential Search</em>, klik elemen berurutan dari kiri. Pada <em>Binary Search</em>, klik elemen titik tengah (<code>Mid</code>) lalu pilih arah kiri/kanan. Pada <em>Bubble/Insertion/Selection Sort</em>, lakukan perbandingan dan pertukaran sesuai aturan.</p>
           </div>
         </div>
 
         <div class="proc-card">
           <div class="proc-num">5</div>
           <div class="proc-body">
-            <h3>Evaluasi Umpan Balik &amp; Catatan Kesalahan Iterasi/Teknik Siswa</h3>
-            <p>Jika Anda salah memilih indeks tengah <code>mid</code>, salah membuang paruh ruang pada <em>Binary Search</em>, atau salah menukar elemen saat <em>Sorting</em>, perhatikan penjelasan korektif di panel <strong>Catatan Kesalahan Siswa</strong>.</p>
+            <h3>Perhatikan Umpan Balik &amp; Catatan Kesalahan Iterasi/Teknik Siswa</h3>
+            <p>Apabila Anda mengambil langkah yang melanggar aturan algoritma, sistem akan mengeluarkan bunyi peringatan dan mencatat rincian kesalahan tersebut pada panel <strong>Catatan Kesalahan Iterasi / Teknik Siswa</strong>.</p>
           </div>
         </div>
 
@@ -882,7 +806,7 @@
           <div class="proc-num">6</div>
           <div class="proc-body">
             <h3>Tekan Tombol "Catat Aktivitas Siswa &amp; Verifikasi Misi"</h3>
-            <p>Setiap kali satu misi selesai dijalankan, klik tombol hijau untuk menyimpan jumlah perbandingan, pembagian ruang/pertukaran, dan persentase akurasi Anda ke <strong>Tabel Data Hasil Aktivitas Percobaan Siswa</strong>.</p>
+            <p>Setelah proses pencarian atau pengurutan selesai pada Mode Aktivitas Siswa, klik tombol hijau untuk menyimpan hasil dan rincian kesalahan Anda ke dalam <strong>Tabel Data Hasil Aktivitas Percobaan Siswa</strong>.</p>
           </div>
         </div>
 
@@ -890,7 +814,7 @@
           <div class="proc-num">7</div>
           <div class="proc-body">
             <h3>Jawab 10 Soal di Menu LKPD dan Unduh Laporan PDF A4</h3>
-            <p>Buka menu <strong>LKPD</strong>, isi identitas dan 10 soal evaluasi (termasuk soal diagnostik Sequential &amp; Binary Search), lalu klik <strong>Ubah ke PDF</strong> untuk mengunduh laporan resmi.</p>
+            <p>Buka menu <strong>LKPD</strong>, lengkapi identitas dan 10 soal evaluasi, lalu klik <strong>Ubah ke PDF</strong>. Seluruh tabel aktivitas percobaan beserta rekap kesalahan teknik Anda akan tercetak rapi di dalam dokumen PDF.</p>
           </div>
         </div>
       </div>
@@ -902,8 +826,8 @@
     <section id="view-lkpd" class="view">
       <div class="view-header">
         <span class="section-badge">LEMBAR KERJA PESERTA DIDIK (LKPD) DIGITAL</span>
-        <h2>Evaluasi Praktikum: Sequential Search, Binary Search &amp; Sorting</h2>
-        <p>Seluruh jawaban Anda beserta Tabel Data Hasil Aktivitas Percobaan dari menu Simulasi akan disertakan otomatis ke dalam dokumen PDF A4.</p>
+        <h2>Evaluasi Praktikum Algoritma Pencarian &amp; Pengurutan</h2>
+        <p>Seluruh jawaban Anda beserta Tabel Data Hasil Aktivitas Percobaan dan Rekap Kesalahan Teknik Siswa dari menu Simulasi akan disertakan otomatis ke dalam PDF.</p>
       </div>
 
       <div class="glass-panel lkpd-identity">
@@ -913,7 +837,7 @@
         </div>
         <div class="id-field">
           <label for="studentClass">Kelas / Rombel:</label>
-          <input type="text" id="studentClass" placeholder="Contoh: X.1 / X Merdeka" />
+          <input type="text" id="studentClass" placeholder="Contoh: X.1 / X Unggul" />
         </div>
       </div>
 
@@ -921,27 +845,27 @@
       <div class="glass-panel lkpd-section">
         <div class="lkpd-sec-header">
           <span class="sec-pill">BAGIAN A</span>
-          <h3>Analisis Data Percobaan Searching &amp; Sorting (Soal Esai 1–4)</h3>
+          <h3>Analisis Data Percobaan &amp; Evaluasi Kesalahan (Soal Esai 1–4)</h3>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q1">1. Berdasarkan hasil praktikum Anda pada Misi 1 dan Misi 2, jelaskan perbedaan cara kerja Pencarian Linier (Sequential Search) dan Pencarian Biner (Binary Search)! Mengapa Binary Search mewajibkan data sudah terurut terlebih dahulu, sedangkan Sequential Search tidak?</label>
-          <textarea id="lkpd_q1" rows="3" placeholder="Jelaskan perbedaan mekanisme pemeriksaan satu per satu vs pembagian titik tengah serta alasan syarat data terurut..."></textarea>
+          <label for="lkpd_q1">1. Jelaskan perbedaan cara kerja antara Pencarian Linier (Sequential Search) dan Pencarian Biner (Binary Search) berdasarkan hasil aktivitas praktikum Anda! Mengapa Binary Search mewajibkan data diurutkan (sorted) terlebih dahulu?</label>
+          <textarea id="lkpd_q1" rows="3" placeholder="Tuliskan perbandingan langkah Sequential Search vs Binary Search dan alasan prasyarat data terurut..."></textarea>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q2">2. Pada percobaan Binary Search untuk mencari angka target <code>19</code> di dalam deret terurut 9 elemen <code>[2, 5, 8, 12, 15, 19, 23, 27, 31]</code>, uraikan perubahan nilai <code>low</code>, <code>high</code>, dan <code>mid</code> pada setiap langkah hingga angka 19 ditemukan! Bandingkan jumlah langkahnya jika dicari menggunakan Sequential Search!</label>
-          <textarea id="lkpd_q2" rows="3" placeholder="Tuliskan telusur Iterasi 1 (low=1, high=9, mid=5), Iterasi 2, dst. serta perbandingan jumlah langkahnya..."></textarea>
+          <label for="lkpd_q2">2. Berdasarkan aktivitas praktik Bubble Sort pada deret [2, 3, 7, 6, 5], jelaskan apa yang terjadi pada Iterasi Pertama (4 kali perbandingan) dan Iterasi Kedua (3 kali perbandingan)! Mengapa pada Iterasi Ketiga dan Keempat tidak boleh dilakukan pertukaran lagi?</label>
+          <textarea id="lkpd_q2" rows="3" placeholder="Uraikan perubahan urutan deret [2, 3, 7, 6, 5] pada Iterasi 1 hingga Iterasi 4..."></textarea>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q3">3. Berdasarkan aktivitas praktik Bubble Sort dan Insertion Sort pada deret <code>[2, 3, 7, 6, 5]</code>, jelaskan bagaimana kedua algoritma tersebut menukar dan menyisipkan angka <code>6</code> dan <code>5</code> hingga menghasilkan deret terurut menaik <code>[2, 3, 5, 6, 7]</code>!</label>
-          <textarea id="lkpd_q3" rows="3" placeholder="Uraikan perbandingan berdekatan pada Bubble Sort vs penyisipan mundur ke kiri pada Insertion Sort..."></textarea>
+          <label for="lkpd_q3">3. Pada aktivitas praktik Insertion Sort untuk deret kartu [2, 3, 7, 6, 5], jelaskan proses penyisipan kartu 6 pada Iterasi Ketiga dan kartu 5 pada Iterasi Keempat! Kesalahan apa yang sering terjadi saat menyisipkan kartu ke sebelah kiri?</label>
+          <textarea id="lkpd_q3" rows="3" placeholder="Jelaskan perbandingan mundur ke kiri saat menyisipkan kartu 6 dan kartu 5..."></textarea>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q4">4. Pada aktivitas praktik Selection Sort untuk deret <code>(2, 3, 7, 6, 5)</code>, bagaimana perubahan isi "Bagian Terurut" dan "Bagian yang Belum Terurut" dari awal hingga selesai? Evaluasilah catatan kesalahan teknik Anda selama menjalankan simulasi!</label>
-          <textarea id="lkpd_q4" rows="3" placeholder="Tuliskan tahapan perubahan Bagian Terurut () hingga (2,3,5,6,7) beserta refleksi akurasi praktik Anda..."></textarea>
+          <label for="lkpd_q4">4. Pada aktivitas praktik Selection Sort untuk deret (2, 3, 7, 6, 5), bagaimana perubahan isi "Bagian Terurut" dan "Bagian yang Belum Terurut" dari awal hingga selesai? Evaluasilah apakah Anda sempat melakukan kesalahan memilih nilai terkecil selama simulasi!</label>
+          <textarea id="lkpd_q4" rows="3" placeholder="Tuliskan tahapan perubahan Bagian Terurut () hingga (2,3,5,6,7) beserta refleksi praktik Anda..."></textarea>
         </div>
       </div>
 
@@ -953,27 +877,27 @@
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q5">5. Algoritma pencarian apakah yang bekerja dengan membagi dua ruang pencarian pada titik tengah (<code>mid</code>) dan memiliki syarat mutlak bahwa data <strong>wajib sudah terurut</strong>?</label>
+          <label for="lkpd_q5">5. Pada Pencarian Biner (<em>Binary Search</em>) untuk deret terurut <code>[2, 3, 5, 6, 7]</code> dengan batas awal <code>Low = [1]</code> dan <code>High = [5]</code>, berapakah <strong>nilai angka</strong> yang berada tepat di posisi titik tengah (<code>Mid</code>) pada pemeriksaan pertama?</label>
           <div class="diag-row">
-            <input type="text" id="lkpd_q5" placeholder="Ketik nama algoritma pencarian (misal: Binary Search / Pencarian Biner)..." />
+            <input type="text" id="lkpd_q5" placeholder="Ketik nilai angka di posisi tengah (Mid)..." />
             <button type="button" class="btn-check" onclick="checkDiagnostic(5)">Cek</button>
           </div>
           <div id="diag_fb_5" class="diag-feedback"></div>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q6">6. Pada algoritma <em>Binary Search</em> dengan batas indeks <code>low = 1</code> dan <code>high = 9</code> pada deret <code>[2, 5, 8, 12, 15, 19, 23, 27, 31]</code>, berapakah nomor <strong>indeks tengah (<code>mid</code>)</strong> yang pertama kali diperiksa?</label>
+          <label for="lkpd_q6">6. Pada algoritma <em>Bubble Sort</em> untuk deret <code>[2, 3, 7, 6, 5]</code>, berapakah nilai bilangan tertinggi yang menempati posisi paling ujung kanan setelah <strong>Iterasi Pertama</strong> selesai?</label>
           <div class="diag-row">
-            <input type="text" id="lkpd_q6" placeholder="Ketik nomor indeks mid (angka 1 s.d. 9)..." />
+            <input type="text" id="lkpd_q6" placeholder="Ketik nilai angka tertinggi..." />
             <button type="button" class="btn-check" onclick="checkDiagnostic(6)">Cek</button>
           </div>
           <div id="diag_fb_6" class="diag-feedback"></div>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q7">7. Jika kita mencari angka <code>6</code> pada deret acak <code>[2, 3, 7, 6, 5]</code> menggunakan <strong>Pencarian Linier (Sequential Search)</strong> mulai dari indeks <code>[1]</code> di kiri, berapa kali perbandingan yang dilakukan hingga angka <code>6</code> ditemukan?</label>
+          <label for="lkpd_q7">7. Algoritma pengurutan apakah yang bekerja dengan cara mengambil elemen ke-<code>(i+1)</code> lalu menyisipkannya di antara elemen-elemen sebelumnya yang sudah terurut seperti menyusun kartu?</label>
           <div class="diag-row">
-            <input type="text" id="lkpd_q7" placeholder="Ketik jumlah perbandingan (angka)..." />
+            <input type="text" id="lkpd_q7" placeholder="Ketik nama algoritmanya..." />
             <button type="button" class="btn-check" onclick="checkDiagnostic(7)">Cek</button>
           </div>
           <div id="diag_fb_7" class="diag-feedback"></div>
@@ -997,13 +921,13 @@
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q9">9. Bayangkan sebuah perpustakaan digital memiliki <strong>1.024 data buku</strong> yang belum terurut. Kapan kita sebaiknya langsung memakai <em>Sequential Search</em>, dan kapan kita sebaiknya mengurutkan data terlebih dahulu (<em>Sorting</em>) lalu memakai <em>Binary Search</em>? Jelaskan dari segi efisiensi jumlah langkah pemeriksaan!</label>
-          <textarea id="lkpd_q9" rows="3" placeholder="Analisis perbandingan maksimal 1.024 langkah pada Sequential Search vs ~10 langkah pada Binary Search setelah diurutkan..."></textarea>
+          <label for="lkpd_q9">9. Bandingkan hasil aktivitas praktik Anda pada deret yang hampir terurut <code>[2, 3, 7, 6, 5]</code> dengan deret terbalik <code>[9, 7, 5, 3, 1]</code>! Mengapa algoritma Insertion Sort membutuhkan jauh lebih sedikit perbandingan pada data yang hampir terurut dibandingkan Bubble Sort dan Selection Sort?</label>
+          <textarea id="lkpd_q9" rows="3" placeholder="Tuliskan analisis perbandingan efisiensi ketiga algoritma..."></textarea>
         </div>
 
         <div class="q-item">
-          <label for="lkpd_q10">10. Buatlah kesimpulan menyeluruh dari praktikum ini mengenai hubungan sinergis antara Pengurutan (Bubble, Insertion, Selection Sort) dan Pencarian (Sequential &amp; Binary Search), serta refleksi dari akurasi praktik Anda di Mode Aktivitas Siswa!</label>
-          <textarea id="lkpd_q10" rows="3" placeholder="Tuliskan kesimpulan akhir praktikum Anda..."></textarea>
+          <label for="lkpd_q10">10. Buatlah kesimpulan akhir dari praktikum ini mengenai hubungan antara Pengurutan (Sorting) dan Pencarian (Sequential &amp; Binary Search), serta pelajaran yang Anda peroleh dari catatan kesalahan iterasi/teknik selama menjalankan Mode Aktivitas Siswa!</label>
+          <textarea id="lkpd_q10" rows="3" placeholder="Tuliskan kesimpulan menyeluruh hasil praktikum Anda..."></textarea>
         </div>
 
         <div class="lkpd-actions">
@@ -1013,7 +937,7 @@
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
-            <span>Ubah ke PDF (Unduh Laporan LKPD Searching &amp; Sorting)</span>
+            <span>Ubah ke PDF (Unduh Laporan LKPD &amp; Diagnostik Aktivitas Siswa)</span>
           </button>
         </div>
       </div>
@@ -1067,7 +991,7 @@
           <div class="about-icon">&#128300;</div>
           <h3>Fitur Lab &amp; Penilaian Aktivitas</h3>
           <p>
-            Memfasilitasi simulasi utuh <strong>Sequential Search</strong>, <strong>Binary Search (Low-Mid-High)</strong>, serta <strong>Bubble, Insertion, dan Selection Sort</strong> pada <strong>Mode Aktivitas Siswa</strong> dengan deteksi kesalahan langkah secara langsung.
+            Memisahkan secara tegas <strong>Mode Aktivitas Siswa</strong> (yang dinilai dan dicatat ke Tabel Percobaan serta laporan PDF) dari <strong>Mode Demonstrasi</strong> (khusus observasi visual), serta mendeteksi setiap kesalahan iterasi/teknik siswa secara langsung pada <em>Sequential Search</em>, <em>Binary Search</em>, <em>Bubble Sort</em>, <em>Insertion Sort</em>, dan <em>Selection Sort</em>.
           </p>
         </div>
 
@@ -1075,7 +999,7 @@
           <div class="about-icon">&#127891;</div>
           <h3>Capaian Pembelajaran</h3>
           <p>
-            Memfasilitasi peserta didik Fase E (Kelas X SMA/MA/SMK) pada elemen <strong>Berpikir Komputasional (BK)</strong> untuk menerapkan strategi algoritmik standar melalui pencarian (<em>Sequential &amp; Binary Search</em>) dan pengurutan (<em>Sorting</em>).
+            Memfasilitasi peserta didik Fase E (Kelas X SMA/MA/SMK) pada elemen <strong>Berpikir Komputasional (BK)</strong> dan <strong>Algoritma &amp; Pemrograman (AP)</strong> untuk menerapkan strategi algoritmik standar melalui pencarian (<em>searching</em>) dan pengurutan (<em>sorting</em>).
           </p>
         </div>
       </div>
@@ -1095,4 +1019,3 @@
   <script src="script.js?v=4"></script>
 </body>
 </html>
-Displaying Virtual-Lab-Searching-Sorting/index.html.
